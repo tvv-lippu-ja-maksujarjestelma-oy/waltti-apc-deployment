@@ -59,7 +59,7 @@ Tenants could be used to separate authorization per team or per project.
 
 1. From the left bar, select Tenants.
 1. Select New Tenant.
-1. Add Tenants: apc
+1. Add Tenants: apc-dev
 1. Add Allowed Clusters: pulsar
 1. Select Confirm.
 
@@ -70,7 +70,7 @@ Namespaces could be seen as different parts of projects, or separate modules wit
 Let's create a namespace for the MQTT messages from the vehicles.
 
 1. From the left bar, select Tenants.
-1. In the tenant overview, select the name of the tenant or the pen icon on the row "apc" to edit the tenant.
+1. In the tenant overview, select the name of the tenant or the pen icon on the row "apc-dev" to edit the tenant.
 1. Select the tab Namespaces.
 1. Select New Namespace.
 1. Add Name: source
@@ -92,7 +92,7 @@ Let's allow the service mqtt-pulsar-forwarder to connect to Pulsar.
 Let's allow the service mqtt-pulsar-forwarder to send messages into Pulsar.
 
 1. From the left bar, select Namespaces.
-1. Select Tenant: apc
+1. Select Tenant: apc-dev
 1. Select Namespace: source
 1. In the tab Policy, select Authorization: mqtt-pulsar-forwarder@waltti.auth.streamnative.cloud
 1. For Select Role, select: produce
