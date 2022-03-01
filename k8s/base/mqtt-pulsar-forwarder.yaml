@@ -1,0 +1,116 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mqtt-pulsar-forwarder-dep
+  labels:
+    app.kubernetes.io/name: mqtt-pulsar-forwarder
+spec:
+  # Match the number of zones in the region.
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: mqtt-pulsar-forwarder
+  template:
+    metadata:
+      labels:
+        app: mqtt-pulsar-forwarder
+        app.kubernetes.io/name: mqtt-pulsar-forwarder
+    spec:
+      # Each zone should have exactly one mqtt-pulsar-forwarder to add
+      # redundancy into MQTT data collection. Any further replicas would waste
+      # capacity.
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - mqtt-pulsar-forwarder
+              topologyKey: topology.kubernetes.io/zone
+      containers:
+        - name: mqtt-pulsar-forwarder
+          image: ghcr.io/tvv-lippu-ja-maksujarjestelma-oy/mqtt-pulsar-forwarder:edge
+          imagePullPolicy: Always
+          resources:
+            requests:
+              # GCP Autopilot does not accept less on 2022-02-02.
+              cpu: 251m
+              memory: 64Mi
+              ephemeral-storage: 8Ki
+            limits:
+              cpu: "1"
+              memory: 512Mi
+              ephemeral-storage: 2Mi
+          envFrom:
+            - configMapRef:
+                name: mqtt-pulsar-forwarder-config
+          volumeMounts:
+            - name: mqtt-pulsar-forwarder-secret-volume
+              mountPath: "/secrets"
+              readOnly: true
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsUser: 10001
+            runAsGroup: 10001
+      volumes:
+        - name: mqtt-pulsar-forwarder-secret-volume
+          secret:
+            secretName: mqtt-pulsar-forwarder-secret
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mqtt-pulsar-forwarder-config
+  labels:
+    app.kubernetes.io/name: mqtt-pulsar-forwarder
+data:
+  MQTT_CLEAN: "false"
+  MQTT_PASSWORD_PATH: "/secrets/mqtt-password"
+  MQTT_QOS: "2"
+  MQTT_USERNAME_PATH: "/secrets/mqtt-username"
+  MQTT_TOPIC_FILTER: "apc-from-vehicle/#"
+  PULSAR_BLOCK_IF_QUEUE_FULL: "true"
+  PULSAR_OAUTH2_AUDIENCE: "urn:sn:pulsar:waltti:waltti"
+  PULSAR_OAUTH2_ISSUER_URL: "https://auth.streamnative.cloud"
+  PULSAR_OAUTH2_KEY_PATH: "/secrets/pulsar-oauth2-key"
+  PULSAR_SERVICE_URL: "pulsar+ssl://pulsar.waltti.snio.cloud:6651"
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mqtt-pulsar-forwarder-deny-ingress-allow-egress
+  labels:
+    app.kubernetes.io/name: mqtt-pulsar-forwarder
+spec:
+  podSelector:
+    matchLabels:
+      app: mqtt-pulsar-forwarder
+  policyTypes:
+    - Egress
+    - Ingress
+  egress:
+    - {}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: mqtt-pulsar-forwarder-pdb
+  labels:
+    app.kubernetes.io/name: mqtt-pulsar-forwarder
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: mqtt-pulsar-forwarder
