@@ -12,10 +12,12 @@ configMapGenerator:
     behavior: merge
     literals:
       - "MQTT_URL=mqtts://dev.mqtt.apc.lmj.fi"
+      # For some reason the StreamNative certificate does not match the URI.
+      - "PULSAR_TLS_VALIDATE_HOSTNAME=false"
       - "PULSAR_TOPIC=persistent://apc-dev/source/mqtt-apc-from-vehicle"
 images:
   - name: ghcr.io/tvv-lippu-ja-maksujarjestelma-oy/mqtt-pulsar-forwarder
-    newTag: sha-d0cd6db92efd058286cf9813913c58100ec92d63
+    newTag: sha-9f77b690216413fd2327e313558ab22437401a8e
 
 # Add labeling here so that it affects also the resources in this
 # kustomization.yaml.
@@ -31,7 +33,7 @@ patches:
         value: dev-mqtt-pulsar-forwarder
       - op: add
         path: /metadata/labels/app.kubernetes.io~1version
-        value: sha-d0cd6db92efd058286cf9813913c58100ec92d63
+        value: sha-9f77b690216413fd2327e313558ab22437401a8e
       - op: add
         path: /metadata/labels/app.kubernetes.io~1component
         value: mqtt-data-source
@@ -46,7 +48,7 @@ patches:
         value: dev-mqtt-pulsar-forwarder
       - op: add
         path: /spec/template/metadata/labels/app.kubernetes.io~1version
-        value: sha-d0cd6db92efd058286cf9813913c58100ec92d63
+        value: sha-9f77b690216413fd2327e313558ab22437401a8e
       - op: add
         path: /spec/template/metadata/labels/app.kubernetes.io~1component
         value: mqtt-data-source

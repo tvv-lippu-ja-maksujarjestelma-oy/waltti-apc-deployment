@@ -56,6 +56,21 @@ spec:
             - name: mqtt-pulsar-forwarder-secret-volume
               mountPath: "/secrets"
               readOnly: true
+          ports:
+            - name: liveness-port
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 1
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 30
+            periodSeconds: 2
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -76,6 +91,7 @@ metadata:
   labels:
     app.kubernetes.io/name: mqtt-pulsar-forwarder
 data:
+  HEALTH_CHECK_PORT: "8080"
   MQTT_CLEAN: "false"
   MQTT_PASSWORD_PATH: "/secrets/mqtt-password"
   MQTT_QOS: "2"
