@@ -2,44 +2,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mqtt-pulsar-forwarder-dep
+  name: mqtt-deduplicator-dep
   labels:
-    app.kubernetes.io/name: mqtt-pulsar-forwarder
+    app.kubernetes.io/name: pulsar-topic-deduplicator
+    app.kubernetes.io/instance: mqtt-deduplicator
 spec:
-  # Match the number of zones in the region.
-  replicas: 3
+  replicas: 1
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
+    type: Recreate
   selector:
     matchLabels:
-      app: mqtt-pulsar-forwarder
+      app: mqtt-deduplicator
   template:
     metadata:
       labels:
-        app: mqtt-pulsar-forwarder
+        app: mqtt-deduplicator
         networkPolicy: client-only
         podDisruptionBudget: max-unavailable-one
-        app.kubernetes.io/name: mqtt-pulsar-forwarder
+        app.kubernetes.io/name: pulsar-topic-deduplicator
+        app.kubernetes.io/instance: mqtt-deduplicator
     spec:
-      # Each zone should have exactly one mqtt-pulsar-forwarder to add
-      # redundancy into MQTT data collection. Any further replicas would waste
-      # capacity.
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - mqtt-pulsar-forwarder
-              topologyKey: topology.kubernetes.io/zone
       containers:
-        - name: mqtt-pulsar-forwarder
-          image: tvvlmj/mqtt-pulsar-forwarder:edge
+        - name: mqtt-deduplicator
+          image: tvvlmj/pulsar-topic-deduplicator:edge
           imagePullPolicy: Always
           resources:
             requests:
@@ -49,13 +34,13 @@ spec:
               ephemeral-storage: 8Ki
             limits:
               cpu: "1"
-              memory: 512Mi
+              memory: 1024Mi
               ephemeral-storage: 2Mi
           envFrom:
             - configMapRef:
-                name: mqtt-pulsar-forwarder-config
+                name: mqtt-deduplicator-config
           volumeMounts:
-            - name: mqtt-pulsar-forwarder-secret-volume
+            - name: mqtt-deduplicator-secret-volume
               mountPath: "/secrets"
               readOnly: true
           ports:
@@ -82,27 +67,39 @@ spec:
             runAsUser: 10001
             runAsGroup: 10001
       volumes:
-        - name: mqtt-pulsar-forwarder-secret-volume
+        - name: mqtt-deduplicator-secret-volume
           secret:
-            secretName: mqtt-pulsar-forwarder-secret
+            secretName: mqtt-deduplicator-secret
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: mqtt-pulsar-forwarder-config
+  name: mqtt-deduplicator-config
   labels:
-    app.kubernetes.io/name: mqtt-pulsar-forwarder
+    app.kubernetes.io/name: pulsar-topic-deduplicator
+    app.kubernetes.io/instance: mqtt-deduplicator
 data:
   # Optional
+  DEDUPLICATION_IGNORED_PROPERTIES: >-
+    [
+      "mqttQos",
+      "mqttIsRetained",
+      "mqttIsDuplicate"
+    ]
+  # Optional
+  DEDUPLICATION_WINDOW_IN_SECONDS: "3600"
+  # Optional
   HEALTH_CHECK_PORT: "8080"
-  MQTT_CLEAN: "false"
-  MQTT_PASSWORD_PATH: "/secrets/mqtt-password"
-  MQTT_QOS: "2"
-  MQTT_USERNAME_PATH: "/secrets/mqtt-username"
-  MQTT_TOPIC_FILTER: "apc-from-vehicle/#"
+  # Optional
   PULSAR_BLOCK_IF_QUEUE_FULL: "true"
+  # Optional
+  PULSAR_COMPRESSION_TYPE: "ZSTD"
+  # PULSAR_CONSUMER_TOPICS_PATTERN: "TO_BE_FILLED_IN_OVERLAY"
   PULSAR_OAUTH2_AUDIENCE: "urn:sn:pulsar:waltti:waltti"
   PULSAR_OAUTH2_ISSUER_URL: "https://auth.streamnative.cloud"
   PULSAR_OAUTH2_KEY_PATH: "/secrets/pulsar-oauth2-key"
+  # PULSAR_PRODUCER_TOPIC: "TO_BE_FILLED_IN_OVERLAY"
   PULSAR_SERVICE_URL: "pulsar+ssl://pulsar.waltti.snio.cloud:6651"
-  PULSAR_TLS_VALIDATE_HOSTNAME: "true"
+  PULSAR_SUBSCRIPTION: "mqtt-deduplicator-sub"
+  # Optional
+  PULSAR_TLS_VALIDATE_HOSTNAME: "false"

@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: analytics-db-sa
+  labels:
+    app.kubernetes.io/name: analytics-db-sa
+    app.kubernetes.io/instance: analytics-db-sa
+    app.kubernetes.io/version: "1"
+    app.kubernetes.io/component: analytics-db-sa
+    app.kubernetes.io/part-of: data-sink

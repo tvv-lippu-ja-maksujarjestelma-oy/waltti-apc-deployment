@@ -1,0 +1,16 @@
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: max-unavailable-one-pdb
+  labels:
+    app.kubernetes.io/name: max-unavailable-one-pdb
+    app.kubernetes.io/instance: max-unavailable-one-pdb
+    app.kubernetes.io/version: "1"
+    app.kubernetes.io/component: max-unavailable-one-pdb
+    app.kubernetes.io/part-of: pod-disruption-budget
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      podDisruptionBudget: max-unavailable-one

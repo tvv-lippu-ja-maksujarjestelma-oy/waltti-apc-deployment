@@ -1,0 +1,305 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: sandbox
+namePrefix: sandbox-
+resources:
+  - ../../base
+  - namespace.yaml
+  # FIXME: check error message from base
+  # - analytics-db-schema-migrator-secret.yaml
+  - analytics-db-sink-secret.yaml
+  - http-pulsar-poller-fi-jyvaskyla-vp-secret.yaml
+  - http-pulsar-poller-fi-kuopio-vp-secret.yaml
+  - journey-matcher-secret.yaml
+  - mqtt-deduplicator-secret.yaml
+  - mqtt-pulsar-forwarder-secret.yaml
+configMapGenerator:
+  # FIXME: check error message from base
+  # - name: analytics-db-schema-migrator-config
+  #   behavior: merge
+  #   literals:
+  #     - "POSTGRES_HOST=ADD_MY_IP"
+  - name: analytics-db-sink-config
+    behavior: merge
+    literals:
+      - "POSTGRES_USE_SSL=false"
+      - "PULSAR_TOPICS_PATTERN=persistent://apc-sandbox/aggregation/aggregated-apc-journey"
+  - name: http-pulsar-poller-fi-jyvaskyla-vp-config
+    behavior: merge
+    literals:
+      - "HTTP_PASSWORD_PATH=/secrets/http-password"
+      - "HTTP_URL=https://data.waltti.fi/jyvaskyla/api/gtfsrealtime/v1.0/feed/vehicleposition"
+      - "HTTP_USERNAME_PATH=/secrets/http-username"
+      - "PULSAR_TOPIC=persistent://apc-sandbox/source/gtfs-realtime-vp-fi-jyvaskyla"
+  - name: http-pulsar-poller-fi-kuopio-vp-config
+    behavior: merge
+    literals:
+      - "HTTP_PASSWORD_PATH=/secrets/http-password"
+      - "HTTP_URL=https://opendatavilkku.mattersoft.fi/rtapi/gtfsrealtime/v1.0/feed/vehicleposition"
+      - "HTTP_USERNAME_PATH=/secrets/http-username"
+      - "PULSAR_TOPIC=persistent://apc-sandbox/source/gtfs-realtime-vp-fi-kuopio"
+  - name: journey-matcher-config
+    behavior: merge
+    literals:
+      - 'FEED_MAP=[["persistent://apc-sandbox/source/gtfs-realtime-vp-fi-kuopio",["fi:kuopio","Europe/Helsinki"]],["persistent://apc-sandbox/source/gtfs-realtime-vp-fi-jyvaskyla",["fi:jyvaskyla","Europe/Helsinki"]]]'
+      - 'PINO_LOG_LEVEL=debug'
+      - "PULSAR_APC_CONSUMER_TOPICS_PATTERN=persistent://apc-sandbox/dedup/mqtt-apc-from-vehicle"
+      - "PULSAR_GTFSRT_CONSUMER_TOPICS_PATTERN=persistent://apc-sandbox/source/gtfs-realtime-vp-.*"
+      - "PULSAR_PRODUCER_TOPIC=persistent://apc-sandbox/aggregation/aggregated-apc-journey"
+  - name: mqtt-deduplicator-config
+    behavior: merge
+    literals:
+      - "PULSAR_CONSUMER_TOPICS_PATTERN=persistent://apc-sandbox/source/mqtt-apc-from-vehicle"
+      - "PULSAR_PRODUCER_TOPIC=persistent://apc-sandbox/dedup/mqtt-apc-from-vehicle"
+  - name: mqtt-pulsar-forwarder-config
+    behavior: merge
+    literals:
+      - "MQTT_TOPIC_FILTER=apc-from-vehicle/#"
+      - "MQTT_URL=mqtts://dev.mqtt.apc.lmj.fi"
+      - "PULSAR_TOPIC=persistent://apc-sandbox/source/mqtt-apc-from-vehicle"
+images:
+  # FIXME: check error message from base
+  # - name: tvvlmj/waltti-apc-analytics-db-schema-migrator
+  #   newTag: sha-f011f43d76d66c3c7893a458bdc6c6954290b58e
+  - name: tvvlmj/http-pulsar-poller
+    newTag: sha-b9190c6c3e32f8767d15ac9872ce6e6368321e4b
+  - name: tvvlmj/mqtt-pulsar-forwarder
+    newTag: sha-236dec28f94582e2473f8db0557152e4346388b0
+  - name: tvvlmj/pulsar-topic-deduplicator
+    newTag: sha-b2a62fa189001d16a9941cc97763bdaef26ae14f
+  - name: tvvlmj/waltti-apc-analytics-db-sink
+    newTag: sha-603da850fdaca3fcbc987b958bdc9e3ab3c7ae5b
+  - name: tvvlmj/waltti-apc-journey-matcher
+    newTag: sha-cb2b744960decfb4819344fa3e9d715d4e95c464
+  - name: gcr.io/cloudsql-docker/gce-proxy
+    newTag: 1.33.1
+
+# Add labeling here instead of base so that it affects also the resources in
+# this kustomization.yaml.
+
+# Add general labeling.
+transformers:
+  - add-label-created-by-managed-by.yaml
+
+# Add app-specific labels, also within templates.
+patches:
+  # FIXME: check error message from base
+  # # For analytics-db-schema-migrator
+  # - patch: |-
+  #     - op: add
+  #       path: /metadata/labels/app.kubernetes.io~1instance
+  #       value: analytics-db-schema-migrator
+  #     - op: add
+  #       path: /metadata/labels/app.kubernetes.io~1version
+  #       value: sha-f011f43d76d66c3c7893a458bdc6c6954290b58e
+  #     - op: add
+  #       path: /metadata/labels/app.kubernetes.io~1component
+  #       value: analytics-db-schema-migrator
+  #     - op: add
+  #       path: /metadata/labels/app.kubernetes.io~1part-of
+  #       value: analytics-db
+  #   target:
+  #     labelSelector: "app.kubernetes.io/name=analytics-db-schema-migrator"
+  # - patch: |-
+  #     - op: add
+  #       path: /metadata/labels/app.kubernetes.io~1instance
+  #       value: analytics-db-schema-migrator
+  #     - op: add
+  #       path: /metadata/labels/app.kubernetes.io~1version
+  #       value: sha-f011f43d76d66c3c7893a458bdc6c6954290b58e
+  #     - op: add
+  #       path: /metadata/labels/app.kubernetes.io~1component
+  #       value: analytics-db-schema-migrator
+  #     - op: add
+  #       path: /metadata/labels/app.kubernetes.io~1part-of
+  #       value: analytics-db
+  #   target:
+  #     kind: Job
+  #     labelSelector: "app.kubernetes.io/name=analytics-db-schema-migrator"
+
+  # For analytics-db-sink
+  - patch: |-
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1instance
+        value: analytics-db-sink
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1version
+        value: sha-603da850fdaca3fcbc987b958bdc9e3ab3c7ae5b
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1component
+        value: analytics-db-sink
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1part-of
+        value: data-sink
+    target:
+      labelSelector: "app.kubernetes.io/name=analytics-db-sink"
+  - patch: |-
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1instance
+        value: analytics-db-sink
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1version
+        value: sha-603da850fdaca3fcbc987b958bdc9e3ab3c7ae5b
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1component
+        value: analytics-db-sink
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1part-of
+        value: data-sink
+    target:
+      kind: Deployment
+      labelSelector: "app.kubernetes.io/name=analytics-db-sink"
+
+  # For http-pulsar-poller-fi-jyvaskyla-vp
+  - patch: |-
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1version
+        value: sha-b9190c6c3e32f8767d15ac9872ce6e6368321e4b
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1component
+        value: http-pulsar-poller
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1part-of
+        value: data-source
+    target:
+      labelSelector: "app.kubernetes.io/instance=http-pulsar-poller-fi-jyvaskyla-vp"
+  - patch: |-
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1version
+        value: sha-b9190c6c3e32f8767d15ac9872ce6e6368321e4b
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1component
+        value: http-pulsar-poller
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1part-of
+        value: data-source
+    target:
+      kind: Deployment
+      labelSelector: "app.kubernetes.io/instance=http-pulsar-poller-fi-jyvaskyla-vp"
+
+  # For http-pulsar-poller-fi-kuopio-vp
+  - patch: |-
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1version
+        value: sha-b9190c6c3e32f8767d15ac9872ce6e6368321e4b
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1component
+        value: http-pulsar-poller
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1part-of
+        value: data-source
+    target:
+      labelSelector: "app.kubernetes.io/instance=http-pulsar-poller-fi-kuopio-vp"
+  - patch: |-
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1version
+        value: sha-b9190c6c3e32f8767d15ac9872ce6e6368321e4b
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1component
+        value: http-pulsar-poller
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1part-of
+        value: data-source
+    target:
+      kind: Deployment
+      labelSelector: "app.kubernetes.io/instance=http-pulsar-poller-fi-kuopio-vp"
+
+  # For journey-matcher
+  - patch: |-
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1instance
+        value: journey-matcher
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1version
+        value: sha-cb2b744960decfb4819344fa3e9d715d4e95c464
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1component
+        value: journey-matcher
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1part-of
+        value: business-logic
+    target:
+      labelSelector: "app.kubernetes.io/name=journey-matcher"
+  - patch: |-
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1instance
+        value: journey-matcher
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1version
+        value: sha-cb2b744960decfb4819344fa3e9d715d4e95c464
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1component
+        value: journey-matcher
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1part-of
+        value: business-logic
+    target:
+      kind: Deployment
+      labelSelector: "app.kubernetes.io/name=journey-matcher"
+
+  # For mqtt-deduplicator
+  - patch: |-
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1name
+        value: pulsar-topic-deduplicator
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1version
+        value: sha-b2a62fa189001d16a9941cc97763bdaef26ae14f
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1component
+        value: mqtt-deduplicator
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1part-of
+        value: data-cleaning
+    target:
+      labelSelector: "app.kubernetes.io/instance=mqtt-deduplicator"
+  - patch: |-
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1name
+        value: pulsar-topic-deduplicator
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1version
+        value: sha-b2a62fa189001d16a9941cc97763bdaef26ae14f
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1component
+        value: mqtt-deduplicator
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1part-of
+        value: data-cleaning
+    target:
+      kind: Deployment
+      labelSelector: "app.kubernetes.io/instance=mqtt-deduplicator"
+
+  # For mqtt-pulsar-forwarder
+  - patch: |-
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1instance
+        value: mqtt-pulsar-forwarder
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1version
+        value: sha-236dec28f94582e2473f8db0557152e4346388b0
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1component
+        value: mqtt-pulsar-forwarder
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1part-of
+        value: data-source
+    target:
+      labelSelector: "app.kubernetes.io/name=mqtt-pulsar-forwarder"
+  - patch: |-
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1instance
+        value: mqtt-pulsar-forwarder
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1version
+        value: sha-236dec28f94582e2473f8db0557152e4346388b0
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1component
+        value: mqtt-pulsar-forwarder
+      - op: add
+        path: /spec/template/metadata/labels/app.kubernetes.io~1part-of
+        value: data-source
+    target:
+      kind: Deployment
+      labelSelector: "app.kubernetes.io/name=mqtt-pulsar-forwarder"

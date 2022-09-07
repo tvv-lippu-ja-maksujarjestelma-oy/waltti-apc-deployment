@@ -1,0 +1,112 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: journey-matcher-dep
+  labels:
+    app.kubernetes.io/name: journey-matcher
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: journey-matcher
+  template:
+    metadata:
+      labels:
+        app: journey-matcher
+        networkPolicy: client-only
+        podDisruptionBudget: max-unavailable-one
+        app.kubernetes.io/name: journey-matcher
+    spec:
+      containers:
+        - name: journey-matcher
+          image: tvvlmj/waltti-apc-journey-matcher:edge
+          imagePullPolicy: Always
+          resources:
+            requests:
+              # GCP Autopilot does not accept less on 2022-02-02.
+              cpu: 251m
+              memory: 128Mi
+              ephemeral-storage: 100Mi
+            limits:
+              cpu: 2
+              memory: 8Gi
+              # 10Mi is not enough
+              ephemeral-storage: 100Mi
+          envFrom:
+            - configMapRef:
+                name: journey-matcher-config
+          volumeMounts:
+            - name: journey-matcher-secret-volume
+              mountPath: "/secrets"
+              readOnly: true
+          ports:
+            - name: liveness-port
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 1
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 30
+            periodSeconds: 2
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsUser: 10001
+            runAsGroup: 10001
+      volumes:
+        - name: journey-matcher-secret-volume
+          secret:
+            secretName: journey-matcher-secret
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: journey-matcher-config
+  labels:
+    app.kubernetes.io/name: journey-matcher
+data:
+  # Optional
+  APC_WAIT_IN_SECONDS: "6"
+  COUNTING_SYSTEM_MAP: >-
+    [
+      ["DL-Mccl1",["fi:kuopio:44517_6","Deal Comp"]],
+      ["emblica-sc01-apc-device1",["fi:kuopio:44517_160","Emblica"]],
+      ["emblica-sc02-apc-device1",["fi:kuopio:44517_6","Emblica"]],
+      ["emblica-sc03-apc-device1",["fi:jyvaskyla:6714_521","Emblica"]],
+      ["emblica-sc04-apc-device1",["fi:jyvaskyla:6714_518","Emblica"]],
+      ["JL518-APC",["fi:jyvaskyla:6714_518","Telia"]],
+      ["JL521-APC",["fi:jyvaskyla:6714_521","Telia"]],
+      ["KL006-APC",["fi:kuopio:44517_6","Telia"]],
+      ["KL160-APC",["fi:kuopio:44517_160","Telia"]]
+    ]
+  # FEED_MAP: "TO_BE_FILLED_IN_OVERLAY"
+  # Optional
+  HEALTH_CHECK_PORT: "8080"
+  PINO_LOG_LEVEL: "info"
+  # PULSAR_APC_CONSUMER_TOPICS_PATTERN: "TO_BE_FILLED_IN_OVERLAY"
+  PULSAR_APC_SUBSCRIPTION: "journey-matcher-apc-sub"
+  # Optional
+  PULSAR_BLOCK_IF_QUEUE_FULL: "true"
+  # Optional
+  PULSAR_COMPRESSION_TYPE: "ZSTD"
+  # PULSAR_GTFSRT_CONSUMER_TOPICS_PATTERN: "TO_BE_FILLED_IN_OVERLAY"
+  PULSAR_GTFSRT_SUBSCRIPTION: "journey-matcher-gtfsrt-sub"
+  PULSAR_OAUTH2_AUDIENCE: "urn:sn:pulsar:waltti:waltti"
+  PULSAR_OAUTH2_ISSUER_URL: "https://auth.streamnative.cloud"
+  PULSAR_OAUTH2_KEY_PATH: "/secrets/pulsar-oauth2-key"
+  # PULSAR_PRODUCER_TOPIC: "TO_BE_FILLED_IN_OVERLAY"
+  PULSAR_SERVICE_URL: "pulsar+ssl://pulsar.waltti.snio.cloud:6651"
+  # Optional
+  PULSAR_TLS_VALIDATE_HOSTNAME: "false"

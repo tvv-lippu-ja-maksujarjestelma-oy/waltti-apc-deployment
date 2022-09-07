@@ -1,0 +1,170 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analytics-db-sink-dep
+  labels:
+    app.kubernetes.io/name: analytics-db-sink
+spec:
+  # At any time, there must be at most one of each Pulsar client that is not a
+  # source of external data to retain the order of the messages.
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: analytics-db-sink
+  template:
+    metadata:
+      labels:
+        app: analytics-db-sink
+        networkPolicy: client-only
+        podDisruptionBudget: max-unavailable-one
+        app.kubernetes.io/name: analytics-db-sink
+    spec:
+      serviceAccountName: analytics-db-sa
+      containers:
+        - name: analytics-db-sink
+          image: tvvlmj/waltti-apc-analytics-db-sink:edge
+          imagePullPolicy: Always
+          resources:
+            requests:
+              # GCP Autopilot does not accept less on 2022-02-02.
+              cpu: 251m
+              memory: 64Mi
+              ephemeral-storage: 8Ki
+            limits:
+              cpu: "1"
+              memory: 512Mi
+              ephemeral-storage: 2Mi
+          envFrom:
+            - configMapRef:
+                name: analytics-db-sink-config
+          volumeMounts:
+            - name: analytics-db-sink-secret-volume
+              mountPath: "/secrets"
+              readOnly: true
+          ports:
+            - name: liveness-port
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 1
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 30
+            periodSeconds: 2
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsUser: 10001
+            runAsGroup: 10001
+        # Modified from these sources:
+        # https://cloud.google.com/sql/docs/postgres/connect-instance-kubernetes
+        # https://github.com/GoogleCloudPlatform/cloud-sql-proxy/
+        - name: cloud-sql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.33.1
+          command:
+            - "/cloud_sql_proxy"
+            - "-instances=apc-sandbox:europe-west3:sandbox-apc-analytics-db=tcp:5432"
+            - "-use_http_health_check"
+            - "-health_check_port=8090"
+            - "-structured_logs"
+          # FIXME: In v2, arguments will change and command is no longer needed
+          # image: gcr.io/cloudsql-docker/gce-proxy:2.0.0-preview.3
+          # args:
+          #   - "--health-check"
+          #   - "--http-address 0.0.0.0"
+          #   - "--http-port 8090"
+          #   - "--structured-logs"
+          #   - "--port=5432"
+          #   - "apc-sandbox:europe-west3:sandbox-apc-analytics-db"
+          imagePullPolicy: Always
+          ports:
+            - name: probe-port
+              containerPort: 8090
+          # Recommended configurations for health check probes:
+          # https://github.com/GoogleCloudPlatform/cloud-sql-proxy/blob/4f428efe1994ca3a501025b11aea693fec484122/examples/k8s-health-check/README.md#running-cloud-sql-proxy-with-health-checks-in-kubernetes
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: probe-port
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: probe-port
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 1
+          startupProbe:
+            httpGet:
+              path: /startup
+              port: probe-port
+            periodSeconds: 1
+            timeoutSeconds: 5
+            failureThreshold: 20
+          resources:
+            requests:
+              # GCP Autopilot does not accept less on 2022-02-02.
+              cpu: 251m
+              memory: 64Mi
+              ephemeral-storage: 8Ki
+            limits:
+              cpu: "1"
+              memory: 512Mi
+              ephemeral-storage: 2Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsUser: 10001
+            runAsGroup: 10001
+            runAsNonRoot: true
+      volumes:
+        - name: analytics-db-sink-secret-volume
+          secret:
+            secretName: analytics-db-sink-secret
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: analytics-db-sink-config
+  labels:
+    app.kubernetes.io/name: analytics-db-sink
+data:
+  # Optional
+  HEALTH_CHECK_PORT: "8080"
+  # Optional
+  POSTGRES_DB: "postgres"
+  # Provided by cloud-sql-proxy
+  POSTGRES_HOST: "127.0.0.1"
+  POSTGRES_PASSWORD_PATH: "/secrets/postgres-password"
+  # Optional
+  POSTGRES_PORT: "5432"
+  POSTGRES_USER_PATH: "/secrets/postgres-user"
+  # Optional
+  POSTGRES_USE_SSL: "true"
+  PULSAR_OAUTH2_AUDIENCE: "urn:sn:pulsar:waltti:waltti"
+  PULSAR_OAUTH2_ISSUER_URL: "https://auth.streamnative.cloud"
+  PULSAR_OAUTH2_KEY_PATH: "/secrets/pulsar-oauth2-key"
+  PULSAR_SERVICE_URL: "pulsar+ssl://pulsar.waltti.snio.cloud:6651"
+  PULSAR_SUBSCRIPTION: "analytics-db-sink-sub"
+  # Optional
+  PULSAR_TLS_VALIDATE_HOSTNAME: "false"
+  # PULSAR_TOPICS_PATTERN: "TO_BE_FILLED_IN_OVERLAY"

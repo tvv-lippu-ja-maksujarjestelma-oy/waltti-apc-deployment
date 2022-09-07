@@ -1,0 +1,79 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: analytics-db-schema-migrator-job
+  labels:
+    app.kubernetes.io/name: analytics-db-schema-migrator
+spec:
+  ttlSecondsAfterFinished: 0
+  template:
+    metadata:
+      labels:
+        app: analytics-db-schema-migrator
+        networkPolicy: client-only
+        podDisruptionBudget: max-unavailable-one
+        app.kubernetes.io/name: analytics-db-schema-migrator
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: analytics-db-schema-migrator
+          image: tvvlmj/waltti-apc-analytics-db-schema-migrator:edge
+          imagePullPolicy: Always
+          resources:
+            requests:
+              # GCP Autopilot does not accept less on 2022-02-02.
+              cpu: 251m
+              memory: 64Mi
+              ephemeral-storage: 8Ki
+            limits:
+              cpu: "1"
+              memory: 512Mi
+              ephemeral-storage: 2Mi
+          envFrom:
+            - configMapRef:
+                name: analytics-db-schema-migrator-config
+          volumeMounts:
+            - name: analytics-db-schema-migrator-secret-volume
+              mountPath: "/secrets"
+              readOnly: true
+          ports:
+            - name: liveness-port
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 1
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 30
+            periodSeconds: 2
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsUser: 10001
+            runAsGroup: 10001
+      volumes:
+        - name: analytics-db-schema-migrator-secret-volume
+          secret:
+            secretName: analytics-db-schema-migrator-secret
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: analytics-db-schema-migrator-config
+  labels:
+    app.kubernetes.io/name: analytics-db-schema-migrator
+data:
+  HEALTH_CHECK_PORT: "8080"
+  POSTGRES_DB: "postgres"
+  POSTGRES_PASSWORD_PATH: "/secrets/postgres-password"
+  POSTGRES_PORT: "5432"
+  POSTGRES_USER_PATH: "/secrets/postgres-user"
