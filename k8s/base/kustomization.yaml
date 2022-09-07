@@ -6,4 +6,5 @@ resources:
   - client-only-network-policy.yaml
   - max-unavailable-one-pdb.yaml
   # Services
+  - analytics-db-schema-migrator.yaml
   - mqtt-pulsar-forwarder.yaml
