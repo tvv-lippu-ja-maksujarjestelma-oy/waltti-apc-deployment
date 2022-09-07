@@ -20,6 +20,8 @@ spec:
     metadata:
       labels:
         app: mqtt-pulsar-forwarder
+        networkPolicy: client-only
+        podDisruptionBudget: max-unavailable-one
         app.kubernetes.io/name: mqtt-pulsar-forwarder
     spec:
       # Each zone should have exactly one mqtt-pulsar-forwarder to add
@@ -102,31 +104,3 @@ data:
   PULSAR_OAUTH2_ISSUER_URL: "https://auth.streamnative.cloud"
   PULSAR_OAUTH2_KEY_PATH: "/secrets/pulsar-oauth2-key"
   PULSAR_SERVICE_URL: "pulsar+ssl://pulsar.waltti.snio.cloud:6651"
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: mqtt-pulsar-forwarder-deny-ingress-allow-egress
-  labels:
-    app.kubernetes.io/name: mqtt-pulsar-forwarder
-spec:
-  podSelector:
-    matchLabels:
-      app: mqtt-pulsar-forwarder
-  policyTypes:
-    - Egress
-    - Ingress
-  egress:
-    - {}
----
-apiVersion: policy/v1
-kind: PodDisruptionBudget
-metadata:
-  name: mqtt-pulsar-forwarder-pdb
-  labels:
-    app.kubernetes.io/name: mqtt-pulsar-forwarder
-spec:
-  maxUnavailable: 1
-  selector:
-    matchLabels:
-      app: mqtt-pulsar-forwarder
