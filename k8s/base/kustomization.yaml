@@ -7,4 +7,5 @@ resources:
   - max-unavailable-one-pdb.yaml
   # Apps
   - http-pulsar-poller-fi-jyvaskyla-vp.yaml
+  - http-pulsar-poller-fi-kuopio-vp.yaml
   - mqtt-pulsar-forwarder.yaml
