@@ -68,13 +68,13 @@ patches:
   - patch: |-
       - op: add
         path: /metadata/labels/app.kubernetes.io~1instance
-        value: dev-mqtt-pulsar-forwarder
+        value: mqtt-pulsar-forwarder
       - op: add
         path: /metadata/labels/app.kubernetes.io~1version
         value: sha-9f77b690216413fd2327e313558ab22437401a8e
       - op: add
         path: /metadata/labels/app.kubernetes.io~1component
-        value: mqtt-data-source
+        value: mqtt-pulsar-forwarder
       - op: add
         path: /metadata/labels/app.kubernetes.io~1part-of
         value: data-source
@@ -83,13 +83,13 @@ patches:
   - patch: |-
       - op: add
         path: /spec/template/metadata/labels/app.kubernetes.io~1instance
-        value: dev-mqtt-pulsar-forwarder
+        value: mqtt-pulsar-forwarder
       - op: add
         path: /spec/template/metadata/labels/app.kubernetes.io~1version
         value: sha-9f77b690216413fd2327e313558ab22437401a8e
       - op: add
         path: /spec/template/metadata/labels/app.kubernetes.io~1component
-        value: mqtt-data-source
+        value: mqtt-pulsar-forwarder
       - op: add
         path: /spec/template/metadata/labels/app.kubernetes.io~1part-of
         value: data-source
