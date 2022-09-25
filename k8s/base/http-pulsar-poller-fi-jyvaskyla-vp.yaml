@@ -1,0 +1,109 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-pulsar-poller-fi-jyvaskyla-vp-dep
+  labels:
+    app.kubernetes.io/name: http-pulsar-poller
+    app.kubernetes.io/instance: http-pulsar-poller-fi-jyvaskyla-vp
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: http-pulsar-poller-fi-jyvaskyla-vp
+  template:
+    metadata:
+      labels:
+        app: http-pulsar-poller-fi-jyvaskyla-vp
+        networkPolicy: client-only
+        podDisruptionBudget: max-unavailable-one
+        app.kubernetes.io/name: http-pulsar-poller
+        app.kubernetes.io/instance: http-pulsar-poller-fi-jyvaskyla-vp
+    spec:
+      containers:
+        - name: http-pulsar-poller-fi-jyvaskyla-vp
+          image: tvvlmj/http-pulsar-poller:edge
+          imagePullPolicy: Always
+          resources:
+            requests:
+              # GCP Autopilot does not accept less on 2022-02-02.
+              cpu: 251m
+              memory: 64Mi
+              ephemeral-storage: 8Ki
+            limits:
+              cpu: "1"
+              memory: 512Mi
+              ephemeral-storage: 2Mi
+          envFrom:
+            - configMapRef:
+                name: http-pulsar-poller-fi-jyvaskyla-vp-config
+          volumeMounts:
+            - name: http-pulsar-poller-fi-jyvaskyla-vp-secret-volume
+              mountPath: "/secrets"
+              readOnly: true
+          ports:
+            - name: liveness-port
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 1
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 30
+            periodSeconds: 2
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsUser: 10001
+            runAsGroup: 10001
+      volumes:
+        - name: http-pulsar-poller-fi-jyvaskyla-vp-secret-volume
+          secret:
+            secretName: http-pulsar-poller-fi-jyvaskyla-vp-secret
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: http-pulsar-poller-fi-jyvaskyla-vp-config
+  labels:
+    app.kubernetes.io/name: http-pulsar-poller
+    app.kubernetes.io/instance: http-pulsar-poller-fi-jyvaskyla-vp
+data:
+  # Optional
+  HEALTH_CHECK_PORT: "8080"
+  # Optional
+  HTTP_IS_HTTP2_USED: "false"
+  # Optional
+  # HTTP_PASSWORD_PATH: "TO_BE_FILLED_IN_OVERLAY"
+  # Optional
+  HTTP_REQUEST_TIMEOUT_IN_SECONDS: "5"
+  # Optional
+  HTTP_SLEEP_DURATION_IN_SECONDS: "0.1"
+  HTTP_URL: "TO_BE_FILLED_IN_OVERLAY"
+  # Optional
+  # HTTP_USERNAME_PATH: "TO_BE_FILLED_IN_OVERLAY"
+  # Optional
+  # HTTP_WARNING_THRESHOLD_IN_SECONDS: "TO_BE_FILLED_IN_OVERLAY"
+  # Optional
+  PULSAR_BLOCK_IF_QUEUE_FULL: "true"
+  # Optional
+  PULSAR_COMPRESSION_TYPE: "ZSTD"
+  # Optional
+  PULSAR_IS_URL_IN_MESSAGE_PROPERTIES: "false"
+  PULSAR_OAUTH2_AUDIENCE: "urn:sn:pulsar:waltti:waltti"
+  PULSAR_OAUTH2_ISSUER_URL: "https://auth.streamnative.cloud"
+  PULSAR_OAUTH2_KEY_PATH: "/secrets/pulsar-oauth2-key"
+  PULSAR_SERVICE_URL: "pulsar+ssl://pulsar.waltti.snio.cloud:6651"
+  # Optional
+  PULSAR_TLS_VALIDATE_HOSTNAME: "false"
+  PULSAR_TOPIC: "TO_BE_FILLED_IN_OVERLAY"
