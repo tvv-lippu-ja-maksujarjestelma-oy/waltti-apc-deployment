@@ -93,6 +93,7 @@ metadata:
   labels:
     app.kubernetes.io/name: mqtt-pulsar-forwarder
 data:
+  # Optional
   HEALTH_CHECK_PORT: "8080"
   MQTT_CLEAN: "false"
   MQTT_PASSWORD_PATH: "/secrets/mqtt-password"
