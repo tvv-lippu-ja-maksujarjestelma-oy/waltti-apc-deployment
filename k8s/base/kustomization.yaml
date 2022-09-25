@@ -6,4 +6,5 @@ resources:
   - client-only-network-policy.yaml
   - max-unavailable-one-pdb.yaml
   # Apps
+  - http-pulsar-poller-fi-jyvaskyla-vp.yaml
   - mqtt-pulsar-forwarder.yaml
