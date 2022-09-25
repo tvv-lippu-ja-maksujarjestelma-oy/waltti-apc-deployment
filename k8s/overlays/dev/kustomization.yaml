@@ -5,9 +5,17 @@ namespace: dev
 namePrefix: dev-
 resources:
   - ../../base
-  - mqtt-pulsar-forwarder-secret.yaml
   - namespace.yaml
+  - http-pulsar-poller-fi-jyvaskyla-vp-secret.yaml
+  - mqtt-pulsar-forwarder-secret.yaml
 configMapGenerator:
+  - name: http-pulsar-poller-fi-jyvaskyla-vp-config
+    behavior: merge
+    literals:
+      - "HTTP_PASSWORD_PATH=/secrets/http-password"
+      - "HTTP_URL=https://data.waltti.fi/jyvaskyla/api/gtfsrealtime/v1.0/feed/vehicleposition"
+      - "HTTP_USERNAME_PATH=/secrets/http-username"
+      - "PULSAR_TOPIC=persistent://apc-dev/source/gtfs-realtime-vp-fi-jyvaskyla"
   - name: mqtt-pulsar-forwarder-config
     behavior: merge
     literals:
@@ -15,17 +23,48 @@ configMapGenerator:
       # For some reason the StreamNative certificate does not match the URI.
       - "PULSAR_TOPIC=persistent://apc-dev/source/mqtt-apc-from-vehicle"
 images:
+  - name: tvvlmj/http-pulsar-poller
+    newTag: sha-9543990fab0f96039d4130b42fe60f78b75e182f
   - name: ghcr.io/tvv-lippu-ja-maksujarjestelma-oy/mqtt-pulsar-forwarder
     newTag: sha-9f77b690216413fd2327e313558ab22437401a8e
 
-# Add labeling here so that it affects also the resources in this
-# kustomization.yaml.
+# Add labeling here instead of base so that it affects also the resources in
+# this kustomization.yaml.
 
 # Add general labeling.
 transformers:
   - add-label-created-by-managed-by.yaml
-# Add app-specific labels, also within Deployment template.
+
+# Add app-specific labels, also within templates.
 patches:
+  # For http-pulsar-poller-fi-jyvaskyla-vp
+  - patch: |-
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1version
+        value: sha-9543990fab0f96039d4130b42fe60f78b75e182f
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1component
+        value: http-pulsar-poller
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1part-of
+        value: data-source
+    target:
+      labelSelector: "app.kubernetes.io/instance=http-pulsar-poller-fi-jyvaskyla-vp"
+  - patch: |-
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1version
+        value: sha-9543990fab0f96039d4130b42fe60f78b75e182f
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1component
+        value: http-pulsar-poller
+      - op: add
+        path: /metadata/labels/app.kubernetes.io~1part-of
+        value: data-source
+    target:
+      kind: Deployment
+      labelSelector: "app.kubernetes.io/instance=http-pulsar-poller-fi-jyvaskyla-vp"
+
+  # For mqtt-pulsar-forwarder
   - patch: |-
       - op: add
         path: /metadata/labels/app.kubernetes.io~1instance
