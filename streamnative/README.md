@@ -44,7 +44,7 @@ Create:
 
 1. Add Cluster Name: pulsar
 1. Add Location: europe-west3 (Unfortunately europe-north1 is not offered as an option.)
-1. Select Bookies: tiny-1
+1. Select Bookies: medium-1
 1. Select Bookie nodes: 3
 1. Select Brokers: tiny-1
 1. Select Broker nodes: 3
