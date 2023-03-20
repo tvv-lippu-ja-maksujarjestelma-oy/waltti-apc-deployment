@@ -29,3 +29,7 @@ variable "allowed_https_cidr" {
 variable "notification_email" {
   type = string
 }
+
+variable "rabbitmq_version" {
+  default = "3.10.8"
+}
