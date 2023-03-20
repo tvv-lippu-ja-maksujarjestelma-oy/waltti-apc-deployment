@@ -1,0 +1,7 @@
+cloudamqp_customer_api_key = "API_KEY_HERE"
+project_id                 = "GCP_PROJECT_ID"
+region                     = "GCP_REGION"
+environment                = "ENV_HERE"
+tf_service_account         = "GCP_SERVICE_ACCOUNT"
+allowed_https_cidr         = [ "1.2.3.4/8"]
+notification_email         = "something@somewhere.foo"
