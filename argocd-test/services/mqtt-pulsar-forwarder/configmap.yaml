@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mqtt-pulsar-forwarder-config
+  labels:
+    app.kubernetes.io/name: mqtt-pulsar-forwarder
+data:
+  HEALTH_CHECK_PORT: "8080"
+  MQTT_CLEAN: "false"
+  MQTT_PASSWORD_PATH: "/secrets/mqtt-password"
+  MQTT_QOS: "2"
+  MQTT_USERNAME_PATH: "/secrets/mqtt-username"
+  MQTT_TOPIC_FILTER: "apc-from-vehicle/#"
+  PULSAR_BLOCK_IF_QUEUE_FULL: "true"
+  PULSAR_OAUTH2_AUDIENCE: "urn:sn:pulsar:waltti:waltti"
+  PULSAR_OAUTH2_ISSUER_URL: "https://auth.streamnative.cloud"
+  PULSAR_OAUTH2_KEY_PATH: "/secrets/pulsar-oauth2-key"
+  PULSAR_SERVICE_URL: "pulsar+ssl://pulsar.waltti.snio.cloud:6651"

@@ -1,0 +1,2 @@
+resources:
+  - ../services/mqtt-pulsar-forwarder

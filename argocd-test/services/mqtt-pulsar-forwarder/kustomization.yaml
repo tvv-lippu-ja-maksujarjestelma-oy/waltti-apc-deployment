@@ -1,0 +1,6 @@
+resources:
+  - configmap.yaml
+  - deployment.yaml
+  - networking.yaml
+  - podpolicy.yaml
+  
