@@ -1,4 +1,14 @@
 namespace: dev
+#namePrefix: dev-
 resources:
   - ../../base
   - namespace.yaml
+
+configMapGenerator:
+  - name: mqtt-pulsar-forwarder-config
+    behavior: merge
+    literals:
+      - "MQTT_URL=mqtts://lively-cobalt-wasp.rmq5.cloudamqp.com"
+
+generators:
+  - ./ksops-secret-generator.yaml

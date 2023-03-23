@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mqtt-pulsar-forwarder-dep
-  labels:
-    app.kubernetes.io/name: mqtt-pulsar-forwarder
+  # labels:
+  #   app.kubernetes.io/name: mqtt-pulsar-forwarder
 spec:
   # Match the number of zones in the region.
   replicas: 3

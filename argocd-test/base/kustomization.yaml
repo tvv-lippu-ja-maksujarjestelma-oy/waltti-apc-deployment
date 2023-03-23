@@ -1,2 +1,18 @@
 resources:
-  - ../services/mqtt-pulsar-forwarder
+  - configmap.yaml
+  - deployment.yaml
+  - networking.yaml
+  - podpolicy.yaml
+
+commonLabels:
+  app.kubernetes.io/name: mqtt-pulsar-forwarder
+
+secretGenerator:
+  - name: mqtt-pulsar-forwarder-secret
+    literals:
+    - mqtt-username=foo
+    - mqtt-password=bar
+    - pulsar-oauth2-key=whatever
+    options:
+      disableNameSuffixHash: true
+

@@ -2,8 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mqtt-pulsar-forwarder-config
-  labels:
-    app.kubernetes.io/name: mqtt-pulsar-forwarder
+  # labels:
+  #   app.kubernetes.io/name: mqtt-pulsar-forwarder
 data:
   HEALTH_CHECK_PORT: "8080"
   MQTT_CLEAN: "false"
