@@ -9,6 +9,9 @@ configMapGenerator:
     behavior: merge
     literals:
       - "MQTT_URL=mqtts://lively-cobalt-wasp.rmq5.cloudamqp.com"
-
+      # For some reason the StreamNative certificate does not match the URI.
+      - "PULSAR_TLS_VALIDATE_HOSTNAME=false"
+      #- "PULSAR_TOPIC=persistent://apc-dev/source/mqtt-apc-from-vehicle"
+      - "PULSAR_TOPIC=persistent:fooz"
 generators:
   - ./ksops-secret-generator.yaml
