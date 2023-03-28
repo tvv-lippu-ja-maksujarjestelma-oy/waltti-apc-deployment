@@ -8,7 +8,7 @@ commonLabels:
   app.kubernetes.io/name: mqtt-pulsar-forwarder
 
 secretGenerator:
-  - name: mqtt-pulsar-forwarder-secret
+  - name: mqtt-pulsar-forwarder
     literals:
     - mqtt-username=foo
     - mqtt-password=bar

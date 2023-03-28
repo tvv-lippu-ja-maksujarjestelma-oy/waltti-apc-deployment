@@ -1,9 +1,7 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: mqtt-pulsar-forwarder-pdb
-  # labels:
-  #   app.kubernetes.io/name: mqtt-pulsar-forwarder
+  name: mqtt-pulsar-forwarder
 spec:
   maxUnavailable: 1
   selector:

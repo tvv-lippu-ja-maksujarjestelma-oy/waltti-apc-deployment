@@ -1,9 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mqtt-pulsar-forwarder-dep
-  # labels:
-  #   app.kubernetes.io/name: mqtt-pulsar-forwarder
+  name: mqtt-pulsar-forwarder
 spec:
   # Match the number of zones in the region.
   replicas: 3
@@ -50,7 +48,7 @@ spec:
               ephemeral-storage: 2Mi
           envFrom:
             - configMapRef:
-                name: mqtt-pulsar-forwarder-config
+                name: mqtt-pulsar-forwarder
           volumeMounts:
             - name: mqtt-pulsar-forwarder-secret-volume
               mountPath: "/secrets"
@@ -81,4 +79,4 @@ spec:
       volumes:
         - name: mqtt-pulsar-forwarder-secret-volume
           secret:
-            secretName: mqtt-pulsar-forwarder-secret
+            secretName: mqtt-pulsar-forwarder

@@ -5,7 +5,7 @@ resources:
   - namespace.yaml
 
 configMapGenerator:
-  - name: mqtt-pulsar-forwarder-config
+  - name: mqtt-pulsar-forwarder
     behavior: merge
     literals:
       - "MQTT_URL=mqtts://lively-cobalt-wasp.rmq5.cloudamqp.com"
