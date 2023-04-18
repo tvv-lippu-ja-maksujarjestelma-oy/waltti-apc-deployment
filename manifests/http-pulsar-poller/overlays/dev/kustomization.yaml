@@ -1,0 +1,23 @@
+namespace: dev
+resources:
+  #- ../../kuopio
+  - ../../jyvaskyla
+
+configMapGenerator:
+  - name: http-pulsar-poller-fi-jyvaskyla-vp
+    behavior: merge
+    literals:
+      - "HTTP_PASSWORD_PATH=/secrets/http-password"
+      - "HTTP_URL=https://data.waltti.fi/jyvaskyla/api/gtfsrealtime/v1.0/feed/vehicleposition"
+      - "HTTP_USERNAME_PATH=/secrets/http-username"
+      - "PULSAR_TOPIC=persistent://apc-dev/source/gtfs-realtime-vp-fi-jyvaskyla"
+  # - name: http-pulsar-poller-fi-kuopio-vp
+  #   behavior: merge
+  #   literals:
+  #     - "HTTP_PASSWORD_PATH=/secrets/http-password"
+  #     - "HTTP_URL=https://opendatavilkku.mattersoft.fi/rtapi/gtfsrealtime/v1.0/feed/vehicleposition"
+  #     - "HTTP_USERNAME_PATH=/secrets/http-username"
+  #     - "PULSAR_TOPIC=persistent://apc-dev/source/gtfs-realtime-vp-fi-kuopio"
+
+generators:
+  - ./ksops-secret-generator.yaml

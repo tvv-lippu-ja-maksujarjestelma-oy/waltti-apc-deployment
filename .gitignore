@@ -35,3 +35,9 @@ terraform.rc
 
 # Streamnative
 streamnative.json
+
+# VS Code
+.vscode
+
+# Ignore local notes
+NOTES.md
