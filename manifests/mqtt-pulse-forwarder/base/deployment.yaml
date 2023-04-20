@@ -42,7 +42,7 @@ spec:
             # Check docs at https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-resource-requests
             requests:
               cpu: 500m
-              memory: 0.5GiB
+              memory: 512Mi
           envFrom:
             - configMapRef:
                 name: mqtt-pulsar-forwarder
