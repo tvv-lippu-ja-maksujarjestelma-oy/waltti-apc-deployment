@@ -1,6 +1,6 @@
 nameSuffix: -kuopio-vp
 resources:
-- ../base
+- ../../base
 
 commonLabels:
   app.kubernetes.io/instance: http-pulsar-poller-fi-kuopio-vp

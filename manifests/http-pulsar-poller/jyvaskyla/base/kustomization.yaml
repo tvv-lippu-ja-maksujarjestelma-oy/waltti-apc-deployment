@@ -1,6 +1,6 @@
 nameSuffix: -jyvaskyla-vp
 resources:
-- ../base
+- ../../base
 
 commonLabels:
   app.kubernetes.io/instance: http-pulsar-poller-fi-jyvaskyla-vp
