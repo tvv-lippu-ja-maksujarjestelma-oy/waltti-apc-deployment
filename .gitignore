@@ -41,3 +41,5 @@ streamnative.json
 
 # Ignore local notes
 NOTES.md
+# Ignore json files for StreamNative auth files
+*.json
