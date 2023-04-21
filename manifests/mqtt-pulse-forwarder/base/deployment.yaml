@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mqtt-pulsar-forwarder
+spec:
+  # Match the number of zones in the region.
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: mqtt-pulsar-forwarder
+  template:
+    metadata:
+      labels:
+        app: mqtt-pulsar-forwarder
+        app.kubernetes.io/name: mqtt-pulsar-forwarder
+    spec:
+      # Each zone should have exactly one mqtt-pulsar-forwarder to add
+      # redundancy into MQTT data collection. Any further replicas would waste
+      # capacity.
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - mqtt-pulsar-forwarder
+              topologyKey: topology.kubernetes.io/zone
+      containers:
+        - name: mqtt-pulsar-forwarder
+          image: ghcr.io/tvv-lippu-ja-maksujarjestelma-oy/mqtt-pulsar-forwarder:edge
+          imagePullPolicy: Always
+          resources:
+            # Autopilot only considers requests
+            # GCP Autopilot does not accept less on 2023-04-20.
+            # Check docs at https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-resource-requests
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          envFrom:
+            - configMapRef:
+                name: mqtt-pulsar-forwarder
+          volumeMounts:
+            - name: mqtt-pulsar-forwarder-secret-volume
+              mountPath: "/secrets"
+              readOnly: true
+          ports:
+            - name: liveness-port
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 1
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 30
+            periodSeconds: 2
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsUser: 10001
+            runAsGroup: 10001
+      volumes:
+        - name: mqtt-pulsar-forwarder-secret-volume
+          secret:
+            secretName: mqtt-pulsar-forwarder

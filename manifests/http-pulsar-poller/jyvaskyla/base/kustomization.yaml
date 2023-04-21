@@ -1,0 +1,17 @@
+nameSuffix: -jyvaskyla-vp
+resources:
+- ../../base
+
+commonLabels:
+  app.kubernetes.io/instance: http-pulsar-poller-fi-jyvaskyla-vp
+  app: http-pulsar-poller-fi-jyvaskyla-vp
+
+secretGenerator:
+  - name: http-pulsar-poller-fi
+    literals:
+    - http-username=foo
+    - http-password=bar
+    - pulsar-oauth2-key=whatever
+    options:
+      disableNameSuffixHash: true
+

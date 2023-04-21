@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-pulsar-poller-fi
+  labels:
+    app.kubernetes.io/name: http-pulsar-poller
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+     #app: http-pulsar-poller-fi
+  template:
+    metadata:
+      labels:
+        #app: http-pulsar-poller-fi-kuopio-vp
+        networkPolicy: client-only
+        podDisruptionBudget: max-unavailable-one
+        #app.kubernetes.io/name: http-pulsar-poller
+        #app.kubernetes.io/instance: http-pulsar-poller-fi-kuopio-vp
+    spec:
+      containers:
+        - name: http-pulsar-poller-fi
+          #image: tvvlmj/http-pulsar-poller:edge
+          image: tvvlmj/http-pulsar-poller:sha-8c3e3d89128ee4976714117a2fe3f9e904f6132e
+          imagePullPolicy: Always
+          resources:
+            # Autopilot only considers requests
+            # GCP Autopilot does not accept less on 2022-02-02.
+            # Check docs at https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-resource-requests
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          envFrom:
+            - configMapRef:
+                name: http-pulsar-poller-fi
+          volumeMounts:
+            - name: http-pulsar-poller-fi
+              mountPath: "/secrets"
+              readOnly: true
+          ports:
+            - name: liveness-port
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 1
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 30
+            periodSeconds: 2
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsUser: 10001
+            runAsGroup: 10001
+      volumes:
+        - name: http-pulsar-poller-fi
+          secret:
+            secretName: http-pulsar-poller-fi

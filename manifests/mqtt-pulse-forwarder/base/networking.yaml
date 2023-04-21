@@ -1,0 +1,13 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mqtt-pulsar-forwarder-deny-ingress-allow-egress
+spec:
+  podSelector:
+    matchLabels:
+      app: mqtt-pulsar-forwarder
+  policyTypes:
+    - Egress
+    - Ingress
+  egress:
+    - {}

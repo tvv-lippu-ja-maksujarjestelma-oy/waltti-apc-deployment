@@ -1,0 +1,16 @@
+namespace: dev
+#namePrefix: dev-
+resources:
+  - ../../base
+  - namespace.yaml
+
+configMapGenerator:
+  - name: mqtt-pulsar-forwarder
+    behavior: merge
+    literals:
+      - "MQTT_URL=mqtts://lively-cobalt-wasp.rmq5.cloudamqp.com"
+      # For some reason the StreamNative certificate does not match the URI.
+      - "PULSAR_TLS_VALIDATE_HOSTNAME=false"
+      - "PULSAR_TOPIC=persistent://playground/source/mqtt-apc-from-vehicle"
+generators:
+  - ./ksops-secret-generator.yaml

@@ -1,0 +1,9 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: mqtt-pulsar-forwarder
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: mqtt-pulsar-forwarder

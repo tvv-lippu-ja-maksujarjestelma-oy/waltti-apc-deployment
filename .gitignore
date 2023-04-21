@@ -33,5 +33,13 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+# Streamnative
+streamnative.json
+
+# VS Code
+.vscode
+
+# Ignore local notes
+NOTES.md
 # Ignore json files for StreamNative auth files
 *.json
