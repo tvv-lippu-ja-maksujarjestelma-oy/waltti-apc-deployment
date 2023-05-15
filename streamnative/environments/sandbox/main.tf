@@ -20,6 +20,17 @@ resource "pulsar_tenant" "tenant" {
 resource "pulsar_namespace" "source" {
   namespace = "source"
   tenant    = pulsar_tenant.tenant.tenant
+
+  retention_policies {
+    retention_minutes    = "-1"
+    retention_size_in_mb = "-1"
+  }
+
+  permission_grant {
+    role   = "sandbox-client@waltti.auth.streamnative.cloud"
+    actions = ["produce", "consume"]
+  }
+
 }
 
 resource "pulsar_namespace" "retained" {
@@ -35,6 +46,11 @@ resource "pulsar_namespace" "cleaned" {
 resource "pulsar_namespace" "aggregation" {
   namespace = "aggregation"
   tenant    = pulsar_tenant.tenant.tenant
+
+  permission_grant {
+    role    = "proto-client@waltti.auth.streamnative.cloud"
+    actions = ["produce", "consume"]
+  }
 }
 
 resource "pulsar_namespace" "open" {

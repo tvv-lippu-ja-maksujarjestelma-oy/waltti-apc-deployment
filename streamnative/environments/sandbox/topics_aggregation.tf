@@ -6,7 +6,7 @@ resource "pulsar_topic" "aggregated_apc_journey" {
   partitions = 0
 
   permission_grant {
-    role    = "sandbox-client@waltti.auth.streamnative.cloud"
+    role    = "proto-client@waltti.auth.streamnative.cloud"
     actions = ["produce", "consume", "functions"]
   }
 }
