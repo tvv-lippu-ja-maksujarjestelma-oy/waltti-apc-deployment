@@ -6,14 +6,10 @@ resource "pulsar_topic" "mqtt_apc_from_vehicle" {
   partitions = 0
 
   permission_grant {
-    role    = "test-user@waltti.auth.streamnative.cloud"
+    role    = "proto-client@waltti.auth.streamnative.cloud"
     actions = ["produce", "consume", "functions"]
   }
 
-  permission_grant {
-    role    = "sandbox-client@waltti.auth.streamnative.cloud"
-    actions = ["produce", "consume", "functions"]
-  }
 }
 
 resource "pulsar_topic" "gtfsrt_vp_fi_jyvaskyla" {
@@ -24,14 +20,10 @@ resource "pulsar_topic" "gtfsrt_vp_fi_jyvaskyla" {
   partitions = 0
 
   permission_grant {
-    role    = "test-user@waltti.auth.streamnative.cloud"
+    role    = "proto-client@waltti.auth.streamnative.cloud"
     actions = ["produce", "consume", "functions"]
   }
 
-  permission_grant {
-    role    = "sandbox-client@waltti.auth.streamnative.cloud"
-    actions = ["produce", "consume", "functions"]
-  }
 }
 resource "pulsar_topic" "gtfsrt_vp_fi_kuopio" {
   tenant     = pulsar_tenant.tenant.tenant
@@ -41,12 +33,7 @@ resource "pulsar_topic" "gtfsrt_vp_fi_kuopio" {
   partitions = 0
 
   permission_grant {
-    role    = "test-user@waltti.auth.streamnative.cloud"
-    actions = ["produce", "consume", "functions"]
-  }
-
-  permission_grant {
-    role    = "sandbox-client@waltti.auth.streamnative.cloud"
+    role    = "proto-client@waltti.auth.streamnative.cloud"
     actions = ["produce", "consume", "functions"]
   }
 }
