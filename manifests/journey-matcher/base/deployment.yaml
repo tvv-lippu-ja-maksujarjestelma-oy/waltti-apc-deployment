@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: journey-matcher
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: journey-matcher
+  template:
+    metadata:
+      labels:
+        app: journey-matcher
+        networkPolicy: client-only
+        podDisruptionBudget: max-unavailable-one
+        app.kubernetes.io/name: journey-matcher
+    spec:
+      containers:
+        - name: journey-matcher
+          image: tvvlmj/waltti-apc-journey-matcher:edge
+          imagePullPolicy: Always
+          resources:
+            # Autopilot only considers requests
+            # GCP Autopilot does not accept less on 2023-04-20.
+            # Check docs at https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-resource-requests
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          envFrom:
+            - configMapRef:
+                name: journey-matcher
+          volumeMounts:
+            - name: journey-matcher-secret-volume
+              mountPath: "/secrets"
+              readOnly: true
+          ports:
+            - name: liveness-port
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 1
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 30
+            periodSeconds: 2
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsUser: 10001
+            runAsGroup: 10001
+      volumes:
+        - name: journey-matcher-secret-volume
+          secret:
+            secretName: journey-matcher

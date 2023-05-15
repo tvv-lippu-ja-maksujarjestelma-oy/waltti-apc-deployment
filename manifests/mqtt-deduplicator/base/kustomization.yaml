@@ -1,0 +1,16 @@
+resources:
+  - configmap.yaml
+  - deployment.yaml
+
+commonLabels:
+  app.kubernetes.io/name: mqtt-deduplicator
+
+secretGenerator:
+  - name: mqtt-deduplicator
+    literals:
+    - mqtt-username=foo
+    - mqtt-password=bar
+    - pulsar-oauth2-key=whatever
+    options:
+      disableNameSuffixHash: true
+

@@ -26,10 +26,10 @@ data:
   PULSAR_COMPRESSION_TYPE: "ZSTD"
   # Optional
   PULSAR_IS_URL_IN_MESSAGE_PROPERTIES: "false"
-  PULSAR_OAUTH2_AUDIENCE: "urn:sn:pulsar:waltti:waltti"
+  PULSAR_OAUTH2_AUDIENCE: "urn:sn:pulsar:waltti:alpha"
   PULSAR_OAUTH2_ISSUER_URL: "https://auth.streamnative.cloud"
   PULSAR_OAUTH2_KEY_PATH: "/secrets/pulsar-oauth2-key"
-  PULSAR_SERVICE_URL: "pulsar+ssl://pulsar.waltti.snio.cloud:6651"
+  PULSAR_SERVICE_URL: "pulsar+ssl://sandbox.waltti.snio.cloud:6651"
   # Optional
   PULSAR_TLS_VALIDATE_HOSTNAME: "false"
   PULSAR_TOPIC: "TO_BE_FILLED_IN_OVERLAY"
