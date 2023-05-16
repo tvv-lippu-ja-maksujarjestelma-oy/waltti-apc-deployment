@@ -34,7 +34,7 @@ spec:
               topologyKey: topology.kubernetes.io/zone
       containers:
         - name: mqtt-pulsar-forwarder
-          image: ghcr.io/tvv-lippu-ja-maksujarjestelma-oy/mqtt-pulsar-forwarder:edge
+          image: tvvlmj/mqtt-pulsar-forwarder:edge
           imagePullPolicy: Always
           resources:
             # Autopilot only considers requests
