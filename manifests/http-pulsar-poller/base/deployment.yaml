@@ -22,8 +22,7 @@ spec:
     spec:
       containers:
         - name: http-pulsar-poller-fi
-          #image: tvvlmj/http-pulsar-poller:edge
-          image: tvvlmj/http-pulsar-poller:sha-8c3e3d89128ee4976714117a2fe3f9e904f6132e
+          image: tvvlmj/http-pulsar-poller:edge
           imagePullPolicy: Always
           resources:
             # Autopilot only considers requests
