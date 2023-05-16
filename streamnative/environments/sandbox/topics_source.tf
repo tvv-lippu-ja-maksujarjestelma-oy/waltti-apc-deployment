@@ -6,7 +6,7 @@ resource "pulsar_topic" "mqtt_apc_from_vehicle" {
   partitions = 0
 
   permission_grant {
-    role    = "proto-client@waltti.auth.streamnative.cloud"
+    role    = "mqtt-pulsar-forwarder@waltti.auth.streamnative.cloud"
     actions = ["produce", "consume", "functions"]
   }
 
