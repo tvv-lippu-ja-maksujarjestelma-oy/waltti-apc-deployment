@@ -1,7 +1,5 @@
 resources:
   - deployment.yaml
-  - networking.yaml
-  - podpolicy.yaml
 
 commonLabels:
   app.kubernetes.io/name: mqtt-pulsar-forwarder

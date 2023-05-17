@@ -18,6 +18,8 @@ spec:
       labels:
         app: mqtt-pulsar-forwarder
         app.kubernetes.io/name: mqtt-pulsar-forwarder
+        networkPolicy: client-only
+        podDisruptionBudget: max-unavailable-one
     spec:
       # Each zone should have exactly one mqtt-pulsar-forwarder to add
       # redundancy into MQTT data collection. Any further replicas would waste

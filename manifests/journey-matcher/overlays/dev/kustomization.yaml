@@ -12,5 +12,8 @@ configMapGenerator:
       - "PULSAR_GTFSRT_CONSUMER_TOPICS_PATTERN=persistent://apc-sandbox/source/gtfs-realtime-vp-.*"
       - "PULSAR_PRODUCER_TOPIC=persistent://apc-sandbox/aggregation/aggregated-apc-journey"
 
+patches:
+  - path: history-limit.yaml
+
 generators:
   - ./ksops-secret-generator.yaml
