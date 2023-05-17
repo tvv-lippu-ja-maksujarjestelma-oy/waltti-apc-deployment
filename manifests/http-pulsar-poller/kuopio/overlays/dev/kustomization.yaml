@@ -11,5 +11,8 @@ configMapGenerator:
       - "HTTP_USERNAME_PATH=/secrets/http-username"
       - "PULSAR_TOPIC=persistent://apc-dev/source/gtfs-realtime-vp-fi-kuopio"
 
+patches:
+  - path: history-limit.yaml
+
 generators:
   - ./ksops-secret-generator.yaml
