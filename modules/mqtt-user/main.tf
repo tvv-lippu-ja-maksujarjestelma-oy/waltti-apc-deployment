@@ -19,8 +19,8 @@ resource "rabbitmq_permissions" "this_user" {
 
   permissions {
     configure = "^([amq\\.topic].*)$"
-    write     = "^([amq\\.topic].*)$"
-    read      = "^([amq\\.topic].*)$"
+    write     = var.user_perms_write
+    read      = var.user_perms_read
   }
 }
 
@@ -30,7 +30,7 @@ resource "rabbitmq_topic_permissions" "this_user" {
 
   permissions {
     exchange = "amq.topic"
-    write    = ".*"
-    read     = ".*"
+    write    = var.topic_perms_write
+    read     = var.topic_perms_read
   }
 }
