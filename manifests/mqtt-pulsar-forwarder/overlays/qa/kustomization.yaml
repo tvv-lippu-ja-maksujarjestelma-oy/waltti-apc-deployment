@@ -1,0 +1,16 @@
+namespace: dev
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: mqtt-pulsar-forwarder
+    behavior: merge
+    literals:
+      - "MQTT_URL=mqtts://dev.mqtt.apc.lmj.fi"
+      - "PULSAR_TOPIC=persistent://apc-sandbox/source/mqtt-apc-from-vehicle"
+
+patches:
+  - path: history-limit.yaml
+
+generators:
+  - ./ksops-secret-generator.yaml

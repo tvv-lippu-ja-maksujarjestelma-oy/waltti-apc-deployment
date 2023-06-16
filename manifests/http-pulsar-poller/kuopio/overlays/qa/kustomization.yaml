@@ -1,0 +1,18 @@
+namespace: qa
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: http-pulsar-poller-fi-kuopio-vp
+    behavior: merge
+    literals:
+      - "HTTP_PASSWORD_PATH=/secrets/http-password"
+      - "HTTP_URL=https://opendatavilkku.mattersoft.fi/rtapi/gtfsrealtime/v1.0/feed/vehicleposition"
+      - "HTTP_USERNAME_PATH=/secrets/http-username"
+      - "PULSAR_TOPIC=persistent://apc-dev/source/gtfs-realtime-vp-fi-kuopio"
+
+patches:
+  - path: history-limit.yaml
+
+generators:
+  - ./ksops-secret-generator.yaml

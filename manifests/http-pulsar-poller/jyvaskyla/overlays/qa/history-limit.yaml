@@ -1,0 +1,6 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-pulsar-poller-fi-jyvaskyla-vp
+spec:
+  revisionHistoryLimit: 2
