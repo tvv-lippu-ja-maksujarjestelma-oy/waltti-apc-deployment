@@ -1,0 +1,22 @@
+namespace: qa
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: pulsar-mqtt-forwarder
+    behavior: merge
+    literals:
+      - "MQTT_URL=mqtts://lively-cobalt-wasp.rmq5.cloudamqp.com"
+      - "MQTT_TOPIC=apc/v1/authority-id/#"
+      - "PULSAR_TOPICS_PATTERN=persistent://apc-sandbox/aggregation/aggregated-apc-journey"
+      - "PINO_LOG_LEVEL=debug"
+      - "PULSAR_SUBSCRIPTION=pulsar-mqtt-forwarder"
+      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
+      - "PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud"
+      - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
+      
+patches:
+  - path: history-limit.yaml
+
+generators:
+  - ./ksops-secret-generator.yaml

@@ -1,0 +1,23 @@
+resources:
+  - deployment.yaml
+
+commonLabels:
+  app.kubernetes.io/name: pulsar-mqtt-forwarder
+
+secretGenerator:
+  - name: pulsar-mqtt-forwarder
+    literals:
+    - mqtt-username=foo
+    - mqtt-password=bar
+    - pulsar-oauth2-key=whatever
+    options:
+      disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: pulsar-mqtt-forwarder
+    literals:
+    - MQTT_PASSWORD_PATH=/secrets/mqtt-password
+    - MQTT_USERNAME_PATH=/secrets/mqtt-username
+    - PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key
+    - MQTT_CLIENT_ID_PREFIX=pulsar-mqtt-forwarder
+
