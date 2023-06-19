@@ -1,5 +1,4 @@
 namespace: dev
-nameSuffix: -jyvaskyla-vp
 resources:
   - ../../base
 
