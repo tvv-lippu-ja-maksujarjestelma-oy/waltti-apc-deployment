@@ -6,7 +6,7 @@ configMapGenerator:
   - name: journey-matcher
     behavior: merge
     literals:
-      - 'FEED_MAP=[["persistent://apc-sandbox/source/gtfs-realtime-vp-fi-kuopio",["fi:kuopio","Europe/Helsinki"]],["persistent://apc-sandbox/source/gtfs-realtime-vp-fi-jyvaskyla",["fi:jyvaskyla","Europe/Helsinki"]]]'
+      - 'FEED_MAP=[["persistent://apc-sandbox/source/gtfsrt-vp-fi-kuopio",["fi:kuopio","Europe/Helsinki"]],["persistent://apc-sandbox/source/gtfsrt-vp-fi-jyvaskyla",["fi:jyvaskyla","Europe/Helsinki"]]]'
       - 'PINO_LOG_LEVEL=debug'
       - "PULSAR_APC_CONSUMER_TOPICS_PATTERN=persistent://apc-sandbox/retained/mqtt-apc-from-vehicle"
       - "PULSAR_GTFSRT_CONSUMER_TOPICS_PATTERN=persistent://apc-sandbox/source/gtfsrt-vp-.*"
