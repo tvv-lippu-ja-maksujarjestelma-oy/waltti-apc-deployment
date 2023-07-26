@@ -1,8 +1,8 @@
-resource "pulsar_topic" "mqtt_apc_from_vehicle_deduplicated" {
+resource "pulsar_topic" "aggregated_apc_journey" {
   tenant     = pulsar_tenant.tenant.tenant
-  namespace  = pulsar_namespace.retained.namespace
+  namespace  = pulsar_namespace.aggregated.namespace
   topic_type = "persistent"
-  topic_name = "mqtt-apc-from-vehicle-deduplicated"
+  topic_name = "aggregated-apc-journey"
   partitions = 0
 
   permission_grant {
@@ -10,3 +10,4 @@ resource "pulsar_topic" "mqtt_apc_from_vehicle_deduplicated" {
     actions = ["produce", "consume", "functions"]
   }
 }
+
