@@ -188,14 +188,14 @@ grpcio-gcp = ["grpcio-gcp (>=0.2.2,<1.0dev)"]
 
 [[package]]
 name = "google-auth"
-version = "2.19.1"
+version = "2.22.0"
 description = "Google Authentication Library"
 category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "google-auth-2.19.1.tar.gz", hash = "sha256:a9cfa88b3e16196845e64a3658eb953992129d13ac7337b064c6546f77c17183"},
-    {file = "google_auth-2.19.1-py2.py3-none-any.whl", hash = "sha256:ea165e014c7cbd496558796b627c271aa8c18b4cba79dc1cc962b24c5efdfb85"},
+    {file = "google-auth-2.22.0.tar.gz", hash = "sha256:164cba9af4e6e4e40c3a4f90a1a6c12ee56f14c0b4868d1ca91b32826ab334ce"},
+    {file = "google_auth-2.22.0-py2.py3-none-any.whl", hash = "sha256:d61d1b40897407b574da67da1a833bdc10d5a11642566e506565d1b1a46ba873"},
 ]
 
 [package.dependencies]
@@ -206,11 +206,11 @@ six = ">=1.9.0"
 urllib3 = "<2.0"
 
 [package.extras]
-aiohttp = ["aiohttp (>=3.6.2,<4.0.0dev)", "requests (>=2.20.0,<3.0.0dev)"]
+aiohttp = ["aiohttp (>=3.6.2,<4.0.0.dev0)", "requests (>=2.20.0,<3.0.0.dev0)"]
 enterprise-cert = ["cryptography (==36.0.2)", "pyopenssl (==22.0.0)"]
 pyopenssl = ["cryptography (>=38.0.3)", "pyopenssl (>=20.0.0)"]
 reauth = ["pyu2f (>=0.1.5)"]
-requests = ["requests (>=2.20.0,<3.0.0dev)"]
+requests = ["requests (>=2.20.0,<3.0.0.dev0)"]
 
 [[package]]
 name = "google-cloud-secret-manager"
@@ -599,4 +599,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "04bb3f51bc09753e46a19532b63be9572c6cf0d6e59225dac6cc9fa292501584"
+content-hash = "630a7689b99ed9f0503ebd8113ccc0ff6abbca3098e24e29a19e8b46afcf0171"

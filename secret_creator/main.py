@@ -31,6 +31,7 @@ def create_secret(secretname, secrettype, project_detail):
     response = client.create_secret(
         secret_id=secretname, parent=project_detail, secret=secret
     )
+    log.debug(response)
     return response
 
 
@@ -40,6 +41,7 @@ def create_secret_version(secretname,data,project_detail):
     parent=f"{project_detail}/secrets/{secretname}"
     payload = json.dumps(data).encode("UTF-8")
     response = client.add_secret_version(parent=parent,payload={ "data": payload })
+    log.debug(response)
     return response
 
 
