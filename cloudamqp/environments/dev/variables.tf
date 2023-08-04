@@ -31,5 +31,5 @@ variable "notification_email" {
 }
 
 variable "rabbitmq_version" {
-  default = "3.11.10"
+  default = "3.12.1"
 }
