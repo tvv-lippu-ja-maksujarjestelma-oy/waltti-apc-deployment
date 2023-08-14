@@ -14,7 +14,7 @@ configMapGenerator:
       - "HTTP_PASSWORD_PATH=/secrets/http-password"
       - "HTTP_URL=https://data.waltti.fi/jyvaskyla/api/gtfsrealtime/v1.0/feed/vehicleposition"
       - "HTTP_USERNAME_PATH=/secrets/http-username"
-      - "PULSAR_TOPIC=persistent://apc-sandbox/source/gtfsrt-vp-fi-jyvaskyla"
+      - "PULSAR_TOPIC=persistent://apc-staging/source/gtfsrt-vp-fi-jyvaskyla"
 
 patches:
   - path: history-limit.yaml

@@ -6,9 +6,9 @@ configMapGenerator:
   - name: mqtt-deduplicator
     behavior: merge
     literals:
-      - "PULSAR_CONSUMER_TOPICS_PATTERN=persistent://apc-sandbox/source/mqtt-apc-from-vehicle"
-      - "PULSAR_PRODUCER_TOPIC=persistent://apc-sandbox/retained/mqtt-apc-from-vehicle-deduplicated"
-      - "PINO_LOG_LEVEL=debug"
+      - "PULSAR_CONSUMER_TOPICS_PATTERN=persistent://apc-staging/source/mqtt-apc-from-vehicle"
+      - "PULSAR_PRODUCER_TOPIC=persistent://apc-staging/deduplicated/mqtt-apc-from-vehicle-deduplicated"
+      - "PINO_LOG_LEVEL=info"
 
 patches:
   - path: history-limit.yaml
