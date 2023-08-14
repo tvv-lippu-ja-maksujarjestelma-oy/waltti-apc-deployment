@@ -6,7 +6,7 @@ configMapGenerator:
   - name: pulsar-mqtt-forwarder
     behavior: merge
     literals:
-      - "MQTT_URL=mqtts://lively-cobalt-wasp.rmq5.cloudamqp.com"
+      - "MQTT_URL=mqtts://mqtt-dev.apc.waltti.fi"
       - "MQTT_TOPIC=apc/v1/authority-id/"  # Rely on topicSuffix property
       - "PULSAR_TOPICS_PATTERN=persistent://apc-sandbox/aggregated/aggregated-apc-journey"
       - "PINO_LOG_LEVEL=debug"
