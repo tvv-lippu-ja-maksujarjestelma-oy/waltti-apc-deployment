@@ -12,7 +12,7 @@ configMapGenerator:
       - "PULSAR_GTFSRT_CONSUMER_TOPICS_PATTERN=persistent://apc-sandbox/source/gtfsrt-vp-.*"
       - "PULSAR_PRODUCER_TOPIC=persistent://apc-sandbox/aggregated/aggregated-apc-journey"
       - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
-"     - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
+      - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
 
 patches:
   - path: history-limit.yaml
