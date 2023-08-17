@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     pulsar = {
-      version = "0.1.3"
+      version = "0.2.0"
       source  = "registry.terraform.io/streamnative/pulsar"
     }
 
