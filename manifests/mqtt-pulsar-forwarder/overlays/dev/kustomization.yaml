@@ -8,6 +8,8 @@ configMapGenerator:
     literals:
       - "MQTT_URL=mqtts://dev.mqtt.apc.lmj.fi"
       - "PULSAR_TOPIC=persistent://apc-sandbox/source/mqtt-apc-from-vehicle"
+      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
+      - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
 
 patches:
   - path: history-limit.yaml

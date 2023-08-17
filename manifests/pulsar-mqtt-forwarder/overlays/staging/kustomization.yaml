@@ -1,4 +1,4 @@
-namespace: qa
+namespace: staging
 resources:
   - ../../base
 
