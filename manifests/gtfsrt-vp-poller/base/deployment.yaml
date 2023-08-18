@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: http-pulsar-poller-fi
+  name: gtfsrt-vp-poller
   labels:
-    app.kubernetes.io/name: http-pulsar-poller
+    app.kubernetes.io/name: gtfsrt-vp-poller
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-     #app: http-pulsar-poller-fi
+     #app: gtfsrt-vp-poller
   template:
     metadata:
       labels:
-        #app: http-pulsar-poller-fi-kuopio-vp
+        #app: gtfsrt-vp-poller-fi-kuopio-vp
         networkPolicy: client-only
         podDisruptionBudget: max-unavailable-one
         #app.kubernetes.io/name: http-pulsar-poller
-        #app.kubernetes.io/instance: http-pulsar-poller-fi-kuopio-vp
+        #app.kubernetes.io/instance: gtfsrt-vp-poller-fi-kuopio-vp
     spec:
       containers:
-        - name: http-pulsar-poller-fi
+        - name: gtfsrt-vp-poller
           image: tvvlmj/http-pulsar-poller:edge
           imagePullPolicy: Always
           resources:
@@ -34,9 +34,9 @@ spec:
               ephemeral-storage: 100Mi
           envFrom:
             - configMapRef:
-                name: http-pulsar-poller-fi
+                name: gtfsrt-vp-poller
           volumeMounts:
-            - name: http-pulsar-poller-fi
+            - name: gtfsrt-vp-poller
               mountPath: "/secrets"
               readOnly: true
           ports:
@@ -63,6 +63,6 @@ spec:
             runAsUser: 10001
             runAsGroup: 10001
       volumes:
-        - name: http-pulsar-poller-fi
+        - name: gtfsrt-vp-poller
           secret:
-            secretName: http-pulsar-poller-fi
+            secretName: gtfsrt-vp-poller

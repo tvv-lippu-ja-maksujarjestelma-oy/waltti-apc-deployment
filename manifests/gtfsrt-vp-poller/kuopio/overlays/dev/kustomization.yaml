@@ -3,7 +3,7 @@ resources:
   - ../../base
 
 configMapGenerator:
-  - name: http-pulsar-poller-fi-kuopio-vp
+  - name: gtfsrt-vp-poller-fi-kuopio
     behavior: merge
     literals:
       - "HTTP_PASSWORD_PATH=/secrets/http-password"

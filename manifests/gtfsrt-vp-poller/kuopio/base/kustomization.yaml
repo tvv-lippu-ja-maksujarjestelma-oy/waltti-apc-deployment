@@ -1,13 +1,13 @@
-nameSuffix: -kuopio-vp
+nameSuffix: -fi-kuopio
 resources:
 - ../../base
 
 commonLabels:
-  app.kubernetes.io/instance: http-pulsar-poller-fi-kuopio-vp
-  app: http-pulsar-poller-fi-kuopio-vp
+  app.kubernetes.io/instance: gtfsrt-vp-poller-fi-kuopio
+  app: gtfsrt-vp-poller-fi-kuopio
 
 secretGenerator:
-  - name: http-pulsar-poller-fi
+  - name: gtfsrt-vp-poller
     literals:
     - http-username=foo
     - http-password=bar
