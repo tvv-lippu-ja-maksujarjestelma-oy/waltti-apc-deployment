@@ -1,6 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: http-pulsar-poller-fi-jyvaskyla-vp
+  name: gtfsrt-vp-poller-fi-kuopio
 spec:
   revisionHistoryLimit: 2

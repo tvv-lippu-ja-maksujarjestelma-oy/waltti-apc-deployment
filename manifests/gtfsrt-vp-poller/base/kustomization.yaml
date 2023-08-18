@@ -2,7 +2,7 @@ resources:
   - deployment.yaml
 
 configMapGenerator:
-  - name:  http-pulsar-poller-fi
+  - name:  gtfsrt-vp-poller
     literals:
     - HEALTH_CHECK_PORT=8080
     - HTTP_IS_HTTP2_USED=false

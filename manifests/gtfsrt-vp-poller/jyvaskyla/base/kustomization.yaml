@@ -1,13 +1,13 @@
-nameSuffix: -jyvaskyla-vp
+nameSuffix: -fi-jyvaskyla
 resources:
 - ../../base
 
 commonLabels:
-  app.kubernetes.io/instance: http-pulsar-poller-fi-jyvaskyla-vp
-  app: http-pulsar-poller-fi-jyvaskyla-vp
+  app.kubernetes.io/instance: gtfsrt-vp-poller-fi-jyvaskyla
+  app: gtfsrt-vp-poller-fi-jyvaskyla
 
 secretGenerator:
-  - name: http-pulsar-poller-fi
+  - name: gtfsrt-vp-poller
     literals:
     - http-username=foo
     - http-password=bar

@@ -3,12 +3,12 @@ resources:
   - ../../base
 
 commonLabels:
-  app.kubernetes.io/instance: http-pulsar-poller-fi-jyvaskyla-vp
-  app: http-pulsar-poller-fi-jyvaskyla-vp
+  app.kubernetes.io/instance: gtfsrt-vp-poller-fi-jyvaskyla
+  app: gtfsrt-vp-poller-fi-jyvaskyla
 
 
 configMapGenerator:
-  - name: http-pulsar-poller-fi-jyvaskyla-vp
+  - name: gtfsrt-vp-poller-fi-jyvaskyla
     behavior: merge
     literals:
       - "HTTP_PASSWORD_PATH=/secrets/http-password"
