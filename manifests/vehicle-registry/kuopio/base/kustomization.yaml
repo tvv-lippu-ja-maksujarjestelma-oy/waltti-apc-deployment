@@ -1,0 +1,17 @@
+nameSuffix: -fi-kuopio
+resources:
+- ../../base
+
+commonLabels:
+  app.kubernetes.io/instance: vehicle-registry-fi-kuopio
+  app:  vehicle-registry-poller-fi-kuopio
+
+secretGenerator:
+  - name: vehicle-registry-poller
+    literals:
+    - http-username=foo
+    - http-password=bar
+    - pulsar-oauth2-key=super_secret
+    options:
+      disableNameSuffixHash: true
+
