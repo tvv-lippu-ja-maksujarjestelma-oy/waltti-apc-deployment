@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vehicle-registry-poller
+  labels:
+    app.kubernetes.io/name: vehicle-registry-poller
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+     #app: vehicle-registry-poller
+  template:
+    metadata:
+      labels:
+        networkPolicy: client-only
+        podDisruptionBudget: max-unavailable-one
+        #app.kubernetes.io/name: vehicle-registry-poller
+        #app.kubernetes.io/instance: vehicle-registry-poller-fi-kuopio
+    spec:
+      containers:
+        - name: vehicle-registry-poller
+          image: tvvlmj/http-pulsar-poller:edge
+          imagePullPolicy: Always
+          resources:
+            # Autopilot only considers requests
+            # GCP Autopilot does not accept less on 2022-02-02.
+            # Check docs at https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-resource-requests
+            requests:
+              cpu: 500m
+              memory: 512Mi
+              ephemeral-storage: 100Mi
+          envFrom:
+            - configMapRef:
+                name: vehicle-registry-poller
+          volumeMounts:
+            - name: vehicle-registry-poller
+              mountPath: "/secrets"
+              readOnly: true
+          ports:
+            - name: liveness-port
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 1
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 30
+            periodSeconds: 2
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsUser: 10001
+            runAsGroup: 10001
+      volumes:
+        - name: vehicle-registry-poller
+          secret:
+            secretName: vehicle-registry-poller
