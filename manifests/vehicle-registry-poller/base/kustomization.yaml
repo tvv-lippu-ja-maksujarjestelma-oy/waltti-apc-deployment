@@ -18,5 +18,5 @@ configMapGenerator:
     - PULSAR_IS_URL_IN_MESSAGE_PROPERTIES=false
     - PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud
     - PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key
-    - PULSAR_TLS_VALIDATE_HOSTNAME=false
+    - PULSAR_TLS_VALIDATE_HOSTNAME=true
     - PULSAR_TOPIC=TO_BE_FILLED_IN_OVERLAY

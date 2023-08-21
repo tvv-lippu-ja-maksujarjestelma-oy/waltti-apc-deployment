@@ -21,7 +21,7 @@ configMapGenerator:
     # PULSAR_PRODUCER_TOPIC: "TO_BE_FILLED_IN_OVERLAY"
     - "PULSAR_SUBSCRIPTION=mqtt-deduplicator-sub"
     # Optional
-    - "PULSAR_TLS_VALIDATE_HOSTNAME=false"
+    - "PULSAR_TLS_VALIDATE_HOSTNAME=true"
 
 secretGenerator:
   - name: mqtt-deduplicator
