@@ -1,0 +1,20 @@
+namespace: dev
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: anonymizer
+    behavior: merge
+    literals:
+      - 'PINO_LOG_LEVEL=debug'
+      - "PULSAR_APC_CONSUMER_TOPICS_PATTERN=persistent://apc-sandbox/aggregated/aggregated-apc-journey"
+      - "PULSAR_PRODUCER_TOPIC=persistent://apc-sandbox/anonymized/anonymized-apc-journey"
+      - "PULSAR_PROFILE_READER_TOPIC=persistent://apc-sandbox/cleaned/vehicle-anonymization-profile"
+      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
+      - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
+
+patches:
+  - path: history-limit.yaml
+
+generators:
+  - ./ksops-secret-generator.yaml
