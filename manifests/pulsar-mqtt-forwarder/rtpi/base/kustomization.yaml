@@ -7,7 +7,7 @@ commonLabels:
   app: pulsar-mqtt-forwarder-rtpi
 
 secretGenerator:
-  - name: pulsar-mqtt-forwarder-rtpi
+  - name: pulsar-mqtt-forwarder
     literals:
       - mqtt-username=foo
       - mqtt-password=bar

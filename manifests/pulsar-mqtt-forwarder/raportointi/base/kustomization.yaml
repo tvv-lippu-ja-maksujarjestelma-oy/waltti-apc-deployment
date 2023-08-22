@@ -1,13 +1,13 @@
 nameSuffix: -raportointi
 resources:
-  - ../../base
+- ../../base
 
 commonLabels:
   app.kubernetes.io/instance: pulsar-mqtt-forwarder-raportointi
   app: pulsar-mqtt-forwarder-raportointi
 
 secretGenerator:
-  - name: pulsar-mqtt-forwarder-raportointi
+  - name: pulsar-mqtt-forwarder
     literals:
       - mqtt-username=foo
       - mqtt-password=bar
