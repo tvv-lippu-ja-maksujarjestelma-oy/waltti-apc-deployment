@@ -1,0 +1,16 @@
+nameSuffix: -rtpi
+resources:
+  - ../../base
+
+commonLabels:
+  app.kubernetes.io/instance: pulsar-mqtt-forwarder-rtpi
+  app: pulsar-mqtt-forwarder-rtpi
+
+secretGenerator:
+  - name: pulsar-mqtt-forwarder-rtpi
+    literals:
+      - mqtt-username=foo
+      - mqtt-password=bar
+      - pulsar-oauth2-key=whatever
+    options:
+      disableNameSuffixHash: true
