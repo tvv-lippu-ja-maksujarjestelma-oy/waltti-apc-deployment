@@ -4,15 +4,6 @@ resources:
 commonLabels:
   app.kubernetes.io/name: pulsar-mqtt-forwarder
 
-secretGenerator:
-  - name: pulsar-mqtt-forwarder
-    literals:
-    - mqtt-username=foo
-    - mqtt-password=bar
-    - pulsar-oauth2-key=whatever
-    options:
-      disableNameSuffixHash: true
-
 configMapGenerator:
   - name: pulsar-mqtt-forwarder
     literals:
