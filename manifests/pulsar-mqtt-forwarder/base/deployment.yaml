@@ -8,12 +8,10 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: pulsar-mqtt-forwarder
+      #app: pulsar-mqtt-forwarder
   template:
     metadata:
       labels:
-        app: pulsar-mqtt-forwarder
-        app.kubernetes.io/name: pulsar-mqtt-forwarder
         networkPolicy: client-only
         podDisruptionBudget: max-unavailable-one
     spec:
