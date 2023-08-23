@@ -11,13 +11,14 @@ configMapGenerator:
   - name: gtfsrt-vp-poller-fi-jyvaskyla
     behavior: merge
     literals:
+      - "HTTP_IS_HTTP2_USED=true"
       - "HTTP_PASSWORD_PATH=/secrets/http-password"
       - "HTTP_URL=https://data.waltti.fi/jyvaskyla/api/gtfsrealtime/v1.0/feed/vehicleposition"
       - "HTTP_USERNAME_PATH=/secrets/http-username"
       - "PULSAR_TOPIC=persistent://apc-staging/source/gtfsrt-vp-fi-jyvaskyla"
       - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
       - "PULSAR_SERVICE_URL=pulsar+ssl://staging.waltti.snio.cloud:6651"
-      
+
 patches:
   - path: history-limit.yaml
 
