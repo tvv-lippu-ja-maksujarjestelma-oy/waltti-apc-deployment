@@ -7,6 +7,7 @@ configMapGenerator:
     behavior: merge
     literals:
       - "MQTT_URL=mqtts://mqtt-staging.apc.waltti.fi"
+      - "MQTT_CLIENT_ID_PREFIX=mqtt-pulsar-forwarder-staging"
       - "PULSAR_TOPIC=persistent://apc-staging/source/mqtt-apc-from-vehicle"
       - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
       - "PULSAR_SERVICE_URL=pulsar+ssl://staging.waltti.snio.cloud:6651"
