@@ -11,7 +11,6 @@ configMapGenerator:
   - name: gtfsrt-vp-poller-fi-jyvaskyla
     behavior: merge
     literals:
-      - "HTTP_IS_HTTP2_USED=true"
       - "HTTP_PASSWORD_PATH=/secrets/http-password"
       - "HTTP_URL=https://data.waltti.fi/jyvaskyla/api/gtfsrealtime/v1.0/feed/vehicleposition"
       - "HTTP_USERNAME_PATH=/secrets/http-username"

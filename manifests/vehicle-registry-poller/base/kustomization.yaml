@@ -5,7 +5,6 @@ configMapGenerator:
   - name:  vehicle-registry-poller
     literals:
     - HEALTH_CHECK_PORT=8080
-    - HTTP_IS_HTTP2_USED=false
     #- HTTP_PASSWORD_PATH=TO_BE_FILLED_IN_OVERLAY
     - HTTP_REQUEST_TIMEOUT_IN_SECONDS=5
     # Poll every 6hrs
@@ -13,7 +12,6 @@ configMapGenerator:
     - HTTP_URL=TO_BE_FILLED_IN_OVERLAY
     - HTTP_USER_AGENT=waltti-apc-http-pulsar-poller
     #- HTTP_USERNAME_PATH=TO_BE_FILLED_IN_OVERLAY
-    #- HTTP_WARNING_THRESHOLD_IN_SECONDS=TO_BE_FILLED_IN_OVERLAY
     - PULSAR_BLOCK_IF_QUEUE_FULL=true
     - PULSAR_COMPRESSION_TYPE=ZSTD
     - PULSAR_IS_URL_IN_MESSAGE_PROPERTIES=false
