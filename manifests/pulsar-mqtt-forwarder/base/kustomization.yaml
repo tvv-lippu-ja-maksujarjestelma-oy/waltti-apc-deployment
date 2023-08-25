@@ -10,5 +10,4 @@ configMapGenerator:
     - MQTT_PASSWORD_PATH=/secrets/mqtt-password
     - MQTT_USERNAME_PATH=/secrets/mqtt-username
     - PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key
-    - MQTT_CLIENT_ID_PREFIX=pulsar-mqtt-forwarder
 

@@ -10,6 +10,7 @@ configMapGenerator:
   - name: pulsar-mqtt-forwarder-rtpi
     behavior: merge
     literals:
+      - "MQTT_CLIENT_ID_PREFIX=pulsar-mqtt-forwarder-rtpi"
       - "MQTT_URL=mqtts://mqtt-dev.apc.waltti.fi"
       - "MQTT_TOPIC=anonymized-apc/v1/authority-id/" # Rely on topicSuffix property
       - "PULSAR_TOPICS_PATTERN=persistent://apc-sandbox/anonymized/anonymized-apc-journey"

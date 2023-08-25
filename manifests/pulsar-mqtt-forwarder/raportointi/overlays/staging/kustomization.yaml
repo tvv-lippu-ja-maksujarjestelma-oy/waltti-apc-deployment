@@ -10,6 +10,7 @@ configMapGenerator:
   - name: pulsar-mqtt-forwarder-raportointi
     behavior: merge
     literals:
+      - "MQTT_CLIENT_ID_PREFIX=pulsar-mqtt-forwarder-raportointi"
       - "MQTT_URL=mqtts://mqtt-staging.apc.waltti.fi"
       - "MQTT_TOPIC=apc/v1/authority-id/" # Rely on topicSuffix property
       - "PULSAR_TOPICS_PATTERN=persistent://apc-staging/aggregated/aggregated-apc-journey"
