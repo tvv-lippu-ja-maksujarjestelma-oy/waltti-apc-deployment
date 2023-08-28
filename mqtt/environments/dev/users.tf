@@ -1,3 +1,5 @@
+# Yes, terraform needs those extra chars compared to MQTT...
+
 module "testuser" {
   source            = "../../../modules/mqtt-user"
   secretname        = "mqtt-test-user"
