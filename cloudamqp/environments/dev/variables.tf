@@ -1,16 +1,16 @@
 // GCP
 variable "project_id" {
   default = "gcp_project_id"
-  type = string
+  type    = string
 }
 
 variable "region" {
   default = "europe-west3"
-  type = string
+  type    = string
 }
 
 variable "tf_service_account" {
-    type = string
+  type = string
 }
 
 // CloudAMQP
