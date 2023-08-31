@@ -25,3 +25,9 @@ resource "cloudamqp_integration_log" "stackdriver" {
   name        = "stackdriver"
   credentials = google_service_account_key.cloudamqp_key.private_key
 }
+
+resource "cloudamqp_integration_metric" "stackdriver" {
+  instance_id = cloudamqp_instance.instance.id
+  name        = "stackdriver"
+  credentials = google_service_account_key.cloudamqp_key.private_key
+}
