@@ -8,6 +8,7 @@ configMapGenerator:
     literals:
       - "MQTT_URL=mqtts://dev.mqtt.apc.lmj.fi"
       - "MQTT_CLIENT_ID_PREFIX=mqtt-pulsar-forwarder-dev"
+      - "PINO_LOG_LEVEL=debug"
       - "PULSAR_TOPIC=persistent://apc-sandbox/source/mqtt-apc-from-vehicle"
       - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
       - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"

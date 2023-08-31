@@ -21,6 +21,8 @@ configMapGenerator:
     # Optional
     - "HEALTH_CHECK_PORT=8080"
     # Optional
+    - "PINO_LOG_LEVEL=info"
+    # Optional
     - "PULSAR_BLOCK_IF_QUEUE_FULL=true"
     - "PULSAR_CACHE_READER_NAME=mqtt-deduplicator-cache-reader"
     # Optional
