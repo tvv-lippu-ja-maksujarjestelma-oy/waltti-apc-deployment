@@ -9,5 +9,6 @@ configMapGenerator:
     literals:
     - MQTT_PASSWORD_PATH=/secrets/mqtt-password
     - MQTT_USERNAME_PATH=/secrets/mqtt-username
+    - PINO_LOG_LEVEL=info
     - PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key
 

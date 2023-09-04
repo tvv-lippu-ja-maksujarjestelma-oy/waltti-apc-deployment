@@ -8,7 +8,6 @@ configMapGenerator:
     literals:
       - "PULSAR_CONSUMER_TOPICS_PATTERN=persistent://apc-staging/source/mqtt-apc-from-vehicle"
       - "PULSAR_PRODUCER_TOPIC=persistent://apc-staging/deduplicated/mqtt-apc-from-vehicle-deduplicated"
-      - "PINO_LOG_LEVEL=info"
       - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
       - "PULSAR_SERVICE_URL=pulsar+ssl://staging.waltti.snio.cloud:6651"
       

@@ -23,6 +23,7 @@ configMapGenerator:
     - MQTT_QOS=2
     - MQTT_USERNAME_PATH=/secrets/mqtt-username
     - MQTT_TOPIC_FILTER=apc-from-vehicle/#
+    - PINO_LOG_LEVEL=info
     - PULSAR_BLOCK_IF_QUEUE_FULL=true
     - PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key
     - PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud
