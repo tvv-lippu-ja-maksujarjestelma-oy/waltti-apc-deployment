@@ -1,0 +1,11 @@
+web_service_url    =
+broker_service_url = 
+client_id          = 
+issuer_url         = 
+key_file_path      = 
+audience           = 
+admin_roles        = 
+project_id         = 
+region             = 
+environment        = 
+tf_service_account = 
