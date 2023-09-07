@@ -17,7 +17,7 @@ configMapGenerator:
       - "PULSAR_SUBSCRIPTION=pulsar-mqtt-forwarder-rtpi"
       - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
       - "PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud"
-      - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
+      - "PULSAR_SERVICE_URL=pulsar+ssl://staging.waltti.snio.cloud:6651"
 
 patches:
   - path: history-limit.yaml
