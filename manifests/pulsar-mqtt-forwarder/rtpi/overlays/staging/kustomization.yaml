@@ -1,0 +1,26 @@
+namespace: staging
+resources:
+  - ../../base
+
+commonLabels:
+  app.kubernetes.io/instance: pulsar-mqtt-forwarder-rtpi
+  app: pulsar-mqtt-forwarder-rtpi
+
+configMapGenerator:
+  - name: pulsar-mqtt-forwarder-rtpi
+    behavior: merge
+    literals:
+      - "MQTT_CLIENT_ID_PREFIX=pulsar-mqtt-forwarder-rtpi"
+      - "MQTT_URL=mqtts://mqtt-staging.apc.waltti.fi"
+      - "MQTT_TOPIC=anonymized-apc/v1/authority-id/" # Rely on topicSuffix property
+      - "PULSAR_TOPICS_PATTERN=persistent://apc-staging/anonymized/anonymized-apc-journey"
+      - "PULSAR_SUBSCRIPTION=pulsar-mqtt-forwarder-rtpi"
+      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
+      - "PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud"
+      - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
+
+patches:
+  - path: history-limit.yaml
+
+generators:
+  - ./ksops-secret-generator.yaml
