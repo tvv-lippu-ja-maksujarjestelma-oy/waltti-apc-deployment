@@ -1,17 +1,17 @@
 # Create a new cloudamqp instance
 resource "cloudamqp_instance" "instance" {
-  name        = "${var.environment}-mqtt"
-  plan        = "squirrel-1"
-  region      = "google-compute-engine::${var.region}"
-  tags        = [ var.environment ]
+  name   = "${var.environment}-mqtt"
+  plan   = "squirrel-1"
+  region = "google-compute-engine::${var.region}"
+  tags   = [var.environment]
   # TODO: test version changes!
   rmq_version = var.rabbitmq_version
 }
 
 resource "cloudamqp_plugin" "rabbitmq_mqtt" {
   instance_id = cloudamqp_instance.instance.id
-  name = "rabbitmq_mqtt"
-  enabled = true
+  name        = "rabbitmq_mqtt"
+  enabled     = true
 }
 
 # TODO: create loop with multiple notification emails!
@@ -33,7 +33,7 @@ resource "cloudamqp_security_firewall" "firewall_settings" {
 
   rules {
     ip          = "0.0.0.0/0"
-    services    = ["MQTTS","HTTPS"]
+    services    = ["MQTTS", "HTTPS"]
     description = "MQTTS"
   }
 
