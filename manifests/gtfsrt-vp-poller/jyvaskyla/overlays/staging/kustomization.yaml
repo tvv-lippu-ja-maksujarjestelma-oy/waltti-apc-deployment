@@ -21,5 +21,5 @@ configMapGenerator:
 patches:
   - path: history-limit.yaml
 
-# generators:
-#   - ./ksops-secret-generator.yaml
+generators:
+  - ./ksops-secret-generator.yaml
