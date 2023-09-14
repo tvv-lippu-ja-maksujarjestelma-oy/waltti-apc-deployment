@@ -9,9 +9,9 @@ configMapGenerator:
       - "HTTP_PASSWORD_PATH=/secrets/http-password"
       - "HTTP_URL=https://vilkkutestadmin.mattersoft.fi/externalapi/assets/allvehicles"
       - "HTTP_USERNAME_PATH=/secrets/http-username"
-      - "PULSAR_TOPIC=persistent://apc-sandbox/source/vehicle-catalogue-fi-kuopio"
-      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
-      - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
+      - "PULSAR_TOPIC=persistent://apc-staging/source/vehicle-catalogue-fi-kuopio"
+      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
+      - "PULSAR_SERVICE_URL=pulsar+ssl://staging.waltti.snio.cloud:6651"
 patches:
   - path: history-limit.yaml
 
