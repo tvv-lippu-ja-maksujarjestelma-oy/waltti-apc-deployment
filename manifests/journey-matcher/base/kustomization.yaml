@@ -14,7 +14,38 @@ secretGenerator:
 configMapGenerator:
   - name: journey-matcher
     literals:
-      - APC_WAIT_IN_SECONDS=6
+      # Take care with APC_WAIT_IN_SECONDS. If set too low, passenger counts
+      # arriving late to the server will be matched to the next stop. If set too
+      # high, the next stop will be reached before the passenger counts are
+      # summed and sent onwards, which would make it ambiguous which stop the
+      # passenger counts belong to.
+      #
+      # Also, APC_WAIT_IN_SECONDS delays sending the OccupancyStatus results
+      # into trip planners downstream. Thus after
+      #
+      # The first priority is to keep the stop matching accurate. The second
+      # priority is for the anonymized passenger counting results to reach trip
+      # planning engines and passenger-facing UIs quickly.
+      #
+      # Consider the scenario where a bus departs a stop after serving
+      # passengers but passes the very next stop without stopping, presumably
+      # passing as fast as possible. A rough analysis of over 300_000 stop
+      # events from Kuopio and Jyväskylä implies that the time difference
+      # between such stop events is at most 22 seconds in 0.5 % of the cases,
+      # i.e. in 99.5 % of the cases it takes longer than 22 seconds.
+      #
+      # That sounds unbelievably low and there might be error sources in the
+      # data, e.g. network delays affecting vehicle timestamp in the GTFS
+      # Realtime Vehicle Position feed that could bring some stops temporally
+      # artificially close to each other. However, let's take the 22 seconds as
+      # a dangerous upper bound for APC_WAIT_IN_SECONDS.
+      #
+      # The dangerous lower limit would be the upper percentiles of the delay
+      # between APC devices generating and sending their results. The network
+      # delays over the public internet are not in our control but in general
+      # those can be expected to stay in the 100s of milliseconds, thus quite
+      # negligible.
+      - APC_WAIT_IN_SECONDS=15
       - >-
         COUNTING_SYSTEM_MAP=[
           ["DL-Mccl1",["fi:kuopio:44517_6","Deal Comp"]],
