@@ -47,7 +47,7 @@ resource "pulsar_topic" "vehicle_position_splitter_fi_kuopio" {
   tenant     = pulsar_tenant.tenant.tenant
   namespace  = pulsar_namespace.source.namespace
   topic_type = "persistent"
-  topic_name = "vehicle_position_splitter_fi_kuopio"
+  topic_name = "splitted-gtfsrt-vp-fi-kuopio"
   partitions = 0
 
   permission_grant {
