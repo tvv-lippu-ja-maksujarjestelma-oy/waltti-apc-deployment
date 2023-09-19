@@ -43,7 +43,7 @@ resource "pulsar_topic" "gtfsrt_vp_fi_kuopio" {
   }
 }
 
-resource "pulsar_topic" "splitted-gtfsrt-vp-fi-kuopio" {
+resource "pulsar_topic" "splitted_gtfsrt_vp_fi_kuopio" {
   tenant     = pulsar_tenant.tenant.tenant
   namespace  = pulsar_namespace.source.namespace
   topic_type = "persistent"
