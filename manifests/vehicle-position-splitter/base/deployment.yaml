@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vehicle-position-splitter
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: vehicle-position-splitter
+  template:
+    metadata:
+      labels:
+        app: vehicle-position-splitter
+        networkPolicy: client-only
+        podDisruptionBudget: max-unavailable-one
+        app.kubernetes.io/name: vehicle-position-splitter
+    spec:
+      containers:
+        - name: vehicle-position-splitter
+          image: tvvlmj/waltti-apc-vehicle-position-splitter:edge
+          imagePullPolicy: Always
+          resources:
+            # Autopilot only considers requests
+            # GCP Autopilot does not accept less on 2023-04-20.
+            # Check docs at https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-resource-requests
+            requests:
+              cpu: 500m
+              memory: 512Mi
+              ephemeral-storage: 100Mi
+          envFrom:
+            - configMapRef:
+                name: vehicle-position-splitter
+          volumeMounts:
+            - name: vehicle-position-splitter-secret-volume
+              mountPath: "/secrets"
+              readOnly: true
+          ports:
+            - name: liveness-port
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 1
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 30
+            periodSeconds: 2
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 10001
+            runAsGroup: 10001
+      volumes:
+        - name: vehicle-position-splitter-secret-volume
+          secret:
+            secretName: vehicle-position-splitter
