@@ -1,0 +1,17 @@
+nameSuffix: -fi-kuopio
+resources:
+- ../../base
+
+commonLabels:
+  app.kubernetes.io/instance: vehicle-position-splitter-fi-kuopio
+  app: vehicle-position-splitter-fi-kuopio
+
+secretGenerator:
+  - name: vehicle-position-splitter
+    literals:
+    - http-username=foo
+    - http-password=bar
+    - pulsar-oauth2-key=whatever
+    options:
+      disableNameSuffixHash: true
+
