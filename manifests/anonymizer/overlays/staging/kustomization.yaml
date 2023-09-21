@@ -1,0 +1,19 @@
+namespace: staging
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: anonymizer
+    behavior: merge
+    literals:
+      - "PULSAR_APC_CONSUMER_TOPICS_PATTERN=persistent://apc-staging/aggregated/aggregated-apc-journey"
+      - "PULSAR_PRODUCER_TOPIC=persistent://apc-staging/anonymized/anonymized-apc-journey"
+      - "PULSAR_PROFILE_READER_TOPIC=persistent://apc-staging/cleaned/vehicle-anonymization-profile"
+      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
+      - "PULSAR_SERVICE_URL=pulsar+ssl://staging.waltti.snio.cloud:6651"
+
+patches:
+  - path: history-limit.yaml
+
+generators:
+  - ./ksops-secret-generator.yaml
