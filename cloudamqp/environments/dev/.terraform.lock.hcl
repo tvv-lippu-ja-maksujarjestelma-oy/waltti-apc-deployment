@@ -2,15 +2,15 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/cloudamqp/cloudamqp" {
-  version = "1.27.0"
+  version = "1.27.1"
   hashes = [
-    "h1:e+G5nYRxq7lI+P2FjEmghSe5w84fL17F/TfGIb85sFw=",
-    "zh:63ecda3c517e0b0a7cf56dc8bea39fb4127d74fd9b631dc84b9d94369f29d2cd",
-    "zh:7f24e0ca5862f5bde0e1f32a969c1f45a1c401c0aec0950d81f01f8780169d8a",
-    "zh:a47c5987391f084e681ec8aaf619be4796f0d271246e72858f85d758441fc2d2",
-    "zh:a7f4d09cb33857508389a14c14823257b67a4442cd3c99d52235469bff708b32",
-    "zh:d2c51630c9b6e3ba4a9fca0a6bd41c25de50c92da76fd04eabc51f8779ac93d9",
-    "zh:eb0f07928e7c6eb53fbfb44c2467e8c4cb48720e35f0c8c08d5cc72177b97e37",
+    "h1:4PUgphAFJWBcFIM+0cQfGVbny9iCegVc0l8cvcbqKrs=",
+    "zh:0ac47dca38fdbc5a0b49b6ad374cf5a47026b5cc674c37f125012887f75898e0",
+    "zh:14cc48685228b1e574f54eab2f26da570041011180ecac79041ce18d3084f9a7",
+    "zh:76a4dd0311eb91b404f853fedc4a90bd9cbb1c169bafe65d32b5247bb2995f5e",
+    "zh:80e632caff7027f87478e9a7f4bdb830495f28dabf9f085afe2f58582bfaa342",
+    "zh:862bbc5ca6154a5a747392448f66986d424b4ec39b357393b0da1d474883505d",
+    "zh:951a982e85d7ac30e9b3f1109ba675ec5a6d76413947bf175035bc2b4b2b851d",
   ]
 }
 
