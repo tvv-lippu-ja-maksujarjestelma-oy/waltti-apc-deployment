@@ -1,0 +1,33 @@
+namespace: dev
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: vehicle-anonymization-profiler
+    behavior: merge
+    literals:
+      - "PINO_LOG_LEVEL=debug"
+      - >-
+        PULSAR_CATALOGUE_READERS=[
+          {
+            "feedPublisherId": "fi:jyvaskyla",
+            "name": "vehicle-anonymization-profiler-catalogue-reader-fi-jyvaskyla",
+            "topic": "persistent://apc-sandbox/source/vehicle-catalogue-fi-jyvaskyla"
+          },
+          {
+            "feedPublisherId": "fi:kuopio",
+            "name": "vehicle-anonymization-profiler-catalogue-reader-fi-kuopio",
+            "topic": "persistent://apc-sandbox/source/vehicle-catalogue-fi-kuopio"
+          }
+        ]
+      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
+      - "PULSAR_PRODUCER_TOPIC=persistent://apc-sandbox/profiles/vehicle-anonymization-profiles"
+
+      - "PULSAR_CONSUMER_TOPICS_PATTERN=persistent://apc-sandbox/source/mqtt-apc-from-vehicle"
+      - "PULSAR_PRODUCER_TOPIC=persistent://apc-sandbox/deduplicated/mqtt-apc-from-vehicle-deduplicated"
+      - "PINO_LOG_LEVEL=debug"
+      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
+      - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
+
+generators:
+  - ./ksops-secret-generator.yaml

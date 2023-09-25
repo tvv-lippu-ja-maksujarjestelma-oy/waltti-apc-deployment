@@ -1,0 +1,25 @@
+resources:
+  - deployment.yaml
+
+commonLabels:
+  app.kubernetes.io/name: vehicle-anonymization-profiler
+
+secretGenerator:
+  - name: vehicle-anonymization-profiler
+    literals:
+      - pulsar-oauth2-key=whatever
+    options:
+      disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: vehicle-anonymization-profiler
+    literals:
+      - "HEALTH_CHECK_PORT=8080"
+      - "IS_FRESH_START=false"
+      - "PULSAR_BLOCK_IF_QUEUE_FULL=true"
+      - "PULSAR_CACHE_READER_NAME=vehicle-anonymization-profiler-cache-reader"
+      - "PULSAR_COMPRESSION_TYPE=ZSTD"
+      - "PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud"
+      - "PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key"
+      - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
+      - "PULSAR_TLS_VALIDATE_HOSTNAME=true"
