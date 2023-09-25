@@ -73,3 +73,18 @@ resource "pulsar_namespace" "anonymized" {
   }
 
 }
+
+resource "pulsar_namespace" "profiles" {
+  namespace = "profiles"
+  tenant    = pulsar_tenant.tenant.tenant
+
+  retention_policies {
+    retention_minutes    = "-1"
+    retention_size_in_mb = "100"
+  }
+  permission_grant {
+    role    = "proto-client@waltti.auth.streamnative.cloud"
+    actions = ["produce", "consume", "functions"]
+  }
+
+}
