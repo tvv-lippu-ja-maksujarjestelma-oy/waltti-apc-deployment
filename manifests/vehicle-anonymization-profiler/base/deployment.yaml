@@ -34,6 +34,7 @@ spec:
                   port: liveness-port
                 failureThreshold: 1
                 periodSeconds: 10
+                initialDelaySeconds: 5
               startupProbe:
                 httpGet:
                   path: /healthz
