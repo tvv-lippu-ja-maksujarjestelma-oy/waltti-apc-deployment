@@ -22,11 +22,6 @@ configMapGenerator:
         ]
       - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
       - "PULSAR_PRODUCER_TOPIC=persistent://apc-sandbox/profiles/vehicle-anonymization-profiles"
-
-      - "PULSAR_CONSUMER_TOPICS_PATTERN=persistent://apc-sandbox/source/mqtt-apc-from-vehicle"
-      - "PULSAR_PRODUCER_TOPIC=persistent://apc-sandbox/deduplicated/mqtt-apc-from-vehicle-deduplicated"
-      - "PINO_LOG_LEVEL=debug"
-      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
       - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
 
 generators:

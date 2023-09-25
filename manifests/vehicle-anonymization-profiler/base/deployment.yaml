@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: vehicle-anonymization-profiler
 spec:
-  schedule: "5 * * * *"
+  schedule: "7 2/6 * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
