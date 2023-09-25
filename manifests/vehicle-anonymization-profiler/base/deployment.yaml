@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: vehicle-anonymization-profiler
+spec:
+  schedule: "5 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: vehicle-anonymization-profiler
+              image: tvvlmj/waltti-apc-vehicle-anonymization-profiler:edge
+              imagePullPolicy: IfNotPresent
+              resources:
+                requests:
+                  cpu: 4
+                  memory: 16Gi
+              envFrom:
+                - configMapRef:
+                    name: vehicle-anonymization-profiler
+              ports:
+                - name: liveness-port
+                  containerPort: 8080
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: liveness-port
+                failureThreshold: 1
+                periodSeconds: 10
+              startupProbe:
+                httpGet:
+                  path: /healthz
+                  port: liveness-port
+                failureThreshold: 30
+                periodSeconds: 2
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                readOnlyRootFilesystem: false
+                runAsNonRoot: false
