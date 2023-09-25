@@ -13,7 +13,7 @@ spec:
           containers:
             - name: vehicle-anonymization-profiler
               image: tvvlmj/waltti-apc-vehicle-anonymization-profiler:edge
-              imagePullPolicy: IfNotPresent
+              imagePullPolicy: Always
               resources:
                 requests:
                   cpu: 4
@@ -21,6 +21,10 @@ spec:
               envFrom:
                 - configMapRef:
                     name: vehicle-anonymization-profiler
+              volumeMounts:
+                - name: vehicle-anonymization-profiler-secret-volume
+                  mountPath: "/secrets"
+                  readOnly: true
               ports:
                 - name: liveness-port
                   containerPort: 8080
@@ -43,3 +47,7 @@ spec:
                     - ALL
                 readOnlyRootFilesystem: false
                 runAsNonRoot: false
+          volumes:
+            - name: vehicle-anonymization-profiler-secret-volume
+              secret:
+                secretName: vehicle-anonymization-profiler
