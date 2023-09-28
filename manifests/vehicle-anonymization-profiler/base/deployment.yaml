@@ -42,12 +42,7 @@ spec:
                 periodSeconds: 2
                 initialDelaySeconds: 5
               securityContext:
-                allowPrivilegeEscalation: false
-                capabilities:
-                  drop:
-                    - ALL
-                readOnlyRootFilesystem: false
-                runAsNonRoot: false
+                allowPrivilegeEscalation: true
           volumes:
             - name: vehicle-anonymization-profiler-secret-volume
               secret:
