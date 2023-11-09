@@ -1,0 +1,19 @@
+namespace: staging
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: mqtt-pulsar-forwarder-temp
+    behavior: merge
+    literals:
+      - "MQTT_URL=mqtts://mqtt-staging.apc.waltti.fi"
+      - "MQTT_CLIENT_ID_PREFIX=mqtt-pulsar-forwarder-temp-staging"
+      - "PULSAR_TOPIC=persistent://apc-sandbox/source/mqtt-apc-from-vehicle"
+      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
+      - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
+      
+patches:
+  - path: history-limit.yaml
+
+generators:
+  - ./ksops-secret-generator.yaml
