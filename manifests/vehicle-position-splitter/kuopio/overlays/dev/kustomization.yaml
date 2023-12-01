@@ -8,8 +8,7 @@ configMapGenerator:
     literals:
       - 'FEED_MAP=[["persistent://apc-sandbox/source/gtfsrt-vp-fi-kuopio","fi:kuopio"],["persistent://apc-sandbox/source/vehicle-catalogue-fi-kuopio","fi:kuopio"]]'
       - 'PINO_LOG_LEVEL=debug'
-      - PULSAR_GTFSRT_SUBSCRIPTION=vehicle-position-splitter-kuopio-sub
-      - PULSAR_APC_SUBSCRIPTION=vehicle-position-splitter-kuopio-sub
+      - 'PULSAR_GTFSRT_SUBSCRIPTION=vehicle-position-splitter-kuopio-sub'
       - "PULSAR_GTFSRT_CONSUMER_TOPICS_PATTERN=persistent://apc-sandbox/source/gtfsrt-vp-fi-kuopio"
       - "PULSAR_PRODUCER_TOPIC=persistent://apc-sandbox/source/splitted-gtfsrt-vp-fi-kuopio"
       - "PULSAR_VEHICLE_READER_TOPIC=persistent://apc-sandbox/source/vehicle-catalogue-fi-kuopio"

@@ -7,8 +7,7 @@ configMapGenerator:
     behavior: merge
     literals:
       - 'FEED_MAP=[["persistent://apc-staging/source/gtfsrt-vp-fi-kuopio","fi:kuopio"],["persistent://apc-staging/source/vehicle-catalogue-fi-kuopio","fi:kuopio"]]'
-      - PULSAR_GTFSRT_SUBSCRIPTION=vehicle-position-splitter-kuopio-sub
-      - PULSAR_APC_SUBSCRIPTION=vehicle-position-splitter-kuopio-sub
+      - 'PULSAR_GTFSRT_SUBSCRIPTION=vehicle-position-splitter-kuopio-sub'
       - "PULSAR_GTFSRT_CONSUMER_TOPICS_PATTERN=persistent://apc-staging/source/gtfsrt-vp-fi-kuopio"
       - "PULSAR_PRODUCER_TOPIC=persistent://apc-staging/source/splitted-gtfsrt-vp-fi-kuopio"
       - "PULSAR_VEHICLE_READER_TOPIC=persistent://apc-staging/source/vehicle-catalogue-fi-kuopio"
