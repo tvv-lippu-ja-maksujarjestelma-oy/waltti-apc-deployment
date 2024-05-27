@@ -32,5 +32,5 @@ variable "notification_email" {
 
 # NOTE: Updating rabbitmq via this variable is not working
 variable "rabbitmq_version" {
-  default = "3.12.4"
+  default = "3.12.13"
 }
