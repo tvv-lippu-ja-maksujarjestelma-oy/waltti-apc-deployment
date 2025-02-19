@@ -11,7 +11,7 @@ configMapGenerator:
   - name: mqtt-pulsar-forwarder-config
     behavior: merge
     literals:
-      - "MQTT_URL=mqtts://dev.mqtt.apc.lmj.fi"
+      - "MQTT_URL=mqtts://mqtt-dev.apc.waltti.fi"
       # For some reason the StreamNative certificate does not match the URI.
       - "PULSAR_TLS_VALIDATE_HOSTNAME=false"
       - "PULSAR_TOPIC=persistent://apc-dev/source/mqtt-apc-from-vehicle"

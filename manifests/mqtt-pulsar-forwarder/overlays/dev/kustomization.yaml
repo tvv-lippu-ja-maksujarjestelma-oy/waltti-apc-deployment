@@ -6,7 +6,7 @@ configMapGenerator:
   - name: mqtt-pulsar-forwarder
     behavior: merge
     literals:
-      - "MQTT_URL=mqtts://dev.mqtt.apc.lmj.fi"
+      - "MQTT_URL=mqtts://mqtt-dev.apc.waltti.fi"
       - "MQTT_CLIENT_ID_PREFIX=mqtt-pulsar-forwarder-dev"
       - "PINO_LOG_LEVEL=debug"
       - "PULSAR_TOPIC=persistent://apc-sandbox/source/mqtt-apc-from-vehicle"
