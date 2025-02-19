@@ -88,7 +88,7 @@ CloudAMQP should handle TLS via Let's Encrypt.
 1. Copy the load-balanced domain name from the Hosts section, e.g. `burly-gold-finch.rmq3.cloudamqp.com`.
 1. In your DNS manager, create a CNAME record that points from `dev.mqtt.apc.lmj.fi` to the CloudAMQP domain name. Set a time-to-live of e.g. 600 seconds.
 1. In the CloudAMQP console, select "Custom domain" from the left bar.
-1. Add Custom Domain: `dev.mqtt.apc.lmj.fi`.
+1. Add Custom Domain: `mqtt-dev.apc.waltti.fi`.
 1. Select Create.
 
 ### Enable MQTT plugin
