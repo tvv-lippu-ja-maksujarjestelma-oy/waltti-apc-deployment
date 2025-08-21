@@ -5,6 +5,7 @@ provider "registry.terraform.io/cloudamqp/cloudamqp" {
   version = "1.26.1"
   hashes = [
     "h1:2c4Q9KhcjtlB9YQaS9w//jk6dBYIXHzAg9joSjBwHeQ=",
+    "h1:bGpYC9w65c5hH0Lb6mKY1tE5Eg5m15uIXu6YhCA1wwg=",
     "zh:352c7fb2031aa9bc22da73dd47b7d7602e79d462d881b6443a31ab866e9f6aae",
     "zh:370973ba544e0fc0cf4c0a177cce57e0acbc28b59bc84d2b4f257fa21ff8cc98",
     "zh:41e4c8bfa8b55f0b308527c82ccbddc523d74bd5c279028fd85ae4041e94b937",
@@ -18,6 +19,7 @@ provider "registry.terraform.io/cyrilgdn/rabbitmq" {
   version     = "1.8.0"
   constraints = "~> 1.8.0"
   hashes = [
+    "h1:PZrZsZvFQJd3hwfv7j/drVvQEL42n6yxV9zhXWjfDwA=",
     "h1:hbzoPpKDY/ePtDcvdZPiq8RRQPgze265t2wWHPecpJo=",
     "zh:0a8bd3de84ccd39b55057403fd9d1adbb024caccfcffb879ac894858ba9f06a0",
     "zh:16f80a580d481970bbedf86e8e5da07078f0d7f1a8a86392e8ef6e1b9f4ca1d9",
@@ -40,6 +42,7 @@ provider "registry.terraform.io/hashicorp/google" {
   version     = "4.64.0"
   constraints = "~> 4.64.0"
   hashes = [
+    "h1:e9YVOqH5JQTR0LbT+VkOlJb1pDoZEvzXkqaA0Xsn5Mo=",
     "h1:oT2shsj9Mb4dGGwzlbWQPMTGSex6yDtJZcF5xQJ7rdE=",
     "zh:097fcb0a45fa41c2476deeb7a9adeadf5142e35e4d1a9eeb7b1720900a06807c",
     "zh:177e6e34f10efb5cec16b4106af5aef5240f20c33d91d40f3ea73fdc6ce9a24a",
