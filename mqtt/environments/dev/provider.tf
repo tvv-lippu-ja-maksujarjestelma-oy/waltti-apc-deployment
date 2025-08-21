@@ -30,7 +30,7 @@ provider "google" {
 }
 
 provider "rabbitmq" {
-  endpoint = var.cloudamqp_endpoint
-  username = var.cloudamqp_username
-  password = var.cloudamqp_password
+  endpoint = var.rabbitmq_endpoint
+  username = var.rabbitmq_username
+  password = var.rabbitmq_password
 }

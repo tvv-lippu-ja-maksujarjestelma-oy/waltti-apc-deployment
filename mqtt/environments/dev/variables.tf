@@ -1,13 +1,5 @@
 // CloudAMQP
-variable "cloudamqp_endpoint" {
-  type = string
-}
-
-variable "cloudamqp_username" {
-  type = string
-}
-
-variable "cloudamqp_password" {
+variable "cloudamqp_customer_api_key" {
   type      = string
   sensitive = true
 }
@@ -25,6 +17,18 @@ variable "tf_service_account" {
 }
 
 // RabbitMQ
+variable "rabbitmq_endpoint" {
+  type = string
+}
+
+variable "rabbitmq_username" {
+  type = string
+}
+
+variable "rabbitmq_password" {
+  type      = string
+  sensitive = true
+}
 
 // General
 variable "environment" {
