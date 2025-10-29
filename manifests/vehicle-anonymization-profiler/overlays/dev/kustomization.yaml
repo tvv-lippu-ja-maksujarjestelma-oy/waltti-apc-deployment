@@ -30,9 +30,9 @@ configMapGenerator:
             "topic": "persistent://apc-sandbox/source/vehicle-catalogue-fi-kuopio"
           }
         ]
-      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
+      # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
       - "PULSAR_PRODUCER_TOPIC=persistent://apc-sandbox/profiles/vehicle-anonymization-profiles"
-      - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
+      - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
 
 generators:
   - ./ksops-secret-generator.yaml
