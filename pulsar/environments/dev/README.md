@@ -9,3 +9,4 @@ roles:
 # TODO
 
 - Topic terraforms
+    - Topics are generated automatically, so this might not be necessary
