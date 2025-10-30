@@ -10,6 +10,8 @@ configMapGenerator:
       - "PULSAR_PRODUCER_TOPIC=persistent://apc-staging/anonymized/anonymized-apc-journey"
       - "PULSAR_PROFILE_READER_TOPIC=persistent://apc-staging/cleaned/vehicle-anonymization-profile"
       - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
+      - "PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud"
+      - "PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key"
       - "PULSAR_SERVICE_URL=pulsar+ssl://staging.waltti.snio.cloud:6651"
 
 patches:

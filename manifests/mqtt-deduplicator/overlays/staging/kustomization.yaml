@@ -9,6 +9,8 @@ configMapGenerator:
       - "PULSAR_CONSUMER_TOPICS_PATTERN=persistent://apc-staging/source/mqtt-apc-from-vehicle"
       - "PULSAR_PRODUCER_TOPIC=persistent://apc-staging/deduplicated/mqtt-apc-from-vehicle-deduplicated"
       - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
+      - "PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud"
+      - "PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key"
       - "PULSAR_SERVICE_URL=pulsar+ssl://staging.waltti.snio.cloud:6651"
       
 patches:

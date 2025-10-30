@@ -28,8 +28,8 @@ configMapGenerator:
     # Optional
     - "PULSAR_COMPRESSION_TYPE=ZSTD"
     # PULSAR_CONSUMER_TOPICS_PATTERN: "TO_BE_FILLED_IN_OVERLAY"
-    - "PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud"
-    - "PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key"
+    # - "PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud"
+    # - "PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key"
     # PULSAR_PRODUCER_TOPIC: "TO_BE_FILLED_IN_OVERLAY"
     - "PULSAR_SUBSCRIPTION=mqtt-deduplicator-sub"
     # Optional

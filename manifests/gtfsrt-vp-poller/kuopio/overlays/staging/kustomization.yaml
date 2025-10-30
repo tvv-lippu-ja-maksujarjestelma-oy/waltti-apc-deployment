@@ -11,6 +11,8 @@ configMapGenerator:
       - "HTTP_USERNAME_PATH=/secrets/http-username"
       - "PULSAR_TOPIC=persistent://apc-staging/source/gtfsrt-vp-fi-kuopio"
       - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
+      - "PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud"
+      - "PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key"
       - "PULSAR_SERVICE_URL=pulsar+ssl://staging.waltti.snio.cloud:6651"
 patches:
   - path: history-limit.yaml
