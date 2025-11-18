@@ -19,7 +19,28 @@ configMapGenerator:
           ["fi:jyvaskyla:6714_518","JL518-APC"],
           ["fi:jyvaskyla:6714_521","JL521-APC"],
           ["fi:kuopio:44517_6","KL006-APC"],
-          ["fi:kuopio:44517_160","KL160-APC"]
+          ["fi:kuopio:44517_160","KL160-APC"],
+          ["fi:jyvaskyla:6714_468","JL468-APC"],
+          ["fi:jyvaskyla:6714_464","JL464-APC"],
+          ["fi:jyvaskyla:6714_568","JL568-APC"],
+          ["fi:jyvaskyla:6714_476","JL476-APC"],
+          ["fi:jyvaskyla:6714_462","JL462-APC"],
+          ["fi:jyvaskyla:6714_567","JL567-APC"],
+          ["fi:jyvaskyla:6714_466","JL466-APC"],
+          ["fi:jyvaskyla:6714_472","JL472-APC"],
+          ["fi:jyvaskyla:6714_469","JL469-APC"],
+          ["fi:jyvaskyla:6714_477","JL477-APC"],
+          ["fi:jyvaskyla:6714_463","JL463-APC"],
+          ["fi:jyvaskyla:6714_566","JL566-APC"],
+          ["fi:jyvaskyla:6714_470","JL470-APC"],
+          ["fi:jyvaskyla:6714_471","JL471-APC"],
+          ["fi:jyvaskyla:6714_467","JL467-APC"],
+          ["fi:jyvaskyla:6714_475","JL475-APC"],
+          ["fi:jyvaskyla:6714_565","JL565-APC"],
+          ["fi:jyvaskyla:6714_474","JL474-APC"],
+          ["fi:jyvaskyla:6714_473","JL473-APC"],
+          ["fi:jyvaskyla:6714_478","JL478-APC"],
+          ["fi:jyvaskyla:6714_465","JL465-APC"]
         ]
       - >-
         AUTHORITY_MAP=[

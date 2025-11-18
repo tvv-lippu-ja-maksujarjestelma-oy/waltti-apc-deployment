@@ -11,6 +11,7 @@ configMapGenerator:
       - "PINO_LOG_LEVEL=debug"
       # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
       - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
+      - "PULSAR_CACHE_READER_RECEIVER_QUEUE_SIZE=10"
       
 patches:
   - path: history-limit.yaml

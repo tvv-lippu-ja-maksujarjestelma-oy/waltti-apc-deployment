@@ -28,6 +28,11 @@ configMapGenerator:
             "feedPublisherId": "fi:kuopio",
             "name": "vehicle-anonymization-profiler-catalogue-reader-fi-kuopio",
             "topic": "persistent://apc-sandbox/source/vehicle-catalogue-fi-kuopio"
+          },
+          {
+            "feedPublisherId": "fi:jyvaskyla"",
+            "name": "vehicle-anonymization-profiler-catalogue-reader-fi-jyvaskyla",
+            "topic": "persistent://apc-sandbox/source/vehicle-catalogue-fi-jyvaskyla"
           }
         ]
       # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
