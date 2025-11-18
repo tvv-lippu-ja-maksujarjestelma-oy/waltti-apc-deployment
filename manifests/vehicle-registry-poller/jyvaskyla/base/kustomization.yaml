@@ -1,0 +1,16 @@
+nameSuffix: -fi-jyvaskyla
+resources:
+- ../../base
+
+commonLabels:
+  app.kubernetes.io/instance: vehicle-registry-fi-jyvaskyla
+  app:  vehicle-registry-poller-fi-jyvaskyla
+
+secretGenerator:
+  - name: vehicle-registry-poller
+    literals:
+    - http-username=foo
+    - http-password=bar
+    options:
+      disableNameSuffixHash: true
+
