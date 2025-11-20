@@ -43,3 +43,5 @@ streamnative.json
 NOTES.md
 # Ignore json files for StreamNative auth files
 *.json
+# Allow vehicle-profile-map to be tracked
+!manifests/anonymizer/base/vehicle-profile-map.json
