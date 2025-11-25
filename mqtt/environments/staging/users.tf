@@ -21,3 +21,11 @@ module "mqtt_waltti_raportointi" {
   topic_perms_read  = "^apc\\.v[0-9][0-9]*\\.authority-id\\..*$"
   topic_perms_write = "^$"
 }
+
+module "mqtt_kuopio_analytics" {
+  source            = "../../../modules/mqtt-user"
+  secretname        = "mqtt-kuopio-analytics"
+  vhost             = rabbitmq_vhost.apc.name
+  topic_perms_read  = "^apc\\.v[0-9][0-9]*\\.authority-id\\.221$"
+  topic_perms_write = "^$"
+}
