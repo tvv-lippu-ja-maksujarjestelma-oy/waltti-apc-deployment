@@ -29,10 +29,76 @@ spec:
               cpu: 500m
               memory: 512Mi
               ephemeral-storage: 100Mi
-          envFrom:
-            - configMapRef:
-                name: anonymizer
           env:
+            - name: ACCEPTED_DEVICE_MAP
+              valueFrom:
+                configMapKeyRef:
+                  name: anonymizer
+                  key: ACCEPTED_DEVICE_MAP
+            - name: AUTHORITY_MAP
+              valueFrom:
+                configMapKeyRef:
+                  name: anonymizer
+                  key: AUTHORITY_MAP
+            - name: HEALTH_CHECK_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: anonymizer
+                  key: HEALTH_CHECK_PORT
+            - name: PINO_LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: anonymizer
+                  key: PINO_LOG_LEVEL
+            - name: PULSAR_APC_SUBSCRIPTION
+              valueFrom:
+                configMapKeyRef:
+                  name: anonymizer
+                  key: PULSAR_APC_SUBSCRIPTION
+            - name: PULSAR_BLOCK_IF_QUEUE_FULL
+              valueFrom:
+                configMapKeyRef:
+                  name: anonymizer
+                  key: PULSAR_BLOCK_IF_QUEUE_FULL
+            - name: PULSAR_COMPRESSION_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: anonymizer
+                  key: PULSAR_COMPRESSION_TYPE
+            - name: PULSAR_PROFILE_READER_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: anonymizer
+                  key: PULSAR_PROFILE_READER_NAME
+            - name: PULSAR_TLS_VALIDATE_HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: anonymizer
+                  key: PULSAR_TLS_VALIDATE_HOSTNAME
+            - name: PULSAR_APC_CONSUMER_TOPICS_PATTERN
+              valueFrom:
+                configMapKeyRef:
+                  name: anonymizer
+                  key: PULSAR_APC_CONSUMER_TOPICS_PATTERN
+                  optional: true
+            - name: PULSAR_PRODUCER_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: anonymizer
+                  key: PULSAR_PRODUCER_TOPIC
+                  optional: true
+            - name: PULSAR_PROFILE_READER_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: anonymizer
+                  key: PULSAR_PROFILE_READER_TOPIC
+                  optional: true
+            - name: PULSAR_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: anonymizer
+                  key: PULSAR_SERVICE_URL
+                  optional: true
             - name: VEHICLE_PROFILE_MAP_FILE
               value: /config/vehicle-profile-map.json
           volumeMounts:
