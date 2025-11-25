@@ -11,8 +11,8 @@ configMapGenerator:
       - "HTTP_USERNAME_PATH=/secrets/http-username"
       - "PINO_LOG_LEVEL=debug"
       - "PULSAR_TOPIC=persistent://apc-sandbox/source/vehicle-catalogue-fi-kuopio"
-      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
-      - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
+      # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
+      - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
 patches:
   - path: history-limit.yaml
 

@@ -9,8 +9,12 @@ configMapGenerator:
       - "PULSAR_CONSUMER_TOPICS_PATTERN=persistent://apc-sandbox/source/mqtt-apc-from-vehicle"
       - "PULSAR_PRODUCER_TOPIC=persistent://apc-sandbox/deduplicated/mqtt-apc-from-vehicle-deduplicated"
       - "PINO_LOG_LEVEL=debug"
-      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
-      - "PULSAR_SERVICE_URL=pulsar+ssl://sandbox.waltti.snio.cloud:6651"
+      # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
+      - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
+      - "DEDUPLICATION_WINDOW_IN_SECONDS=3600"
+      - "CACHE_WINDOW_IN_SECONDS=3600"
+      - "PULSAR_CACHE_READER_RECEIVER_QUEUE_SIZE=10"
+      - "CACHE_REBUILD_DISABLE_SEEK=true"
       
 patches:
   - path: history-limit.yaml

@@ -1,0 +1,21 @@
+namespace: staging
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: vehicle-position-splitter-fi-jyvaskyla
+    behavior: merge
+    literals:
+      - 'FEED_MAP=[["persistent://apc-staging/source/gtfsrt-vp-fi-jyvaskyla","fi:jyvaskyla"],["persistent://apc-staging/source/vehicle-catalogue-fi-jyvaskyla","fi:jyvaskyla"]]'
+      - PULSAR_GTFSRT_SUBSCRIPTION=vehicle-position-splitter-jyvaskyla-sub
+      - PULSAR_APC_SUBSCRIPTION=vehicle-position-splitter-jyvaskyla-sub
+      - "PULSAR_GTFSRT_CONSUMER_TOPICS_PATTERN=persistent://apc-staging/source/gtfsrt-vp-fi-jyvaskyla"
+      - "PULSAR_PRODUCER_TOPIC=persistent://apc-staging/source/splitted-gtfsrt-vp-fi-jyvaskyla"
+      - "PULSAR_VEHICLE_READER_TOPIC=persistent://apc-staging/source/vehicle-catalogue-fi-jyvaskyla"
+      - 'PULSAR_CACHE_READER_NAME=cache-reader'
+      - 'PULSAR_VEHICLE_READER_NAME=vehicle-reader'
+      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
+      - "PULSAR_SERVICE_URL=pulsar+ssl://staging.waltti.snio.cloud:6651"
+
+patches:
+  - path: history-limit.yaml

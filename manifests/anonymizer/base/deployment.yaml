@@ -32,9 +32,15 @@ spec:
           envFrom:
             - configMapRef:
                 name: anonymizer
+          env:
+            - name: VEHICLE_PROFILE_MAP_FILE
+              value: /config/vehicle-profile-map.json
           volumeMounts:
             - name: anonymizer-secret-volume
               mountPath: "/secrets"
+              readOnly: true
+            - name: anonymizer-config
+              mountPath: "/config"
               readOnly: true
           ports:
             - name: liveness-port
@@ -64,3 +70,6 @@ spec:
         - name: anonymizer-secret-volume
           secret:
             secretName: anonymizer
+        - name: anonymizer-config
+          configMap:
+            name: anonymizer

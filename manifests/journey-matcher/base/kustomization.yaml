@@ -56,7 +56,28 @@ configMapGenerator:
           ["JL518-APC",["fi:jyvaskyla:6714_518","Telia"]],
           ["JL521-APC",["fi:jyvaskyla:6714_521","Telia"]],
           ["KL006-APC",["fi:kuopio:44517_6","Telia"]],
-          ["KL160-APC",["fi:kuopio:44517_160","Telia"]]
+          ["KL160-APC",["fi:kuopio:44517_160","Telia"]],
+          ["JL468-0009d8066de0",["fi:jyvaskyla:6714_468","telia"]],
+          ["JL464-0009d8066d88",["fi:jyvaskyla:6714_464","telia"]],
+          ["JL568-0009d8066b30",["fi:jyvaskyla:6714_568","telia"]],
+          ["JL476-0009d80670fc",["fi:jyvaskyla:6714_476","telia"]],
+          ["JL462-0009d8066e94",["fi:jyvaskyla:6714_462","telia"]],
+          ["JL567-0009d8066e00",["fi:jyvaskyla:6714_567","telia"]],
+          ["JL466-0009d8066da8",["fi:jyvaskyla:6714_466","telia"]],
+          ["JL472-0009d8066dfc",["fi:jyvaskyla:6714_472","telia"]],
+          ["JL469-0009d8066e2c",["fi:jyvaskyla:6714_469","telia"]],
+          ["JL477-0009d8066eec",["fi:jyvaskyla:6714_477","telia"]],
+          ["JL463-0009d8066cf0",["fi:jyvaskyla:6714_463","telia"]],
+          ["JL566-0009d8066e44",["fi:jyvaskyla:6714_566","telia"]],
+          ["JL470-0009d8066dec",["fi:jyvaskyla:6714_470","telia"]],
+          ["JL471-0009d8066e20",["fi:jyvaskyla:6714_471","telia"]],
+          ["JL467-0009d8066e54",["fi:jyvaskyla:6714_467","telia"]],
+          ["JL475-0009d8066d78",["fi:jyvaskyla:6714_475","telia"]],
+          ["JL565-0009d8067058",["fi:jyvaskyla:6714_565","telia"]],
+          ["JL474-0009d8066f78",["fi:jyvaskyla:6714_474","telia"]],
+          ["JL473-0009d8066db8",["fi:jyvaskyla:6714_473","telia"]],
+          ["JL478-0009d8066f5c",["fi:jyvaskyla:6714_478","telia"]],
+          ["JL465-0009d8066ef4",["fi:jyvaskyla:6714_465","telia"]]
         ]
       - HEALTH_CHECK_PORT=8080
       - PINO_LOG_LEVEL=info
@@ -64,6 +85,6 @@ configMapGenerator:
       - PULSAR_BLOCK_IF_QUEUE_FULL=true
       - PULSAR_COMPRESSION_TYPE=ZSTD
       - PULSAR_GTFSRT_SUBSCRIPTION=journey-matcher-gtfsrt-sub
-      - PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud
-      - PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key
+      # - PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud
+      # - PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key
       - PULSAR_TLS_VALIDATE_HOSTNAME=true

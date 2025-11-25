@@ -32,10 +32,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: vehicle-position-splitter
-          volumeMounts:
-            - name: vehicle-position-splitter-secret-volume
-              mountPath: "/secrets"
-              readOnly: true
           ports:
             - name: liveness-port
               containerPort: 8080
@@ -60,7 +56,3 @@ spec:
             runAsNonRoot: true
             runAsUser: 10001
             runAsGroup: 10001
-      volumes:
-        - name: vehicle-position-splitter-secret-volume
-          secret:
-            secretName: vehicle-position-splitter

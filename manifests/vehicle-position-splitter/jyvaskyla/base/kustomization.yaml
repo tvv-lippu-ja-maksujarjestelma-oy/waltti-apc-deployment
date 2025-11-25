@@ -1,0 +1,16 @@
+nameSuffix: -fi-jyvaskyla
+resources:
+- ../../base
+
+commonLabels:
+  app.kubernetes.io/instance: vehicle-position-splitter-fi-jyvaskyla
+  app: vehicle-position-splitter-fi-jyvaskyla
+
+secretGenerator:
+  - name: vehicle-position-splitter
+    literals:
+    - http-username=foo
+    - http-password=bar
+    options:
+      disableNameSuffixHash: true
+
