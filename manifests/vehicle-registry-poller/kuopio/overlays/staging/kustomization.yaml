@@ -9,11 +9,10 @@ configMapGenerator:
       - "HTTP_PASSWORD_PATH=/secrets/http-password"
       - "HTTP_URL=https://vilkkutestadmin.mattersoft.fi/externalapi/assets/allvehicles"
       - "HTTP_USERNAME_PATH=/secrets/http-username"
+      - "PINO_LOG_LEVEL=info"
       - "PULSAR_TOPIC=persistent://apc-staging/source/vehicle-catalogue-fi-kuopio"
-      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
-      - "PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud"
-      - "PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key"
-      - "PULSAR_SERVICE_URL=pulsar+ssl://staging.waltti.snio.cloud:6651"
+      # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
+      - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
 patches:
   - path: history-limit.yaml
 

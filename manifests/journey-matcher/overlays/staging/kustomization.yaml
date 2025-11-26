@@ -7,13 +7,12 @@ configMapGenerator:
     behavior: merge
     literals:
       - 'FEED_MAP=[["persistent://apc-staging/source/gtfsrt-vp-fi-kuopio",["fi:kuopio","221","Europe/Helsinki"]],["persistent://apc-staging/source/gtfsrt-vp-fi-jyvaskyla",["fi:jyvaskyla","209","Europe/Helsinki"]]]'
+      - 'PINO_LOG_LEVEL=info'
       - "PULSAR_APC_CONSUMER_TOPICS_PATTERN=persistent://apc-staging/deduplicated/mqtt-apc-from-vehicle-deduplicated"
       - "PULSAR_GTFSRT_CONSUMER_TOPICS_PATTERN=persistent://apc-staging/source/gtfsrt-vp-.*"
       - "PULSAR_PRODUCER_TOPIC=persistent://apc-staging/aggregated/aggregated-apc-journey"
-      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
-      - "PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud"
-      - "PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key"
-      - "PULSAR_SERVICE_URL=pulsar+ssl://staging.waltti.snio.cloud:6651"
+      # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
+      - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
 
 patches:
   - path: history-limit.yaml

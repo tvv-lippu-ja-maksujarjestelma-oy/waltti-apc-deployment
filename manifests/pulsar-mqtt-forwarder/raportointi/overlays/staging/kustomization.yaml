@@ -11,14 +11,14 @@ configMapGenerator:
     behavior: merge
     literals:
       - "MQTT_CLIENT_ID_PREFIX=pulsar-mqtt-forwarder-raportointi"
-      - "MQTT_URL=mqtts://mqtt-staging.apc.waltti.fi"
+      - "MQTT_URL=mqtts://mqtts-staging.apc.waltti.fi"
       - "MQTT_TOPIC=apc/v1/authority-id/" # Rely on topicSuffix property
       - "PULSAR_TOPICS_PATTERN=persistent://apc-staging/aggregated/aggregated-apc-journey"
+      - "PINO_LOG_LEVEL=info"
       - "PULSAR_SUBSCRIPTION=pulsar-mqtt-forwarder-raportointi"
-      - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
-      - "PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud"
-      - "PULSAR_OAUTH2_KEY_PATH=/secrets/pulsar-oauth2-key"
-      - "PULSAR_SERVICE_URL=pulsar+ssl://staging.waltti.snio.cloud:6651"
+      # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
+      # - "PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud"
+      - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
 
 patches:
   - path: history-limit.yaml
