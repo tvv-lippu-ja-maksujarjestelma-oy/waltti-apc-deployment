@@ -4,13 +4,6 @@ resources:
 commonLabels:
   app.kubernetes.io/name: journey-matcher
 
-secretGenerator:
-  - name: journey-matcher
-    literals:
-    - pulsar-oauth2-key=whatever
-    options:
-      disableNameSuffixHash: true
-
 configMapGenerator:
   - name: journey-matcher
     literals:
