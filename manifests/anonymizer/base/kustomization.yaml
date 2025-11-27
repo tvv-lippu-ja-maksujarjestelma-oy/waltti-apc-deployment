@@ -4,13 +4,6 @@ resources:
 commonLabels:
   app.kubernetes.io/name: anonymizer
 
-secretGenerator:
-  - name: anonymizer
-    literals:
-    - pulsar-oauth2-key=whatever
-    options:
-      disableNameSuffixHash: true
-
 configMapGenerator:
   - name: anonymizer
     literals:

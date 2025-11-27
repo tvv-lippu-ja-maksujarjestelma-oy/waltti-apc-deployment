@@ -4,13 +4,6 @@ resources:
 commonLabels:
   app.kubernetes.io/name: vehicle-anonymization-profiler
 
-secretGenerator:
-  - name: vehicle-anonymization-profiler
-    literals:
-      - pulsar-oauth2-key=whatever
-    options:
-      disableNameSuffixHash: true
-
 configMapGenerator:
   - name: vehicle-anonymization-profiler
     literals:

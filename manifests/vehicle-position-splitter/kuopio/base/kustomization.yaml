@@ -11,7 +11,6 @@ secretGenerator:
     literals:
     - http-username=foo
     - http-password=bar
-    - pulsar-oauth2-key=whatever
     options:
       disableNameSuffixHash: true
 

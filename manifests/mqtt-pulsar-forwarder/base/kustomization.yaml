@@ -9,7 +9,6 @@ secretGenerator:
     literals:
     - mqtt-username=foo
     - mqtt-password=bar
-    - pulsar-oauth2-key=whatever
     options:
       disableNameSuffixHash: true
 
