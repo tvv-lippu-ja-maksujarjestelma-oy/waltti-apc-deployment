@@ -32,10 +32,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: journey-matcher
-          volumeMounts:
-            - name: journey-matcher-secret-volume
-              mountPath: "/secrets"
-              readOnly: true
           ports:
             - name: liveness-port
               containerPort: 8080
