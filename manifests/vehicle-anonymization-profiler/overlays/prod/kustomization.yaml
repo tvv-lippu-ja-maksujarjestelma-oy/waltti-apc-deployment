@@ -1,0 +1,26 @@
+namespace: prod
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: vehicle-anonymization-profiler
+    behavior: merge
+    literals:
+      - "PINO_LOG_LEVEL=info"
+      - >-
+        PULSAR_CATALOGUE_READERS=[
+          {
+            "feedPublisherId": "fi:kuopio",
+            "name": "vehicle-anonymization-profiler-catalogue-reader-fi-kuopio",
+            "topic": "persistent://apc-prod/source/vehicle-catalogue-fi-kuopio"
+          },
+          {
+            "feedPublisherId": "fi:jyvaskyla",
+            "name": "vehicle-anonymization-profiler-catalogue-reader-fi-jyvaskyla",
+            "topic": "persistent://apc-prod/source/vehicle-catalogue-fi-jyvaskyla"
+          }
+        ]
+      # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:prod"
+      - "PULSAR_PRODUCER_TOPIC=persistent://apc-prod/profiles/vehicle-anonymization-profiles"
+      - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
+

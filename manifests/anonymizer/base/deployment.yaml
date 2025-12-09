@@ -102,9 +102,6 @@ spec:
             - name: VEHICLE_PROFILE_MAP_FILE
               value: /config/vehicle-profile-map.json
           volumeMounts:
-            - name: anonymizer-secret-volume
-              mountPath: "/secrets"
-              readOnly: true
             - name: anonymizer-config
               mountPath: "/config"
               readOnly: true

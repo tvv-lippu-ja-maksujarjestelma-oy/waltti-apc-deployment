@@ -1,0 +1,22 @@
+namespace: prod
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: vehicle-position-splitter-fi-jyvaskyla
+    behavior: merge
+    literals:
+      - 'FEED_MAP=[["persistent://apc-prod/source/gtfsrt-vp-fi-jyvaskyla","fi:jyvaskyla"],["persistent://apc-prod/source/vehicle-catalogue-fi-jyvaskyla","fi:jyvaskyla"]]'
+      - 'PINO_LOG_LEVEL=info'
+      - PULSAR_GTFSRT_SUBSCRIPTION=vehicle-position-splitter-jyvaskyla-sub
+      - PULSAR_APC_SUBSCRIPTION=vehicle-position-splitter-jyvaskyla-sub
+      - "PULSAR_GTFSRT_CONSUMER_TOPICS_PATTERN=persistent://apc-prod/source/gtfsrt-vp-fi-jyvaskyla"
+      - "PULSAR_PRODUCER_TOPIC=persistent://apc-prod/source/splitted-gtfsrt-vp-fi-jyvaskyla"
+      - "PULSAR_VEHICLE_READER_TOPIC=persistent://apc-prod/source/vehicle-catalogue-fi-jyvaskyla"
+      - 'PULSAR_CACHE_READER_NAME=cache-reader'
+      - 'PULSAR_VEHICLE_READER_NAME=vehicle-reader'
+      - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
+
+patches:
+  - path: history-limit.yaml
+

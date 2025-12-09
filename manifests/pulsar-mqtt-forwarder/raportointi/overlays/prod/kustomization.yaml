@@ -1,0 +1,28 @@
+namespace: prod
+resources:
+  - ../../base
+
+commonLabels:
+  app.kubernetes.io/instance: pulsar-mqtt-forwarder-raportointi
+  app: pulsar-mqtt-forwarder-raportointi
+
+configMapGenerator:
+  - name: pulsar-mqtt-forwarder-raportointi
+    behavior: merge
+    literals:
+      - "MQTT_CLIENT_ID_PREFIX=pulsar-mqtt-forwarder-raportointi"
+      - "MQTT_URL=mqtts://mqtts-prod.apc.waltti.fi"
+      - "MQTT_TOPIC=apc/v1/authority-id/" # Rely on topicSuffix property
+      - "PULSAR_TOPICS_PATTERN=persistent://apc-prod/aggregated/aggregated-apc-journey"
+      - "PINO_LOG_LEVEL=info"
+      - "PULSAR_SUBSCRIPTION=pulsar-mqtt-forwarder-raportointi"
+      # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:prod"
+      # - "PULSAR_OAUTH2_ISSUER_URL=https://auth.streamnative.cloud"
+      - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
+
+patches:
+  - path: history-limit.yaml
+
+generators:
+  - ./ksops-secret-generator.yaml
+

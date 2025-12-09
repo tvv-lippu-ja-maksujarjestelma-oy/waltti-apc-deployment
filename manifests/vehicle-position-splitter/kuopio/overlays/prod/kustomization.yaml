@@ -1,0 +1,23 @@
+namespace: prod
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: vehicle-position-splitter-fi-kuopio
+    behavior: merge
+    literals:
+      - 'FEED_MAP=[["persistent://apc-prod/source/gtfsrt-vp-fi-kuopio","fi:kuopio"],["persistent://apc-prod/source/vehicle-catalogue-fi-kuopio","fi:kuopio"]]'
+      - "PINO_LOG_LEVEL=info"
+      - "PULSAR_GTFSRT_SUBSCRIPTION=vehicle-position-splitter-kuopio-sub"
+      - "PULSAR_APC_SUBSCRIPTION=vehicle-position-splitter-kuopio-sub"
+      - "PULSAR_GTFSRT_CONSUMER_TOPICS_PATTERN=persistent://apc-prod/source/gtfsrt-vp-fi-kuopio"
+      - "PULSAR_PRODUCER_TOPIC=persistent://apc-prod/source/splitted-gtfsrt-vp-fi-kuopio"
+      - "PULSAR_VEHICLE_READER_TOPIC=persistent://apc-prod/source/vehicle-catalogue-fi-kuopio"
+      - "PULSAR_CACHE_READER_NAME=cache-reader"
+      - "PULSAR_VEHICLE_READER_NAME=vehicle-reader"
+      # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:prod"
+      - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
+
+patches:
+  - path: history-limit.yaml
+
