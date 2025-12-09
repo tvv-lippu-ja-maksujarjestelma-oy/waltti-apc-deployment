@@ -1,0 +1,27 @@
+namespace: prod
+resources:
+  - ../../base
+
+commonLabels:
+  app.kubernetes.io/instance: gtfsrt-vp-poller-fi-jyvaskyla
+  app: gtfsrt-vp-poller-fi-jyvaskyla
+
+
+configMapGenerator:
+  - name: gtfsrt-vp-poller-fi-jyvaskyla
+    behavior: merge
+    literals:
+      - "HTTP_PASSWORD_PATH=/secrets/http-password"
+      - "HTTP_URL=https://data.waltti.fi/jyvaskyla/api/gtfsrealtime/v1.0/feed/vehicleposition"
+      - "HTTP_USERNAME_PATH=/secrets/http-username"
+      - "PINO_LOG_LEVEL=info"
+      - "PULSAR_TOPIC=persistent://apc-prod/source/gtfsrt-vp-fi-jyvaskyla"
+      # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:prod"
+      - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
+
+patches:
+  - path: history-limit.yaml
+
+generators:
+  - ./ksops-secret-generator.yaml
+

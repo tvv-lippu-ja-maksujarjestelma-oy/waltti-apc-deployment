@@ -1,0 +1,19 @@
+namespace: prod
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: journey-matcher
+    behavior: merge
+    literals:
+      - 'FEED_MAP=[["persistent://apc-prod/source/gtfsrt-vp-fi-kuopio",["fi:kuopio","221","Europe/Helsinki"]],["persistent://apc-prod/source/gtfsrt-vp-fi-jyvaskyla",["fi:jyvaskyla","209","Europe/Helsinki"]]]'
+      - 'PINO_LOG_LEVEL=info'
+      - "PULSAR_APC_CONSUMER_TOPICS_PATTERN=persistent://apc-prod/deduplicated/mqtt-apc-from-vehicle-deduplicated"
+      - "PULSAR_GTFSRT_CONSUMER_TOPICS_PATTERN=persistent://apc-prod/source/gtfsrt-vp-.*"
+      - "PULSAR_PRODUCER_TOPIC=persistent://apc-prod/aggregated/aggregated-apc-journey"
+      # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:prod"
+      - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
+
+patches:
+  - path: history-limit.yaml
+
