@@ -11,8 +11,8 @@ configMapGenerator:
       - "PINO_LOG_LEVEL=info"
       # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:prod"
       - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
-      - "DEDUPLICATION_WINDOW_IN_SECONDS=3600"
-      - "CACHE_WINDOW_IN_SECONDS=3600"
+      - "DEDUPLICATION_WINDOW_IN_SECONDS=0"
+      - "CACHE_WINDOW_IN_SECONDS=0"
       - "PULSAR_CACHE_READER_RECEIVER_QUEUE_SIZE=10"
       - "CACHE_REBUILD_DISABLE_SEEK=true"
       
