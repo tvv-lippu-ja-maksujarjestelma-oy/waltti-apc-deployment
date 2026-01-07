@@ -16,15 +16,14 @@ spec:
               imagePullPolicy: Always
               resources:
                 requests:
-                  cpu: 4
+                  cpu: 30
                   memory: 16Gi
+                limits:
+                  cpu: 36
+                  memory: 32Gi
               envFrom:
                 - configMapRef:
                     name: vehicle-anonymization-profiler
-              volumeMounts:
-                - name: vehicle-anonymization-profiler-secret-volume
-                  mountPath: "/secrets"
-                  readOnly: true
               ports:
                 - name: liveness-port
                   containerPort: 8080
@@ -43,7 +42,3 @@ spec:
                 initialDelaySeconds: 5
               securityContext:
                 allowPrivilegeEscalation: true
-          volumes:
-            - name: vehicle-anonymization-profiler-secret-volume
-              secret:
-                secretName: vehicle-anonymization-profiler
