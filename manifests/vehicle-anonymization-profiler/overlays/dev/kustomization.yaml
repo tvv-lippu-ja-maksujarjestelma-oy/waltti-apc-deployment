@@ -7,6 +7,7 @@ configMapGenerator:
     behavior: merge
     literals:
       - "PINO_LOG_LEVEL=debug"
+      - "IS_FRESH_START=true"
       # FIXME: Leaving this here as an example on what to do when multiple
       # municipalities start using Waltti-APC.
       # - >-
@@ -25,12 +26,7 @@ configMapGenerator:
       - >-
         PULSAR_CATALOGUE_READERS=[
           {
-            "feedPublisherId": "fi:kuopio",
-            "name": "vehicle-anonymization-profiler-catalogue-reader-fi-kuopio",
-            "topic": "persistent://apc-sandbox/source/vehicle-catalogue-fi-kuopio"
-          },
-          {
-            "feedPublisherId": "fi:jyvaskyla"",
+            "feedPublisherId": "fi:jyvaskyla",
             "name": "vehicle-anonymization-profiler-catalogue-reader-fi-jyvaskyla",
             "topic": "persistent://apc-sandbox/source/vehicle-catalogue-fi-jyvaskyla"
           }
