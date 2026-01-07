@@ -1,0 +1,26 @@
+namespace: staging
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: vehicle-anonymization-profiler
+    behavior: merge
+    literals:
+      - "PINO_LOG_LEVEL=info"
+      - "IS_FRESH_START=true"
+      - >-
+        PULSAR_CATALOGUE_READERS=[
+          {
+            "feedPublisherId": "fi:kuopio",
+            "name": "vehicle-anonymization-profiler-catalogue-reader-fi-kuopio",
+            "topic": "persistent://apc-staging/source/vehicle-catalogue-fi-kuopio"
+          },
+          {
+            "feedPublisherId": "fi:jyvaskyla",
+            "name": "vehicle-anonymization-profiler-catalogue-reader-fi-jyvaskyla",
+            "topic": "persistent://apc-staging/source/vehicle-catalogue-fi-jyvaskyla"
+          }
+        ]
+      # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
+      - "PULSAR_PRODUCER_TOPIC=persistent://apc-staging/profiles/vehicle-anonymization-profiles"
+      - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
