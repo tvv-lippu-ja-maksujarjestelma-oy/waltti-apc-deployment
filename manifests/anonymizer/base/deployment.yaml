@@ -99,6 +99,12 @@ spec:
                   name: anonymizer
                   key: PULSAR_SERVICE_URL
                   optional: true
+            - name: IS_INITIAL_PROFILE_READING_REQUIRED
+              valueFrom:
+                configMapKeyRef:
+                  name: anonymizer
+                  key: IS_INITIAL_PROFILE_READING_REQUIRED
+                  optional: true
             - name: VEHICLE_PROFILE_MAP_FILE
               value: /config/vehicle-profile-map.json
           volumeMounts:

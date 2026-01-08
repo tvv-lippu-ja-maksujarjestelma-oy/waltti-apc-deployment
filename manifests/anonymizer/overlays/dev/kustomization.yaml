@@ -12,6 +12,8 @@ configMapGenerator:
       - "PULSAR_PROFILE_READER_TOPIC=persistent://apc-sandbox/profiles/vehicle-anonymization-profiles"
       # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:alpha"
       - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
+      # Skip initial profile reading - will pick up profiles from keepUpdatingProfiles loop
+      - "IS_INITIAL_PROFILE_READING_REQUIRED=false"
 
 patches:
   - path: history-limit.yaml
