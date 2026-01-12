@@ -14,6 +14,9 @@ configMapGenerator:
       - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
       # Skip initial profile reading - will pick up profiles from keepUpdatingProfiles loop
       - "IS_INITIAL_PROFILE_READING_REQUIRED=false"
+      # Dynamic ACCEPTED_DEVICE_MAP from vehicle catalogue topics
+      - "PULSAR_VEHICLE_REGISTRY_CONSUMER_TOPICS_PATTERN=persistent://apc-sandbox/source/vehicle-catalogue-.*"
+      - "PULSAR_VEHICLE_REGISTRY_SUBSCRIPTION=anonymizer-vehicle-registry-dev"
 
 patches:
   - path: history-limit.yaml
