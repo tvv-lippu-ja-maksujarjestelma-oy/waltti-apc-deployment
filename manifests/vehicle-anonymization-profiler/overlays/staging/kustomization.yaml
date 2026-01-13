@@ -11,11 +11,6 @@ configMapGenerator:
       - >-
         PULSAR_CATALOGUE_READERS=[
           {
-            "feedPublisherId": "fi:kuopio",
-            "name": "vehicle-anonymization-profiler-catalogue-reader-fi-kuopio",
-            "topic": "persistent://apc-staging/source/vehicle-catalogue-fi-kuopio"
-          },
-          {
             "feedPublisherId": "fi:jyvaskyla",
             "name": "vehicle-anonymization-profiler-catalogue-reader-fi-jyvaskyla",
             "topic": "persistent://apc-staging/source/vehicle-catalogue-fi-jyvaskyla"

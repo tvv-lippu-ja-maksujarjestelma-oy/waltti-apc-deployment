@@ -1,0 +1,19 @@
+namespace: staging
+namePrefix: mqtt-mqtt-duplicator-staging-to-prod-
+resources:
+  - ../../base
+
+configMapGenerator:
+  - name: mqtt-mqtt-duplicator
+    behavior: merge
+    literals:
+      - PINO_LOG_LEVEL=debug
+      - SOURCE_MQTT_URL=mqtts://mqtts-staging.apc.waltti.fi
+      - DEST_MQTT_URL=mqtts://mqtts-prod.apc.waltti.fi
+      - HEALTH_CHECK_PORT=8080
+      - SOURCE_MQTT_CLIENT_ID_PREFIX=waltti-duplicator-src-staging-to-prod-
+      - DEST_MQTT_CLIENT_ID_PREFIX=waltti-duplicator-dst-staging-to-prod-
+      - DUPLICATOR_ID=staging-to-prod
+
+generators:
+  - ./ksops-secret-generator.yaml

@@ -1,0 +1,39 @@
+resources:
+  - deployment.yaml
+
+commonLabels:
+  app.kubernetes.io/name: mqtt-mqtt-duplicator
+
+# Placeholder secret (replaced by SOPS secret in overlays)
+secretGenerator:
+  - name: mqtt-mqtt-duplicator
+    literals:
+      - SOURCE_MQTT_USERNAME_PATH=foo
+      - SOURCE_MQTT_PASSWORD_PATH=bar
+      - DEST_MQTT_USERNAME_PATH=foo
+      - DEST_MQTT_PASSWORD_PATH=bar
+    options:
+      disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: mqtt-mqtt-duplicator
+    literals:
+      - HEALTH_CHECK_PORT=8080
+      - PINO_LOG_LEVEL=info
+
+      - SOURCE_MQTT_CLIENT_ID_PREFIX=waltti-duplicator-src-
+      - SOURCE_MQTT_CLIENT_ID_SUFFIX_LENGTH=16
+      - SOURCE_MQTT_TOPIC_FILTER=apc-from-vehicle/#
+      - SOURCE_MQTT_QOS=2
+      - SOURCE_MQTT_CLEAN_SESSION=false
+
+      - DEST_MQTT_CLIENT_ID_PREFIX=waltti-duplicator-dst-
+      - DEST_MQTT_CLIENT_ID_SUFFIX_LENGTH=16
+      - DEST_MQTT_CLEAN_SESSION=true
+
+      - FORWARD_QOS_MAX=2
+      - FORWARD_RETAIN=true
+
+      # Explicitly disable save-to-file in pods
+      - SAVE_MESSAGES_TO_FILE=false
+      - SAVE_MESSAGES_FILE_PATH=/tmp/messages.ndjson
