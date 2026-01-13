@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mqtt-mqtt-duplicator
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: mqtt-mqtt-duplicator
+  template:
+    metadata:
+      labels:
+        app: mqtt-mqtt-duplicator
+        networkPolicy: client-only
+        podDisruptionBudget: max-unavailable-one
+        app.kubernetes.io/name: mqtt-mqtt-duplicator
+        app.kubernetes.io/instance: mqtt-mqtt-duplicator
+    spec:
+      containers:
+        - name: mqtt-mqtt-duplicator
+          image: tvvlmj/waltti-apc-mqtt-mqtt-duplicator:sha-ac1c86d14b36fcc632aeb1de9039e2c89c5748e1
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+              ephemeral-storage: 100Mi
+          envFrom:
+            - configMapRef:
+                name: mqtt-mqtt-duplicator
+            - secretRef:
+                name: mqtt-mqtt-duplicator
+          ports:
+            - name: liveness-port
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 1
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: liveness-port
+            failureThreshold: 30
+            periodSeconds: 2
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 10001
+            runAsGroup: 10001
