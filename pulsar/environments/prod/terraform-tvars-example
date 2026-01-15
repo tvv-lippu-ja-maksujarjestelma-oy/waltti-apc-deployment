@@ -1,0 +1,8 @@
+web_service_url    =
+broker_service_url =
+admin_roles        =
+project_id         =
+region             =
+environment        =
+tf_service_account =
+

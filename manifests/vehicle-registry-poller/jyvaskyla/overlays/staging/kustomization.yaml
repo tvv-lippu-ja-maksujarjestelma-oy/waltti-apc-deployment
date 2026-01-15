@@ -7,7 +7,7 @@ configMapGenerator:
     behavior: merge
     literals:
       - "HTTP_PASSWORD_PATH=/secrets/http-password"
-      - "HTTP_URL=https://vilkkutestadmin.mattersoft.fi/externalapi/assets/allvehicles"
+      - "HTTP_URL=https://lmjadmin.mattersoft.fi/externalapi/assets/allvehicles"
       - "HTTP_USERNAME_PATH=/secrets/http-username"
       - "PINO_LOG_LEVEL=info"
       - "PULSAR_TOPIC=persistent://apc-staging/source/vehicle-catalogue-fi-jyvaskyla"
