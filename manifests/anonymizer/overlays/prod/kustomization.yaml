@@ -9,9 +9,17 @@ configMapGenerator:
       - "PINO_LOG_LEVEL=info"
       - "PULSAR_APC_CONSUMER_TOPICS_PATTERN=persistent://apc-prod/aggregated/aggregated-apc-journey"
       - "PULSAR_PRODUCER_TOPIC=persistent://apc-prod/anonymized/anonymized-apc-journey"
-      - "PULSAR_PROFILE_READER_TOPIC=persistent://apc-prod/cleaned/vehicle-anonymization-profile"
+      - "PULSAR_PROFILE_READER_TOPIC=persistent://apc-prod/profiles/vehicle-anonymization-profiles"
       # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:prod"
       - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
+      # Skip initial profile reading - will pick up profiles from keepUpdatingProfiles loop
+      - "IS_INITIAL_PROFILE_READING_REQUIRED=false"
+      # Dynamic ACCEPTED_DEVICE_MAP from vehicle catalogue topics
+      - "PULSAR_VEHICLE_REGISTRY_CONSUMER_TOPICS_PATTERN=persistent://apc-prod/source/vehicle-catalogue-.*"
+      - "PULSAR_VEHICLE_REGISTRY_SUBSCRIPTION=anonymizer-vehicle-registry-prod"
+    files:
+      # Override base `vehicle-profile-map.json` to remove hard-coded profiles in prod.
+      - vehicle-profile-map.json=./vehicle-profile-map.json
 
 patches:
   - path: history-limit.yaml
