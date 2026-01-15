@@ -45,3 +45,4 @@ NOTES.md
 *.json
 # Allow vehicle-profile-map to be tracked
 !manifests/anonymizer/base/vehicle-profile-map.json
+!manifests/anonymizer/overlays/prod/vehicle-profile-map.json
