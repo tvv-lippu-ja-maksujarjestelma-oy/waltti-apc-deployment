@@ -31,13 +31,15 @@ spec:
                 httpGet:
                   path: /healthz
                   port: liveness-port
-                failureThreshold: 1
+                timeoutSeconds: 5
+                failureThreshold: 3
                 periodSeconds: 10
               startupProbe:
                 httpGet:
                   path: /healthz
                   port: liveness-port
-                failureThreshold: 30
+                timeoutSeconds: 5
+                failureThreshold: 90
                 periodSeconds: 2
                 initialDelaySeconds: 5
               securityContext:
