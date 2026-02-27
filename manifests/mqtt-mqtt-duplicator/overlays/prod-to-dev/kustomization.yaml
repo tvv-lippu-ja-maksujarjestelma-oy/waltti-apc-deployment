@@ -1,4 +1,4 @@
-namespace: prod
+namespace: dev
 namePrefix: mqtt-mqtt-duplicator-prod-to-dev-
 resources:
   - ../../base

@@ -9,6 +9,8 @@ configMapGenerator:
       - 'FEED_MAP=[["persistent://apc-prod/source/splitted-gtfsrt-vp-fi-kuopio",["fi:kuopio","221","Europe/Helsinki"]],["persistent://apc-prod/source/splitted-gtfsrt-vp-fi-jyvaskyla",["fi:jyvaskyla","209","Europe/Helsinki"]]]'
       - 'PINO_LOG_LEVEL=info'
       - "PULSAR_APC_CONSUMER_TOPICS_PATTERN=persistent://apc-prod/deduplicated/mqtt-apc-from-vehicle-deduplicated"
+      - "PULSAR_VEHICLE_REGISTRY_CONSUMER_TOPICS_PATTERN=persistent://apc-prod/source/vehicle-catalogue-.*"
+      - "PULSAR_VEHICLE_REGISTRY_SUBSCRIPTION=journey-matcher-vehicle-registry-prod"
       - "PULSAR_GTFSRT_CONSUMER_TOPICS_PATTERN=persistent://apc-prod/source/splitted-gtfsrt-vp-.*"
       - "PULSAR_PRODUCER_TOPIC=persistent://apc-prod/aggregated/aggregated-apc-journey"
       # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:prod"
