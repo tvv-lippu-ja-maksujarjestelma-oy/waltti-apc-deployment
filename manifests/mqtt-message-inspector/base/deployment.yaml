@@ -1,55 +1,54 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mqtt-pulsar-forwarder
+  name: mqtt-message-inspector
 spec:
-  # Match the number of zones in the region.
-  replicas: 3
+  replicas: 1
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
+    type: Recreate
   selector:
     matchLabels:
-      app: mqtt-pulsar-forwarder
+      app: mqtt-message-inspector
   template:
     metadata:
       labels:
-        app: mqtt-pulsar-forwarder
-        app.kubernetes.io/name: mqtt-pulsar-forwarder
+        app: mqtt-message-inspector
         networkPolicy: client-only
         podDisruptionBudget: max-unavailable-one
+        app.kubernetes.io/name: mqtt-message-inspector
+        app.kubernetes.io/instance: mqtt-message-inspector
     spec:
-      # Each zone should have exactly one mqtt-pulsar-forwarder to add
-      # redundancy into MQTT data collection. Any further replicas would waste
-      # capacity.
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - mqtt-pulsar-forwarder
-              topologyKey: topology.kubernetes.io/zone
+      securityContext:
+        fsGroup: 10001
       containers:
-        - name: mqtt-pulsar-forwarder
-          image: tvvlmj/mqtt-pulsar-forwarder:edge
+        - name: mqtt-message-inspector
+          image: tvvlmj/waltti-apc-mqtt-message-inspector:edge
           imagePullPolicy: Always
           resources:
             requests:
               cpu: 250m
               memory: 512Mi
-              ephemeral-storage: 100Mi
+              ephemeral-storage: 1Gi
           envFrom:
             - configMapRef:
-                name: mqtt-pulsar-forwarder
+                name: mqtt-message-inspector
+          env:
+            - name: HTTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mqtt-message-inspector
+                  key: http-username
+            - name: HTTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mqtt-message-inspector
+                  key: http-password
           volumeMounts:
-            - name: mqtt-pulsar-forwarder-secret-volume
+            - name: mqtt-message-inspector-secret-volume
               mountPath: "/secrets"
               readOnly: true
+            - name: mqtt-message-inspector-data-volume
+              mountPath: "/data"
           ports:
             - name: liveness-port
               containerPort: 8080
@@ -77,6 +76,8 @@ spec:
             runAsUser: 10001
             runAsGroup: 10001
       volumes:
-        - name: mqtt-pulsar-forwarder-secret-volume
+        - name: mqtt-message-inspector-secret-volume
           secret:
-            secretName: mqtt-pulsar-forwarder
+            secretName: mqtt-message-inspector
+        - name: mqtt-message-inspector-data-volume
+          emptyDir: {}
