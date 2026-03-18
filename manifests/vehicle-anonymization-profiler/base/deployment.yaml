@@ -5,6 +5,8 @@ metadata:
 spec:
   schedule: "7 2/6 * * *"
   concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
@@ -16,11 +18,13 @@ spec:
               imagePullPolicy: Always
               resources:
                 requests:
-                  cpu: "8"
-                  memory: 16Gi
+                  cpu: "2"
+                  memory: 4Gi
+                  ephemeral-storage: 2Gi
                 limits:
-                  cpu: "36"
-                  memory: 32Gi
+                  cpu: "8"
+                  memory: 8Gi
+                  ephemeral-storage: 2Gi
               envFrom:
                 - configMapRef:
                     name: vehicle-anonymization-profiler
