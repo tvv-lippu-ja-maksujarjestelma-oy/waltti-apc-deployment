@@ -1,0 +1,28 @@
+namespace: prod
+resources:
+  - ../../base
+
+images:
+  - name: tvvlmj/waltti-apc-mqtt-message-inspector
+    newTag: sha-41ec8d406b4e5f0174994ba4d44b7ca35e4cbaf1
+
+configMapGenerator:
+  - name: mqtt-message-inspector
+    behavior: merge
+    literals:
+      - MQTT_URL=mqtts://mqtts-prod.apc.waltti.fi
+      - MQTT_CLIENT_ID_PREFIX=mqtt-message-inspector-prod-
+      - MQTT_TOPIC_FILTERS=apc-from-vehicle/#,apc/v1/authority-id/#,anonymized-apc/v1/authority-id/#
+      - CAPTURE_GCS_UPLOAD_ENABLED=true
+      - CAPTURE_GCS_PROJECT_ID=apc-sandbox
+      - CAPTURE_GCS_BUCKET=waltti-apc-mqtt-message-inspector-sandbox
+      - CAPTURE_GCS_PREFIX=runs
+      - CAPTURE_DASHBOARD_INTERVAL_SECONDS=300
+      - CAPTURE_GCS_UPLOAD_INTERVAL_SECONDS=300
+      - PINO_LOG_LEVEL=info
+
+patches:
+  - path: history-limit.yaml
+
+generators:
+  - ./ksops-secret-generator.yaml

@@ -1,0 +1,34 @@
+resources:
+  - deployment.yaml
+
+commonLabels:
+  app.kubernetes.io/name: mqtt-message-inspector
+
+secretGenerator:
+  - name: mqtt-message-inspector
+    literals:
+      - mqtt-username=foo
+      - mqtt-password=bar
+    options:
+      disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: mqtt-message-inspector
+    literals:
+      - HEALTH_CHECK_PORT=8080
+      - PINO_LOG_LEVEL=info
+      - MQTT_CLEAN_SESSION=false
+      - MQTT_CLIENT_ID_SUFFIX_LENGTH=16
+      - MQTT_PASSWORD_PATH=/secrets/mqtt-password
+      - MQTT_QOS=2
+      - MQTT_USERNAME_PATH=/secrets/mqtt-username
+      - MQTT_TOPIC_FILTERS=apc-from-vehicle/#
+      - SAVE_MESSAGES_TO_FILE=true
+      - SAVE_MESSAGES_FILE_PATH=/data/messages.ndjson
+      - CAPTURE_ENABLED=true
+      - CAPTURE_OUTPUT_DIR=/data/captures
+      - CAPTURE_DASHBOARD_ENABLED=true
+      - CAPTURE_DASHBOARD_INTERVAL_SECONDS=300
+      - CAPTURE_GCS_UPLOAD_ENABLED=false
+      - CAPTURE_GCS_PREFIX=runs
+      - CAPTURE_GCS_UPLOAD_INTERVAL_SECONDS=300
