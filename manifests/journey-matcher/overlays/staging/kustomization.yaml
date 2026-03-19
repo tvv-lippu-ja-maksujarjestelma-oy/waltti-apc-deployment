@@ -17,4 +17,5 @@ configMapGenerator:
       - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
 
 patches:
-  - path: history-limit.yaml  - path: resource-bursting.yaml
+  - path: history-limit.yaml
+  - path: resource-bursting.yaml
