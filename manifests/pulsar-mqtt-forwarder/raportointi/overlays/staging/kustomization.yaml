@@ -22,6 +22,7 @@ configMapGenerator:
 
 patches:
   - path: history-limit.yaml
+  - path: resource-bursting.yaml
 
 generators:
   - ./ksops-secret-generator.yaml
