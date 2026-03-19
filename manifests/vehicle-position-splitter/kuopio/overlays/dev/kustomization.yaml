@@ -20,3 +20,4 @@ configMapGenerator:
 
 patches:
   - path: history-limit.yaml
+  - path: resource-bursting.yaml

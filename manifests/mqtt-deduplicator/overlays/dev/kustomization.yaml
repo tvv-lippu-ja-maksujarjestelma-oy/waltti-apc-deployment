@@ -17,4 +17,4 @@ configMapGenerator:
       - "CACHE_REBUILD_DISABLE_SEEK=true"
       
 patches:
-  - path: history-limit.yaml
+  - path: history-limit.yaml  - path: resource-bursting.yaml

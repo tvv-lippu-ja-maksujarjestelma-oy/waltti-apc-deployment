@@ -7,7 +7,7 @@ configMapGenerator:
     behavior: merge
     literals:
       - "PINO_LOG_LEVEL=info"
-      - "IS_FRESH_START=true"
+      - "IS_FRESH_START=false"
       - >-
         PULSAR_CATALOGUE_READERS=[
           {
