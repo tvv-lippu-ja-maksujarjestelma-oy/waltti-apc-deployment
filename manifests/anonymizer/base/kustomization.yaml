@@ -11,7 +11,8 @@ configMapGenerator:
       - >-
         AUTHORITY_MAP=[
           ["221","fi:kuopio"],
-          ["209","fi:jyvaskyla"]
+          ["209","fi:jyvaskyla"],
+          ["223","fi:lahti"]
         ]
       - HEALTH_CHECK_PORT=8080
       - PINO_LOG_LEVEL=info

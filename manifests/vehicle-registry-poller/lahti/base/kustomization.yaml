@@ -1,0 +1,15 @@
+nameSuffix: -fi-lahti
+resources:
+- ../../base
+
+commonLabels:
+  app.kubernetes.io/instance: vehicle-registry-fi-lahti
+  app:  vehicle-registry-poller-fi-lahti
+
+secretGenerator:
+  - name: vehicle-registry-poller
+    literals:
+    - http-username=foo
+    - http-password=bar
+    options:
+      disableNameSuffixHash: true

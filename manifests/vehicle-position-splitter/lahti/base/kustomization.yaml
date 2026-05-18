@@ -1,0 +1,15 @@
+nameSuffix: -fi-lahti
+resources:
+- ../../base
+
+commonLabels:
+  app.kubernetes.io/instance: vehicle-position-splitter-fi-lahti
+  app: vehicle-position-splitter-fi-lahti
+
+secretGenerator:
+  - name: vehicle-position-splitter
+    literals:
+    - http-username=foo
+    - http-password=bar
+    options:
+      disableNameSuffixHash: true

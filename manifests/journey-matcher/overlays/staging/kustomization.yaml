@@ -6,7 +6,7 @@ configMapGenerator:
   - name: journey-matcher
     behavior: merge
     literals:
-      - 'FEED_MAP=[["persistent://apc-staging/source/splitted-gtfsrt-vp-fi-kuopio",["fi:kuopio","221","Europe/Helsinki"]],["persistent://apc-staging/source/splitted-gtfsrt-vp-fi-jyvaskyla",["fi:jyvaskyla","209","Europe/Helsinki"]]]'
+      - 'FEED_MAP=[["persistent://apc-staging/source/splitted-gtfsrt-vp-fi-kuopio",["fi:kuopio","221","Europe/Helsinki"]],["persistent://apc-staging/source/splitted-gtfsrt-vp-fi-jyvaskyla",["fi:jyvaskyla","209","Europe/Helsinki"]],["persistent://apc-staging/source/splitted-gtfsrt-vp-fi-lahti",["fi:lahti","223","Europe/Helsinki"]]]'
       - 'PINO_LOG_LEVEL=info'
       - "PULSAR_APC_CONSUMER_TOPICS_PATTERN=persistent://apc-staging/deduplicated/mqtt-apc-from-vehicle-deduplicated"
       - "PULSAR_VEHICLE_REGISTRY_CONSUMER_TOPICS_PATTERN=persistent://apc-staging/source/vehicle-catalogue-.*"
