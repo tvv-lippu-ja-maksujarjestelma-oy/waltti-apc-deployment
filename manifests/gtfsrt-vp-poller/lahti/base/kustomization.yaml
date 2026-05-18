@@ -1,0 +1,15 @@
+nameSuffix: -fi-lahti
+resources:
+- ../../base
+
+commonLabels:
+  app.kubernetes.io/instance: gtfsrt-vp-poller-fi-lahti
+  app: gtfsrt-vp-poller-fi-lahti
+
+secretGenerator:
+  - name: gtfsrt-vp-poller
+    literals:
+    - http-username=foo
+    - http-password=bar
+    options:
+      disableNameSuffixHash: true

@@ -43,11 +43,50 @@ resource "pulsar_topic" "gtfsrt_vp_fi_kuopio" {
   }
 }
 
+resource "pulsar_topic" "gtfsrt_vp_fi_lahti" {
+  tenant     = pulsar_tenant.tenant.tenant
+  namespace  = pulsar_namespace.source.namespace
+  topic_type = "persistent"
+  topic_name = "gtfsrt-vp-fi-lahti"
+  partitions = 0
+
+  permission_grant {
+    role    = "proto-client@waltti.auth.streamnative.cloud"
+    actions = ["produce", "consume", "functions"]
+  }
+}
+
+resource "pulsar_topic" "vehicle_catalogue_fi_lahti" {
+  tenant     = pulsar_tenant.tenant.tenant
+  namespace  = pulsar_namespace.source.namespace
+  topic_type = "persistent"
+  topic_name = "vehicle-catalogue-fi-lahti"
+  partitions = 0
+
+  permission_grant {
+    role    = "proto-client@waltti.auth.streamnative.cloud"
+    actions = ["produce", "consume", "functions"]
+  }
+}
+
 resource "pulsar_topic" "splitted_gtfsrt_vp_fi_kuopio" {
   tenant     = pulsar_tenant.tenant.tenant
   namespace  = pulsar_namespace.source.namespace
   topic_type = "persistent"
   topic_name = "splitted-gtfsrt-vp-fi-kuopio"
+  partitions = 0
+
+  permission_grant {
+    role    = "proto-client@waltti.auth.streamnative.cloud"
+    actions = ["produce", "consume", "functions"]
+  }
+}
+
+resource "pulsar_topic" "splitted_gtfsrt_vp_fi_lahti" {
+  tenant     = pulsar_tenant.tenant.tenant
+  namespace  = pulsar_namespace.source.namespace
+  topic_type = "persistent"
+  topic_name = "splitted-gtfsrt-vp-fi-lahti"
   partitions = 0
 
   permission_grant {
