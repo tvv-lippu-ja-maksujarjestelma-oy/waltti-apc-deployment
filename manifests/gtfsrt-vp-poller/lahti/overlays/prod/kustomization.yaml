@@ -7,7 +7,7 @@ configMapGenerator:
     behavior: merge
     literals:
       - "HTTP_PASSWORD_PATH=/secrets/http-password"
-      - "HTTP_URL=https://data.waltti.fi/lahti/api/gtfsrealtime/v1.0/feed/vehicleposition"
+      - "HTTP_URL=https://lsl.mattersoft.fi/api/gtfsrealtime/v1.0/feed/vehicleposition"
       - "HTTP_USERNAME_PATH=/secrets/http-username"
       - "PINO_LOG_LEVEL=info"
       - "PULSAR_TOPIC=persistent://apc-prod/source/gtfsrt-vp-fi-lahti"
@@ -15,3 +15,6 @@ configMapGenerator:
       - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
 patches:
   - path: history-limit.yaml
+
+generators:
+  - ./ksops-secret-generator.yaml
