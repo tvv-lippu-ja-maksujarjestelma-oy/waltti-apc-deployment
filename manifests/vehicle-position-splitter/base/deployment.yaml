@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: vehicle-position-splitter
-          image: tvvlmj/waltti-apc-vehicle-position-splitter:8b9f458ca6604b52134f6897b4468c301dc64164520d9d9ff11f32b1c9e0486b
+          image: tvvlmj/waltti-apc-vehicle-position-splitter:1e6c2cebc943b647ba2dd8f3857c578a7fd145b3cf7202cda139846b04c3fa79
           imagePullPolicy: Always
           resources:
             requests:
