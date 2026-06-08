@@ -13,6 +13,7 @@ configMapGenerator:
       - CAPTURE_GCS_PROJECT_ID=apc-sandbox
       - CAPTURE_GCS_BUCKET=waltti-apc-mqtt-message-inspector-sandbox
       - CAPTURE_GCS_PREFIX=runs
+      - CAPTURE_PARTITION_BY_UTC_DATE=true
       - CAPTURE_DASHBOARD_INTERVAL_SECONDS=300
       - CAPTURE_GCS_UPLOAD_INTERVAL_SECONDS=300
       - PINO_LOG_LEVEL=info
