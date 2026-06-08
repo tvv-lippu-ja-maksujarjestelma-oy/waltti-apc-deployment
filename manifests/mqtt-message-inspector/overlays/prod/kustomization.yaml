@@ -2,10 +2,6 @@ namespace: prod
 resources:
   - ../../base
 
-images:
-  - name: tvvlmj/waltti-apc-mqtt-message-inspector
-    newTag: sha-41ec8d406b4e5f0174994ba4d44b7ca35e4cbaf1
-
 configMapGenerator:
   - name: mqtt-message-inspector
     behavior: merge
