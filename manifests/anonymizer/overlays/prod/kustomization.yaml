@@ -2,13 +2,6 @@ namespace: prod
 resources:
   - ../../base
 
-images:
-  - name: tvvlmj/waltti-apc-anonymizer
-    # Contains the passenger-count accumulation fix and the Node/Pulsar
-    # stability fixes. Pin the immutable multi-platform digest so production
-    # cannot silently resolve an older or newer `edge` image.
-    digest: sha256:1a9ddbfd09d65f3588e657d03fb305a1640ab454b48ab8018592fcce7290d8f0
-
 configMapGenerator:
   - name: anonymizer
     behavior: merge
