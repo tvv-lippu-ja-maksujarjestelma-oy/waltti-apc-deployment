@@ -29,3 +29,6 @@ configMapGenerator:
       # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:beta"
       - "PULSAR_PRODUCER_TOPIC=persistent://apc-staging/profiles/vehicle-anonymization-profiles"
       - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
+
+patches:
+  - path: resource-requests.yaml

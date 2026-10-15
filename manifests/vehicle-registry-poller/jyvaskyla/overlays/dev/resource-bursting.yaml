@@ -9,7 +9,7 @@ spec:
         - name: vehicle-registry-poller
           resources:
             requests:
-              cpu: 50m
+              cpu: 100m
               memory: 256Mi
               ephemeral-storage: 100Mi
             limits:

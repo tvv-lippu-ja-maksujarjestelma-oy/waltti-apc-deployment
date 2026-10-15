@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: vehicle-anonymization-profiler
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: vehicle-anonymization-profiler
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 1Gi
