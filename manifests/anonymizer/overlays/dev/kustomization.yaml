@@ -21,3 +21,7 @@ configMapGenerator:
 patches:
   - path: history-limit.yaml
   - path: resource-bursting.yaml
+images:
+  - name: tvvlmj/waltti-apc-anonymizer
+    newTag: edge
+    digest: sha256:a44e5c04a6cc76b5279aebe06fa9438b4ff7a6e4212d927ccb57fe056273bd8c
