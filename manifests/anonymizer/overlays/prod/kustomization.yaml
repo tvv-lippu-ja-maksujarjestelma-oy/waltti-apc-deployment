@@ -22,4 +22,5 @@ configMapGenerator:
       - vehicle-profile-map.json=./vehicle-profile-map.json
 
 patches:
+  - path: resource-requests.yaml
   - path: history-limit.yaml

@@ -14,6 +14,7 @@ configMapGenerator:
       # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:prod"
       - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
 patches:
+  - path: resource-requests.yaml
   - path: history-limit.yaml
 
 generators:
