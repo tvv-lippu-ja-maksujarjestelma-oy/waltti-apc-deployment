@@ -26,3 +26,7 @@ patches:
 
 generators:
   - ./ksops-secret-generator.yaml
+images:
+  - name: tvvlmj/pulsar-mqtt-forwarder
+    newTag: edge
+    digest: sha256:a6c26c47b3a83e282354bcfe09c29033a8c5df3cd9a38509db2d91d4c283cf36
