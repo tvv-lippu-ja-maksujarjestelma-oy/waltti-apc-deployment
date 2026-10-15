@@ -19,3 +19,7 @@ configMapGenerator:
 patches:
   - path: history-limit.yaml
   - path: resource-bursting.yaml
+images:
+  - name: tvvlmj/waltti-apc-journey-matcher
+    newTag: edge
+    digest: sha256:26651088204a0c8b3d4e246a1d18bb62a7d0a31d1e906d692f67cbb468512863
