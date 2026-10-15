@@ -24,7 +24,7 @@ spec:
           imagePullPolicy: IfNotPresent
           resources:
             requests:
-              cpu: 250m
+              cpu: 50m
               memory: 256Mi
               ephemeral-storage: 100Mi
           envFrom:
