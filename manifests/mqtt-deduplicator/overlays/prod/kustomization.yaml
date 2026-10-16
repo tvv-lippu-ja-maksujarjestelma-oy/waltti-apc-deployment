@@ -17,4 +17,5 @@ configMapGenerator:
       - "PULSAR_CACHE_READER_RECEIVER_QUEUE_SIZE=10"
       
 patches:
+  - path: resource-requests.yaml
   - path: history-limit.yaml
