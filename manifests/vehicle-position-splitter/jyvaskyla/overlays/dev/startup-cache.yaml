@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vehicle-position-splitter
+spec:
+  template:
+    spec:
+      containers:
+        - name: vehicle-position-splitter
+          env:
+            # Timed cache-reader calls can segfault in pulsar-client 1.17.0.
+            # Match the existing staging and production startup behavior.
+            - name: CACHE_WINDOW_IN_SECONDS
+              value: "0"

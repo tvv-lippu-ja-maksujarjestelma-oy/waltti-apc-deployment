@@ -20,6 +20,7 @@ configMapGenerator:
 patches:
   - path: history-limit.yaml
   - path: resource-bursting.yaml
+  - path: startup-cache.yaml
 images:
   - name: tvvlmj/waltti-apc-vehicle-position-splitter
     newTag: edge
