@@ -1,0 +1,33 @@
+---
+name: Validate manifests
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  KUSTOMIZE_VERSION: v5.8.3
+  KUBECONFORM_VERSION: v0.8.0
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install kustomize and kubeconform
+        run: |
+          set -euo pipefail
+          cd "$(mktemp -d)"
+          base="https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${KUSTOMIZE_VERSION}"
+          curl -fsSLO "${base}/kustomize_${KUSTOMIZE_VERSION}_linux_amd64.tar.gz" -O "${base}/checksums.txt"
+          sha256sum --check --ignore-missing checksums.txt
+          tar -xzf "kustomize_${KUSTOMIZE_VERSION}_linux_amd64.tar.gz"
+          base="https://github.com/yannh/kubeconform/releases/download/${KUBECONFORM_VERSION}"
+          curl -fsSLO "${base}/kubeconform-linux-amd64.tar.gz" -O "${base}/CHECKSUMS"
+          sha256sum --check --ignore-missing CHECKSUMS
+          tar -xzf kubeconform-linux-amd64.tar.gz
+          sudo install kustomize kubeconform /usr/local/bin/
+      - run: ./scripts/ci/validate-manifests.sh

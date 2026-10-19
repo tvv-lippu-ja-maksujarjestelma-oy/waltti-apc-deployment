@@ -1,0 +1,31 @@
+---
+# GitOps step 6: dev digest bumps from Argo CD Image Updater merge themselves once the
+# "validate" check passes. staging and prod pull requests stay human-merged: the gate
+# accepts only changes to dev overlay kustomizations and only the images-pin lines.
+name: Auto-merge dev image updates
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'waltti-image-updater[bot]' && startsWith(github.head_ref, 'image-updater-')
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PR: ${{ github.event.pull_request.number }}
+    steps:
+      - name: Only dev overlay image pins may be touched
+        run: |
+          set -euo pipefail
+          files=$(gh pr diff "$PR" --repo "$GITHUB_REPOSITORY" --name-only)
+          echo "$files"
+          echo "$files" | grep -qvE '^manifests/[a-z0-9-]+(/[a-z0-9-]+)?/overlays/dev/kustomization\.yaml$' && { echo "non-dev file changed"; exit 1; }
+          gh pr diff "$PR" --repo "$GITHUB_REPOSITORY" | grep -E '^[+-]' | grep -vE '^(\+\+\+|---) ' |
+            grep -vE '^[+-] *(images:|- name: tvvlmj/[a-z0-9-]+|newTag: edge|digest: sha256:[0-9a-f]{64})$' && { echo "unexpected diff lines above"; exit 1; }
+          echo "ok: dev image pin only"
+      - run: gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --auto --squash

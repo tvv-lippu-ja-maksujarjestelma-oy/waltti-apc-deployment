@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# CI stand-in for the ksops KRM exec function. CI has no decryption key, so instead of
+# decrypting it passes the sops-encrypted Secret manifests through with the `sops`
+# metadata block removed. Shape and keys are real; values stay ENC[...] strings.
+set -Eeuo pipefail
+input=$(cat)
+echo 'apiVersion: config.kubernetes.io/v1'
+echo 'kind: ResourceList'
+echo 'items:'
+printf '%s\n' "$input" | yq -r '.functionConfig.files[]' | while read -r f; do
+  yq 'del(.sops)' "$f" | sed '1s/^/- /; 2,$s/^/  /'
+done
