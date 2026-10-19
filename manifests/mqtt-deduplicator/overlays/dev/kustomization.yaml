@@ -22,4 +22,4 @@ patches:
 images:
   - name: tvvlmj/pulsar-topic-deduplicator
     newTag: edge
-    digest: sha256:29baa769734e53ca9edc4d176fbd8b2de83724b2903a0070397e814f05981eb7
+    digest: sha256:75eb5c8b4233686bcb9442aa8d7a7072821bd1b26dd3dae5596bc8ee16561d3f
