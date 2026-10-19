@@ -19,3 +19,6 @@ configMapGenerator:
 patches:
   - path: history-limit.yaml
   - path: resource-bursting.yaml
+images:
+  - name: tvvlmj/pulsar-topic-deduplicator
+    digest: sha256:29baa769734e53ca9edc4d176fbd8b2de83724b2903a0070397e814f05981eb7

@@ -23,3 +23,6 @@ patches:
 
 generators:
   - ./ksops-secret-generator.yaml
+images:
+  - name: tvvlmj/waltti-apc-mqtt-message-inspector
+    digest: sha256:fb837597cf1cf54998cdf5b289c62b8231b47d6dd5db8de5057dca9f52bcf8cc

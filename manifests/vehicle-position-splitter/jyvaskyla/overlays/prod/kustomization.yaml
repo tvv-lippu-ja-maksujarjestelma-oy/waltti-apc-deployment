@@ -19,4 +19,6 @@ configMapGenerator:
 
 patches:
   - path: history-limit.yaml
-
+images:
+  - name: tvvlmj/waltti-apc-vehicle-position-splitter
+    digest: sha256:d679a250e23662e2cc9e44c57477d19b5b242d47611ac7b7821a7bfcf28ea96f

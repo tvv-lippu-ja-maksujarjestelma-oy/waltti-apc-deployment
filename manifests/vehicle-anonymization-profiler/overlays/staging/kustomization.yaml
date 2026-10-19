@@ -32,3 +32,6 @@ configMapGenerator:
 
 patches:
   - path: resource-requests.yaml
+images:
+  - name: tvvlmj/waltti-apc-vehicle-anonymization-profiler
+    digest: sha256:adee9c8a5b09d68cabcda8d19203bbfd5e1317b520d41bda3fdf4d8fb4c19ec3
