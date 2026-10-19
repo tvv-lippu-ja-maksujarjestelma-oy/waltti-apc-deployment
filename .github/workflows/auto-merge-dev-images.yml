@@ -28,4 +28,13 @@ jobs:
           gh pr diff "$PR" --repo "$GITHUB_REPOSITORY" | grep -E '^[+-]' | grep -vE '^(\+\+\+|---) ' |
             grep -vE '^[+-] *(images:|- name: tvvlmj/[a-z0-9-]+|newTag: edge|digest: sha256:[0-9a-f]{64})$' && { echo "unexpected diff lines above"; exit 1; }
           echo "ok: dev image pin only"
+      - name: Close older open bot PRs for the same overlay
+        run: |
+          set -euo pipefail
+          file=$(gh pr diff "$PR" --repo "$GITHUB_REPOSITORY" --name-only)
+          gh pr list --repo "$GITHUB_REPOSITORY" --author 'app/waltti-image-updater' --state open --json number,files \
+            --jq ".[] | select(.number < $PR and (.files[].path == \"$file\")) | .number" |
+          while read -r old; do
+            gh pr close "$old" --repo "$GITHUB_REPOSITORY" --delete-branch --comment "Superseded by #$PR, which pins a newer digest for the same overlay."
+          done
       - run: gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --auto --squash

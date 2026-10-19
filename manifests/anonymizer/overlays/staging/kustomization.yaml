@@ -21,3 +21,6 @@ configMapGenerator:
 patches:
   - path: history-limit.yaml
   - path: resource-bursting.yaml
+images:
+  - name: tvvlmj/waltti-apc-anonymizer
+    digest: sha256:ee345393195ddc2d23164be41971d93a7fe8d1c16bb6afcec50ffa6f02b59d8a

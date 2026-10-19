@@ -19,4 +19,6 @@ patches:
 
 generators:
   - ./ksops-secret-generator.yaml
-
+images:
+  - name: tvvlmj/http-pulsar-poller
+    digest: sha256:e237297566a00b35130f43d1092fea2097708300b15534bd4d412956b76d7f79

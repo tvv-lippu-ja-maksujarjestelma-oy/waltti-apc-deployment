@@ -3,13 +3,11 @@
 # validate the output against the Kubernetes API schemas, and enforce immutable images.
 #
 # Image policy: a container image must be pinned by digest (@sha256:) or an immutable
-# sha-<commit> tag. Violations fail the build for the namespaces in
-# ENFORCE_PINNED_NAMESPACES and are only reported for the rest. staging and prod join the
-# enforced list when GitOps step 6 moves their digests from the live Argo override into Git.
+# sha-<commit> tag. Violations fail the build for the namespaces in ENFORCE_PINNED_NAMESPACES.
 set -Eeuo pipefail
 cd "$(dirname "$0")/../.."
 export PATH="$PWD/scripts/ci:$PATH" # the ksops stand-in
-ENFORCE_PINNED_NAMESPACES="${ENFORCE_PINNED_NAMESPACES:-dev}"
+ENFORCE_PINNED_NAMESPACES="${ENFORCE_PINNED_NAMESPACES:-dev staging prod}"
 out=$(mktemp -d)
 status=0
 

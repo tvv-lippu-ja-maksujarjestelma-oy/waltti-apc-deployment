@@ -18,4 +18,6 @@ patches:
 
 generators:
   - ./ksops-secret-generator.yaml
-
+images:
+  - name: tvvlmj/mqtt-pulsar-forwarder
+    digest: sha256:a8b4f57d7d3c20a7f32c7f9bcbeb07fbf12f6882a287b0948f42cb5a5a666ef5
