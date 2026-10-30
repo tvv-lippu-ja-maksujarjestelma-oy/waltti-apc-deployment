@@ -22,4 +22,4 @@ generators:
 images:
   - name: tvvlmj/http-pulsar-poller
     newTag: edge
-    digest: sha256:e237297566a00b35130f43d1092fea2097708300b15534bd4d412956b76d7f79
+    digest: sha256:866278a9f8d144e44c8f63d1e27b638b4cedced069023f15efbafbb8a3d486a4
