@@ -24,4 +24,4 @@ patches:
 images:
   - name: tvvlmj/waltti-apc-anonymizer
     newTag: edge
-    digest: sha256:912819b256b2096ca813378204e913abcbc4e50d8ce1ed91638d666146f42ca7
+    digest: sha256:5ba772249e63eb36eded131d028adf4ccb8713e68db5def287ec843a89eb4821
