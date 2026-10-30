@@ -22,4 +22,4 @@ patches:
 images:
   - name: tvvlmj/waltti-apc-journey-matcher
     newTag: edge
-    digest: sha256:030716e899e7717f21dad45cc0b5560bce1d1212c35a394ea0e474634314bb2b
+    digest: sha256:f887d7a1bf88c9d9395d3cc722e4830da3e6f9317d1bca788354746736d6c857
