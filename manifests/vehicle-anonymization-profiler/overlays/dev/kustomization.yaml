@@ -10,6 +10,7 @@ configMapGenerator:
       - "IS_FRESH_START=false"
       - >-
         PULSAR_CATALOGUE_READERS=[
+
           {
             "feedPublisherId": "fi:jyvaskyla",
             "name": "vehicle-anonymization-profiler-catalogue-reader-fi-jyvaskyla",
