@@ -8,7 +8,7 @@ configMapGenerator:
     literals:
       - "PINO_LOG_LEVEL=debug"
       - "IS_FRESH_START=false"
-      - >-
+      - |-
         PULSAR_CATALOGUE_READERS=[
           {
             "feedPublisherId": "fi:jyvaskyla",
