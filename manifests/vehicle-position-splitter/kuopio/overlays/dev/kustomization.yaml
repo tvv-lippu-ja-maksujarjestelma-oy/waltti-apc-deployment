@@ -24,4 +24,4 @@ patches:
 images:
   - name: tvvlmj/waltti-apc-vehicle-position-splitter
     newTag: edge
-    digest: sha256:dff3ccb89c0bf60a7bc6940c0b86661b91ef84143eaa4b6e9be140d2354c002f
+    digest: sha256:39027e77b43d4f325ea46b7b0a2b6b210a96f3bdaf0f9dbf435e223b0352566f
