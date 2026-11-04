@@ -29,4 +29,4 @@ generators:
 images:
   - name: tvvlmj/pulsar-mqtt-forwarder
     newTag: edge
-    digest: sha256:a9423408199ccef012245ca50835ccda8fac941fa6e57535c65080efdd75aca9
+    digest: sha256:6da636f7bf25c1b71c9ee859792c188ec27f2bd8636d83ae7ddc92d988ce3eaa
