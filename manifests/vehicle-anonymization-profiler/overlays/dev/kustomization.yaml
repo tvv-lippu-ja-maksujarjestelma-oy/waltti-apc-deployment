@@ -35,4 +35,4 @@ patches:
 images:
   - name: tvvlmj/waltti-apc-vehicle-anonymization-profiler
     newTag: edge
-    digest: sha256:b8e7da8d754a712156976fa3b51c8f9579b9347dcdd7ef35dbbb9de1bc91ea42
+    digest: sha256:11e60424409c366854900a2808ee871b4b9e45d10ede0e5a833dcc6f3dcf470d
