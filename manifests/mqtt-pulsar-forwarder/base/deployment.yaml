@@ -40,7 +40,9 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
-              cpu: 500m
+              # Peak use under 0.01 vCPU per pod (2-15 Nov 2026). 250m is accepted by
+              # Autopilot for anti-affinity pods; memory stays at 512Mi.
+              cpu: 250m
               memory: 512Mi
               ephemeral-storage: 100Mi
           envFrom:
