@@ -1,0 +1,11 @@
+# Test environments only (Nov 2026 cost review): without anti-affinity the
+# forwarders may all run on one node, so a node drain stops all of them.
+# Autopilot requires 0.5 vCPU for each pod with pod anti-affinity, while peak
+# use is under 0.01 vCPU per pod (2-15 Nov 2026). The dev cluster has no CPU
+# bursting, so Autopilot sets CPU in 250m steps and caps use at the request;
+# 250m is the smallest step. Prod keeps one forwarder per zone.
+- op: remove
+  path: /spec/template/spec/affinity
+- op: replace
+  path: /spec/template/spec/containers/0/resources/requests/cpu
+  value: 250m
