@@ -7,12 +7,14 @@ configMapGenerator:
     - HEALTH_CHECK_PORT=8080
     #- HTTP_PASSWORD_PATH=TO_BE_FILLED_IN_OVERLAY
     - HTTP_REQUEST_TIMEOUT_IN_SECONDS=5
-    # The poller sleeps this long after each request, so one poller makes
-    # about 1 / (response time + sleep) requests per second. Mattersoft allows
-    # at most 1 request per second, and dev, staging and prod all poll the same
-    # feeds: prod sleeps 2 s and the dev and staging overlays sleep 5 s, about
-    # 0.9 requests per second per feed in total. Keep the sleep well below the
-    # 22 s bound described in the journey-matcher base, minus APC_WAIT_IN_SECONDS.
+    # The poller sleeps this long after each request, also after a failed one,
+    # so one poller makes about 1 / (response time + sleep) requests per
+    # second. Mattersoft allows at most 1 request per second. Dev, staging and
+    # prod all poll each feed (Kuopio and Lahti directly, Jyväskylä through
+    # data.waltti.fi): prod sleeps 2 s and the dev and staging overlays sleep
+    # 5 s, about 0.9 requests per second per feed in total. Keep sleep +
+    # response time under the 22 s bound in the journey-matcher base minus
+    # APC_WAIT_IN_SECONDS (now 7 s), or counts can match the wrong stop.
     - HTTP_SLEEP_DURATION_IN_SECONDS=2
     - HTTP_URL=TO_BE_FILLED_IN_OVERLAY
     - HTTP_USER_AGENT=waltti-apc-http-pulsar-poller
