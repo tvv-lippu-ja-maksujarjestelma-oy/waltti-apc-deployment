@@ -15,6 +15,10 @@ configMapGenerator:
 
 patches:
   - path: history-limit.yaml
+  - path: no-anti-affinity.yaml
+    target:
+      kind: Deployment
+      name: mqtt-pulsar-forwarder
 
 generators:
   - ./ksops-secret-generator.yaml
