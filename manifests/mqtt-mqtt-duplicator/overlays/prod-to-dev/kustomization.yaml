@@ -7,7 +7,6 @@ configMapGenerator:
   - name: mqtt-mqtt-duplicator
     behavior: merge
     literals:
-      - PINO_LOG_LEVEL=debug
       - SOURCE_MQTT_URL=mqtts://mqtts-prod.apc.waltti.fi
       - DEST_MQTT_URL=mqtts://mqtts-dev.apc.waltti.fi
       - HEALTH_CHECK_PORT=8080
