@@ -17,9 +17,12 @@ configMapGenerator:
       - "PULSAR_VEHICLE_READER_NAME=vehicle-reader"
       # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:prod"
       - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
+      # No startup cache build. On 19 Nov 2026 every start rebuilt the 48 h cache, then sent a
+      # "not servicing" burst for all cached vehicles and crashed in native pulsar-client code
+      # ("double free or corruption", exit 134/139) 9 times in 27 minutes. 0 skips the cache build.
+      - "CACHE_WINDOW_IN_SECONDS=0"
 
 patches:
-  - path: resource-requests.yaml
   - path: history-limit.yaml
 images:
   - name: tvvlmj/waltti-apc-vehicle-position-splitter
