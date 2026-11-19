@@ -12,8 +12,8 @@
             "name": "gtfsrt-vp-poller",
             "resources": {
               "requests": {
-                "cpu": "50m",
-                "memory": "192Mi"
+                "cpu": "100m",
+                "memory": "256Mi"
               }
             }
           }
