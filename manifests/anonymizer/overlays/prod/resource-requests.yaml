@@ -12,8 +12,8 @@
             "name": "anonymizer",
             "resources": {
               "requests": {
-                "cpu": "100m",
-                "memory": "256Mi"
+                "cpu": "50m",
+                "memory": "192Mi"
               }
             }
           }
