@@ -19,7 +19,7 @@ configMapGenerator:
       # Startup cache off, as this splitter has run since 7 Oct 2026 (then a hand patch).
       # A 2 h window crashed it at start on 19 Nov 2026 (native pulsar-client crash during the
       # "not servicing" burst). With 0 the vehicle catalogue lookback is 70 minutes; the
-      # registry poller publishes every 6 h, so a restart long after a catalogue accepts no buses.
+      # registry poller therefore publishes every hour (base HTTP_SLEEP_DURATION_IN_SECONDS=3600).
       - "CACHE_WINDOW_IN_SECONDS=0"
 
 patches:

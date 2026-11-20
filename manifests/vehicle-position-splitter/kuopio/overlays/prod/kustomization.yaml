@@ -17,12 +17,11 @@ configMapGenerator:
       - "PULSAR_VEHICLE_READER_NAME=vehicle-reader"
       # - "PULSAR_OAUTH2_AUDIENCE=urn:sn:pulsar:waltti:prod"
       - "PULSAR_SERVICE_URL=pulsar://pulsar-broker.pulsar.svc.cluster.local:6650"
-      # Startup cache window: 2 h. The same value sets how far back the splitter looks for the
-      # vehicle catalogue (fallback 7x = 14 h; the registry poller publishes every 6 h). The 48 h
-      # default kept stale "in service" buses in the cache, so a crash during the startup
-      # "not servicing" burst repeated on every start (Kuopio, 19 Nov 2026). 0 would skip the
-      # catalogue after about 70 minutes without a new catalogue message.
-      - "CACHE_WINDOW_IN_SECONDS=7200"
+      # Startup cache off, as in Jyvaskyla and Lahti. The 48 h default (19 Nov 2026) and a 2 h
+      # window (20 Nov 2026) both crashed it at start (native pulsar-client crash during the
+      # "not servicing" burst). With 0 the vehicle catalogue lookback is 70 minutes, so the
+      # registry poller publishes every hour (base HTTP_SLEEP_DURATION_IN_SECONDS=3600).
+      - "CACHE_WINDOW_IN_SECONDS=0"
 
 patches:
   - path: history-limit.yaml
